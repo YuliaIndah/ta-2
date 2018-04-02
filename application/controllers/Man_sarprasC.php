@@ -28,11 +28,11 @@ class Man_sarprasC extends CI_Controller {
 		$this->load->view('man_sarpras/index_template', $data);
 	}
 
-	public function pengajuan_kegiatan(){ //halaman pengajuan kegiatan (man_sarpras)
-		$data['title'] = "Pengajuan Kegiatan | Manajer Sarana dan Prasarana";
+	public function pengajuan_barang(){ //halaman pengajuan barang (man_sarpras)
+		$data['title'] = "Pengajuan Barang | Manajer Sarana dan Prasarana";
 		$this->data['data_diri'] = $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
-		$this->data['data_pengajuan_kegiatan'] = $this->Man_sarprasM->get_data_pengajuan()->result();
-		$data['body'] = $this->load->view('man_sarpras/pengajuan_kegiatan_content', $this->data, true) ;
+		$this->data['data_pengajuan_barang'] = $this->Man_sarprasM->get_data_pengajuan()->result();
+		$data['body'] = $this->load->view('man_sarpras/pengajuan_barang_content', $this->data, true) ;
 		$this->load->view('man_sarpras/index_template', $data);
 	}
 

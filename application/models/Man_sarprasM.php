@@ -7,12 +7,12 @@ class Man_sarprasM extends CI_Model{
 
 	function get_data_pengajuan(){
 		$this->db->select('*');
-		$this->db->from('kegiatan');
-		$this->db->join('pengguna_jabatan', 'pengguna_jabatan.id_pengguna_jabatan = kegiatan.id_pengguna_jabatan');
-		$this->db->join('pengguna', 'pengguna.no_identitas = pengguna_jabatan.no_identitas');
-		$this->db->join('jabatan', 'jabatan.kode_jabatan = pengguna_jabatan.kode_jabatan');
-		$this->db->join('jenis_kegiatan', 'jenis_kegiatan.kode_jenis_kegiatan = kegiatan.kode_jenis_kegiatan');
-		$this->db->join('file_upload', 'file_upload.kode_kegiatan = kegiatan.kode_kegiatan');
+		$this->db->from('item_pengajuan');
+		$this->db->join('pengguna', 'pengguna.no_identitas = item_pengajuan.no_identitas');
+		$this->db->join('jabatan', 'jabatan.kode_jabatan = pengguna.kode_jabatan');
+		$this->db->join('unit', 'unit.kode_unit = pengguna.kode_unit');
+		$this->db->join('barang', 'barang.kode_barang = item_pengajuan.kode_barang');
+		$this->db->join('jenis_barang', 'jenis_barang.kode_jenis_barang = barang.kode_jenis_barang');
 		$query = $this->db->get();
 		if($query){
 			return $query;
@@ -20,6 +20,7 @@ class Man_sarprasM extends CI_Model{
 			return null;
 		}
 	}
+
 	public function insert_pengajuan_kegiatan($data){   //post pengguna_jabatan
 		if($this->db->insert('kegiatan', $data)){
 			return $this->db->insert_id(); //return last insert ID

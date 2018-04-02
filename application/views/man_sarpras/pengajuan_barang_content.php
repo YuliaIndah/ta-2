@@ -3,7 +3,7 @@
     <!--overview start-->
     <div class="row">
       <div class="col-lg-12">
-        <h3 class="page-header" style="margin-top: 0;"><i class="fa fa-pencil"></i>Kegiatan Diajukan</h3>
+        <h3 class="page-header" style="margin-top: 0;"><i class="fa fa-pencil"></i>Barang Diajukan</h3>
        <!--  <ol class="breadcrumb">
           <li><i class="fa fa-user"></i><a href="#">Kepala Departemen</a></li>
           <li><i class="fa fa-pencil"></i>Pengajuan Kegiatan</li>                
@@ -23,12 +23,11 @@
                     <thead>
                       <tr class="text-center">
                         <!-- <th>No. Identitas</th> -->
-                        <th>Nama Kegiatan</th>
-                        <th>Tgl Kegiatan</th>
-                        <th>Tgl Pengajuan</th>
-                        <th>Dana Diajukan</th>
-                        <th>Dana Disetujui</th>
+                        <th>Nama Barang</th>
                         <th>File</th>
+                        <th>Tgl Pengajuan</th>
+                        <th>Jumlah</th>
+                        <th>Status</th>
                         <th>Nama Pengaju</th>
                         <th>Jabatan Pengaju</th>
                         <th>Aksi</th>
@@ -36,22 +35,19 @@
                     </thead>
                     <tbody>
                       <?php
-                        foreach ($data_pengajuan_kegiatan as $kegiatan) {
+                        foreach ($data_pengajuan_barang as $barang) {
                           ?>
                           <tr>
-                          <td><?php echo $kegiatan->nama_kegiatan;?></td>
-                          <td><?php echo $kegiatan->tgl_kegiatan;?></td>
-                          <td><?php echo $kegiatan->tgl_pengajuan;?></td>
-                          <td><?php echo $kegiatan->dana_diajukan;?></td>
-                          <td><?php echo $kegiatan->dana_disetujui;?></td>
-                          <?php $link = base_url()."assets/file_upload/".$kegiatan->nama_file;?>
-                          <td class="text-center"><a target="_blank" href="<?php echo $link?>"><span><img src="<?php echo base_url()?>assets/image/logo/pdf.svg" style="height: 30px;"></span></a></td>
-                          <td><?php echo $kegiatan->nama;?></td>
-                          <td><?php echo $kegiatan->nama_jabatan;?></td>
+                          <td><?php echo $barang->nama_barang;?></td>
+                          <td><?php echo $barang->nama_barang;?></td>
+                          <td><?php echo $barang->tgl_item_pengajuan;?></td>
+                          <td><?php echo $barang->jumlah;?></td>
+                          <td><?php echo $barang->nama;?></td>
+                          <td><?php echo $barang->nama_jabatan;?></td>
                           <td></td>
                           </tr>
                           <?php
-                        }
+                      }
                       ?>
                     </tbody>
                   </table>
