@@ -14,7 +14,7 @@ class KadepM extends CI_Model{
 		return $query;
 	}
 
-	function get_data_pengajuan(){
+	function get_data_pengajuan(){ //ambil semua data pengajuan yang diajukan
 		$this->db->select('*');
 		$this->db->from('kegiatan');
 		$this->db->join('pengguna', 'pengguna.no_identitas = kegiatan.no_identitas');
@@ -35,8 +35,8 @@ class KadepM extends CI_Model{
 		} 
 	}  
 
-	// Fungsi untuk upload file ke folder
-	public function upload(){
+	
+	public function upload(){ // Fungsi untuk upload file ke folder
 		$config['upload_path'] = './assets/file_upload';
 		$config['allowed_types'] = 'pdf';
 		$config['max_size']	= '';
@@ -55,8 +55,8 @@ class KadepM extends CI_Model{
 		}
 	}
 	
-	// Fungsi untuk menyimpan data ke database
-	public function save($upload,$insert_id){
+	
+	public function save($upload,$insert_id){ // Fungsi untuk menyimpan data ke database
 		$data = array(
 			'kode_kegiatan' => $insert_id, //last insert id
 			'nama_file' 	=> $upload['file']['file_name'],
@@ -64,12 +64,6 @@ class KadepM extends CI_Model{
 		);
 		
 		$this->db->insert('file_upload', $data);
-	}
-
-	public function delete($id){ //hapus data pengajuan kegiatan ketika gagal upload file
-		$this->db->where('kode_kegiatan', $id);
-		$this->db->delete('kegiatan');
-		return "berhasil delete";
 	}
 
 	public function aktif($no_identitas){ //aktifasi akun pengguna
@@ -94,5 +88,45 @@ class KadepM extends CI_Model{
 		$this->db->where('no_identitas', $no_identitas);
 		$this->db->update('pengguna', $data);
 		return TRUE;
+	}
+
+	public function get_data_pengajuan_by_id($id){ //ambil data pengajuan sesuai id
+		$this->db->select('*');
+		$this->db->from('kegiatan');
+		$this->db->join('pengguna', 'pengguna.no_identitas = kegiatan.no_identitas');
+		$this->db->join('jabatan', 'jabatan.kode_jabatan = pengguna.kode_jabatan');
+		$this->db->join('unit', 'unit.kode_unit = pengguna.kode_unit');
+		$this->db->join('jenis_kegiatan', 'jenis_kegiatan.kode_jenis_kegiatan = kegiatan.kode_jenis_kegiatan');
+		$this->db->join('file_upload', 'file_upload.kode_kegiatan = kegiatan.kode_kegiatan');
+		$this->db->where('kegiatan.kode_kegiatan', $id);
+		$query = $this->db->get();
+		if($query){
+			return $query;
+		}else{
+			return null;
+		}
+	}	
+
+	public function get_pilihan_nama_progress(){ //fungsi untuk ambil pilihan nama progress
+		$query = $this->db->get('nama_progress');
+		return $query;
+	}
+
+	public function insert_progress($data){   //post progress
+		$query = $this->db->insert('progress', $data);
+		return $query; 
+	}
+
+	public function update_kegiatan($kode_fk, $data_kegiatan){
+		$this->db->where('kode_kegiatan', $kode_fk);
+		$this->db->update('kegiatan' , $data_kegiatan);
+		return TRUE;
+	}
+
+	public function gajadi_update($id){ //reset dana disetujui ke 0 ketika gagal insert
+		$data = array('dana_disetujui' => 0, );
+		$this->db->where('kode_kegiatan', $id);
+		$this->db->update('kegiatan', $data);
+		return "berhasil delete";
 	}
 }
