@@ -39,7 +39,10 @@ class Man_sarprasC extends CI_Controller {
 	public function kelola_barang(){ //halaman kelola barang(man_sarpras)
 		$data['title'] = "Kelola Barang | Manajer Sarana dan Prasarana";
 		$this->data['data_diri'] = $this->UserM->get_data_diri()->result()[0];      //get data diri buat nampilin nama di pjok kanan
-		$this->data['data_barang'] = $this->UserM;
+		$this->data['data_barang'] = $this->UserM->get_barang()->result();          //menampilkan data barang untuk man_sarpras dan staff sarpras
+		$this->data['jenis_barang'] = $this->Man_sarprasM->get_pilihan_jenis_barang()->result();
+		$data['body'] = $this->load->view('man_sarpras/barang_content', $this->data, true);
+		$this->load->view('man_sarpras/index_template', $data);
 	}
 
 	public function pengaturan_akun(){
@@ -49,6 +52,25 @@ class Man_sarprasC extends CI_Controller {
 		$this->load->view('man_sarpras/index_template', $data);
 	}
 	
+	public function post_tambah_barang(){ //fungsi untuk tambah barang
+		$this->form_validation->set_rules('nama_barang', 'Nama Barang','required');
+		$this->form_validation->set_rules('kode_jenis_barang', 'Jenis Barang','required');
+		if($this->form_validation->run() == FALSE)
+		{
+			$this->kelola_barang();
+			//redirect ke halaman kelola barang
+		}else{
+			$nama_barang 		= $_POST['nama_barang'];
+			$kode_jenis_barang	= $_POST['kode_jenis_barang'];
+			$data_pengguna		= array(
+				'nama_barang'		=> $nama_barang,
+				'kode_jenis_barang'	=> $kode_jenis_barang
+			);
+			$this->Man_sarprasM->insert_tambah_barang($data_pengguna);
+			redirect('Man_sarprasC/kelola_barang');
+		}
+
+	}
 
 	// sebagai pegawai
 
