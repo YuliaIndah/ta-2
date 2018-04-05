@@ -162,14 +162,13 @@ class KadepC extends CI_Controller {
 		$this->load->view('kadep/detail_pengajuan', $data);
 	}
 
-	public function post_progress(){ //posting progress dan update kegiatan (dana disetujui)
+	public function post_progress(){ //posting progress dan update kegiatan (dana disetujuix`)
 		$no_identitas		= $_POST['no_identitas'];
 		$kode_fk			= $_POST['kode_fk'];
 		$kode_nama_progress	= $_POST['kode_nama_progress'];
 		$komentar			= $_POST['komentar'];
 		$jenis_progress		= $_POST['jenis_progress'];
 
-		$dana_disetujui		= $_POST['dana_disetujui'];
 
 		$format_tgl 	= "%Y-%m-%d";
 		$tgl_progress 	= mdate($format_tgl);
@@ -187,14 +186,8 @@ class KadepC extends CI_Controller {
 
 		);
 
-		$data_kegiatan = array('dana_disetujui' => $dana_disetujui, );
-
-		if($this->KadepM->update_kegiatan($kode_fk, $data_kegiatan)){ //update dana disetujui
 			if($this->KadepM->insert_progress($data)){ //insert progress
 				redirect('KadepC/pengajuan_kegiatan');
-			}else{
-				$this->KadepM->gajadi_update($kode_fk); //reset dana disetujui ke 0 ketika gagal insert
 			}
-		}		
 	}
 }

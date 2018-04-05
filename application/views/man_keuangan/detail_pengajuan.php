@@ -1,11 +1,11 @@
-<form class="form-horizontal" action="<?php echo base_url(); ?>KadepC/post_progress" method="post">
+<form class="form-horizontal" action="<?php echo base_url(); ?>Man_keuanganC/post_progress" method="post">
     <div class="form-group">
         <label class="control-label col-sm-5" for="nama_kegiatan" style="text-align: left;">Nama Kegiatan</label>
         <div class="col-sm-5">
             <p class="form-control-static"> <?php echo ": ".$detail_kegiatan->nama_kegiatan; ?> </p>
         </div>
         <input type="hidden" name="kode_fk" value="<?php echo $detail_kegiatan->kode_kegiatan?>"> <!-- buat input ke tabel progress -->
-        <input type="hidden" name="no_identitas" value="<?php echo $detail_kegiatan->no_identitas;?>"> <!-- buat input ke tabel progress -->
+        <input type="hidden" name="no_identitas" value="<?php echo $data_diri->no_identitas;?>"> <!-- buat input ke tabel progress -->
 
         <?php
         if($detail_kegiatan->nama_jabatan != "Mahasiswa"){
@@ -38,12 +38,6 @@
         </div>
     </div>
     <div class="form-group">
-        <label class="control-label col-sm-5" for="dana_disetujui" style="text-align: left;">Dana Yang Disetujui</label>
-        <div class="col-sm-5">
-            <p class="form-control-static"> <?php echo ": Rp".$detail_kegiatan->dana_disetujui.",-"; ?> </p>
-        </div>
-    </div>
-    <div class="form-group">
         <label class="control-label col-sm-5" for="status" name="kode_nama_progress" id="kode_nama_progress" style="text-align: left;">Status</label>
         <div class="col-sm-5">
             <select class="form-control" name="kode_nama_progress" id="kode_nama_progress">
@@ -56,6 +50,12 @@
                 }
                 ?>
             </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-sm-5" for="dana_disetujui"  style="text-align: left;">Dana Yang Disetujui</label>
+        <div class="col-sm-5">
+            <input name="dana_disetujui" id="dana_disetujui" class="form-control" id="focusedInput" type="text">
         </div>
     </div>
     <div class="form-group">

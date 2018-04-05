@@ -22,7 +22,7 @@
 
     function Man_keuangan_acess(){
         $ci=& get_instance();
-        if($ci->session->userdata('kode_jabatan') != 4 ){
+        if($ci->session->userdata('kode_jabatan') != 3 && $ci->session->userdata('kode_unit' != 3) ){
             redirect('LoginC');
         }
     }

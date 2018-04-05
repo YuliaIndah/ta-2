@@ -29,8 +29,8 @@
                       <th>Dana Diajukan</th>
                       <th>Dana Disetujui</th>
                       <th>File</th>
-                      <!-- <th>Nama Pengaju</th> -->
-                      <!-- <th>Jabatan Pengaju</th> -->
+                      <th>Nama Pengaju</th>
+                      <th>Jabatan Pengaju</th>
                       <th>Jenis Kegiatan</th>
                       <th>Status</th>
                       <th>Aksi</th>
@@ -60,8 +60,8 @@
                         <td><?php echo $kegiatan->dana_disetujui;?></td>
                         <?php $link = base_url()."assets/file_upload/".$kegiatan->nama_file;?>
                         <td class="text-center"><a target="_blank" href="<?php echo $link?>"><span><img src="<?php echo base_url()?>assets/image/logo/pdf.svg" style="height: 30px;"></span></a></td>
-                        <!-- <td><?php echo $kegiatan->nama;?></td> -->
-                        <!-- <td><?php echo $kegiatan->nama_jabatan." ".$kegiatan->nama_unit;?></td> -->
+                        <td><?php echo $kegiatan->nama;?></td>
+                        <td><?php echo $kegiatan->nama_jabatan." ".$kegiatan->nama_unit;?></td>
                         <td><?php echo $kegiatan->nama_jenis_kegiatan;?></td>
                         <td>Status</td>
                         <td>
@@ -110,7 +110,7 @@
             //menggunakan fungsi ajax untuk pengambilan data
             $.ajax({
               type : 'get',
-              url : '<?php echo base_url().'KadepC/detail_kegiatan/'?>'+rowid,
+              url : '<?php echo base_url().'Man_keuanganC/detail_kegiatan/'?>'+rowid,
                 //data :  'rowid='+ rowid, // $_POST['rowid'] = rowid
                 success : function(data){
                 $('.fetched-data').html(data);//menampilkan data ke dalam modal
