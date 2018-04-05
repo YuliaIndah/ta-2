@@ -36,6 +36,12 @@ class Man_sarprasC extends CI_Controller {
 		$this->load->view('man_sarpras/index_template', $data);
 	}
 
+	public function kelola_barang(){ //halaman kelola barang(man_sarpras)
+		$data['title'] = "Kelola Barang | Manajer Sarana dan Prasarana";
+		$this->data['data_diri'] = $this->UserM->get_data_diri()->result()[0];      //get data diri buat nampilin nama di pjok kanan
+		$this->data['data_barang'] = $this->UserM;
+	}
+
 	public function pengaturan_akun(){
 		$data['title'] = "Pengaturan Akun | Manajer Sarana dan Prasarana";
 		$this->data['data_diri'] = $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan

@@ -74,6 +74,12 @@
             </a>
           </li>
           <li>
+            <a href="<?php echo site_url('Man_sarprasC/pengajuan_kegiatan_pegawai')?>">
+              <i class="icon_pencil-edit"></i>
+              <span>Kelola Barang</span>
+            </a>
+          </li>
+          <li>
             <a href="<?php echo site_url('Man_sarprasC/pengajuan_barang')?>">
               <i class="icon_bag_alt"></i>
               <span>Barang Diajukan</span>
@@ -85,12 +91,6 @@
               <span>Daftar Kegiatan</span>
             </a>
           </li>
-          <!-- <li>
-            <a href="<?php echo site_url('Man_sarprasC/pengajuan_kegiatan_pegawai')?>">
-              <i class="icon_pencil-edit"></i>
-              <span>Ajukan Kegiatan</span>
-            </a>
-          </li> -->
         </ul>
         <!-- sidebar menu end-->
       </div>

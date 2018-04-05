@@ -5,6 +5,7 @@ class Man_sarprasM extends CI_Model{
 		$this->load->database();
 	}
 
+	// Ambil Data Pengajuan Barang 
 	function get_data_pengajuan(){
 		$this->db->select('*');
 		$this->db->from('item_pengajuan');
@@ -68,5 +69,9 @@ class Man_sarprasM extends CI_Model{
 		$this->db->where('no_identitas', $no_identitas);
 		$this->db->update('pengguna', $data);
 		return TRUE;
+	}
+
+	function get_barang(){// menampilkan data barang keseluruhan
+		$kode_barang = $this->session;
 	}
 }
