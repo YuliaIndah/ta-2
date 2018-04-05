@@ -71,7 +71,14 @@ class Man_sarprasM extends CI_Model{
 		return TRUE;
 	}
 
-	function get_barang(){// menampilkan data barang keseluruhan
-		$kode_barang = $this->session;
+	public function insert_tambah_barang($data){ //post barang
+		return $this->db->insert('barang', $data);
+	}
+
+	public function get_pilihan_jenis_barang(){
+		$this->db->select('*');
+		$this->db->from('jenis_barang');
+		$query = $this->db->get();
+		return $query;
 	}
 }

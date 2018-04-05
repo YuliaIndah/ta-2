@@ -74,7 +74,7 @@
             </a>
           </li>
           <li>
-            <a href="<?php echo site_url('Man_sarprasC/pengajuan_kegiatan_pegawai')?>">
+            <a href="<?php echo site_url('Man_sarprasC/kelola_barang')?>">
               <i class="icon_pencil-edit"></i>
               <span>Kelola Barang</span>
             </a>

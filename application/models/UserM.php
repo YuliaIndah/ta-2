@@ -58,4 +58,17 @@
 			return null;
 		}
 	} 
+
+	function get_barang(){ //menampilkan data seluruh barang
+		$this->db->select('*');
+		$this->db->from('barang');
+		$this->db->join('jenis_barang','jenis_barang.kode_jenis_barang = barang.kode_jenis_barang');
+		$query = $this->db->get();
+		if($query){
+			return $query;
+		}else{
+			return null;
+		}
+
+	}
 }  
