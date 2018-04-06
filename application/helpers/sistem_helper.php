@@ -8,7 +8,7 @@
 
     function Sekdep_access(){
         $ci=& get_instance();
-        if($ci->session->userdata('kode_jabatan') != 2 ){
+        if($ci->session->userdata('kode_jabatan') != 2 && $ci->session->userdata('kode_unit' != 1) ){
             redirect('LoginC');
         }
     }

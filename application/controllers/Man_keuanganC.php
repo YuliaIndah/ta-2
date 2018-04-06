@@ -60,14 +60,19 @@ class Man_keuanganC extends CI_Controller {
 		$this->load->view('man_keuangan/index_template', $data);
 	}
 
-	public function detail_kegiatan($id){ //menampilkan modal dengan isi dari detail_pengajuan.php
+	public function persetujuan_kegiatan($id){ //menampilkan modal dengan isi dari detail_pengajuan.php
 		$data['detail_kegiatan'] = $this->Man_keuanganM->get_kegiatan_diajukan_by_id($id)->result()[0];
 		$data['data_diri'] = $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
 		$data['nama_progress'] = $this->Man_keuanganM->get_pilihan_nama_progress()->result();
 		$this->load->view('man_keuangan/detail_pengajuan', $data);
 	}
 
-
+	public function detail_kegiatan($id){ //menampilkan modal dengan isi dari detail_pengajuan.php
+		$data['detail_kegiatan'] = $this->Man_keuanganM->get_kegiatan_diajukan_by_id($id)->result()[0];
+		$data['data_diri'] = $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
+		$data['nama_progress'] = $this->Man_keuanganM->get_pilihan_nama_progress()->result();
+		$this->load->view('man_keuangan/detail_kegiatan', $data);
+	}
 
 
 

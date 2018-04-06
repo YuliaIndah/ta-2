@@ -23,17 +23,17 @@
                   <thead>
                     <tr class="text-center">
                       <!-- <th>No. Identitas</th> -->
-                      <th>Nama Kegiatan</th>
-                      <th>Tgl Pengajuan</th>
-                      <th>Tgl Kegiatan</th>
-                      <th>Dana Diajukan</th>
-                      <th>Dana Disetujui</th>
-                      <th>File</th>
+                      <th class="text-center">Nama Kegiatan</th>
+                      <th class="text-center">Tgl Pengajuan</th>
+                      <th class="text-center">Tgl Kegiatan</th>
+                      <th class="text-center">Dana Diajukan</th>
+                      <th class="text-center">Dana Disetujui</th>
+                      <th class="text-center">File</th>
                       <!-- <th>Nama Pengaju</th> -->
                       <!-- <th>Jabatan Pengaju</th> -->
-                      <th>Jenis Kegiatan</th>
-                      <th>Status</th>
-                      <th>Aksi</th>
+                      <th class="text-center">Jenis Kegiatan</th>
+                      <th class="text-center">Status</th>
+                      <th class="text-center">Aksi</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -41,7 +41,12 @@
                     foreach ($data_pengajuan_kegiatan as $kegiatan) {
                       ?>
                       <tr>
-                        <td><?php echo $kegiatan->nama_kegiatan;?></td>
+                        <td class="text-center relative">
+                          <div class="relative">
+                            <strong><?php echo $kegiatan->nama_kegiatan;?></strong>
+                            <a href="#myModal1" id="custID" data-toggle="modal" data-id="<?php echo $kegiatan->kode_kegiatan;?>" title="klik untuk melihat detail kegiatan"><small class="kecil">Lihat detail</small></a>
+                          </div>
+                        </td>
                         <?php 
                         $tgl_pengajuan = $kegiatan->tgl_pengajuan;
                         $new_tgl_pengajuan = date('d-m-Y',strtotime($tgl_pengajuan));
@@ -49,13 +54,10 @@
                         <td><?php echo $new_tgl_pengajuan;?></td>
 
                         <?php
-                        $timestamp = $kegiatan->created_at;
-                        $datetime = explode(" ",$timestamp); //parsing tanggal 
-                        $date = $datetime[0];
-                        $time = $datetime[1];
-                        $new_date = date('d-m-Y',strtotime($date));
+                          $tgl_kegiatan = $kegiatan->tgl_kegiatan;
+                          $new_tgl_kegiatan = date('d-m-Y', strtotime($tgl_kegiatan));
                         ?>
-                        <td><?php echo $new_date;?></td>
+                        <td><?php echo $new_tgl_kegiatan;?></td>
                         <td><?php echo $kegiatan->dana_diajukan;?></td>
                         <td><?php echo $kegiatan->dana_disetujui;?></td>
                         <?php $link = base_url()."assets/file_upload/".$kegiatan->nama_file;?>
@@ -85,8 +87,25 @@
       </div>
     </div>
   </section>
-
+<!-- modal detail pengajuan -->
   <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Persetujuan Kegiatan</h4>
+        </div>
+        <div class="modal-body">
+          <div class="fetched-data"></div>
+        </div>
+        <div class="modal-footer">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- modal detail kegiatan -->
+  <div class="modal fade" id="myModal1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -104,8 +123,25 @@
 
   <script src="<?php echo base_url();?>assets/js/jquery.min.js"></script>
   <script type="text/javascript">
+    // js detail pengajuan
     $(document).ready(function(){
       $('#myModal').on('show.bs.modal', function (e) {
+        var rowid = $(e.relatedTarget).data('id');
+            //menggunakan fungsi ajax untuk pengambilan data
+            $.ajax({
+              type : 'get',
+              url : '<?php echo base_url().'KadepC/detail_pengajuan/'?>'+rowid,
+                //data :  'rowid='+ rowid, // $_POST['rowid'] = rowid
+                success : function(data){
+                $('.fetched-data').html(data);//menampilkan data ke dalam modal
+              }
+            });
+          });
+    });
+
+// js detail kegiatan
+     $(document).ready(function(){
+      $('#myModal1').on('show.bs.modal', function (e) {
         var rowid = $(e.relatedTarget).data('id');
             //menggunakan fungsi ajax untuk pengambilan data
             $.ajax({

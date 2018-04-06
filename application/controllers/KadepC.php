@@ -156,10 +156,15 @@ class KadepC extends CI_Controller {
 		redirect('KadepC/data_diri');
 	}
 
-	public function detail_kegiatan($id){ //menampilkan modal dengan isi dari detail_pengajuan.php
+	public function detail_pengajuan($id){ //menampilkan modal dengan isi dari detail_pengajuan.php
 		$data['detail_kegiatan'] = $this->KadepM->get_data_pengajuan_by_id($id)->result()[0];
 		$data['nama_progress'] = $this->KadepM->get_pilihan_nama_progress()->result();
 		$this->load->view('kadep/detail_pengajuan', $data);
+	}
+
+	public function detail_kegiatan($id){ //menampilkan modal dengan isi dari detail_kegiatan.php
+		$data['detail_kegiatan'] = $this->KadepM->get_data_pengajuan_by_id($id)->result()[0];
+		$this->load->view('kadep/detail_kegiatan', $data);
 	}
 
 	public function post_progress(){ //posting progress dan update kegiatan (dana disetujuix`)

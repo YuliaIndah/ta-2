@@ -74,7 +74,7 @@
             </a>
           </li>
           <li>
-            <a href="<?php echo site_url('SekdepC/pengajuan_kegiatan')?>">
+            <a href="<?php echo site_url('SekdepC/kegiatan_diajukan')?>">
               <i class="icon_bag_alt"></i>
               <span>Kegiatan Diajukan</span>
             </a>
@@ -85,12 +85,6 @@
               <span>Daftar Kegiatan</span>
             </a>
           </li>
-          <!-- <li>
-            <a href="<?php echo site_url('SekdepC/pengajuan_kegiatan_pegawai')?>">
-              <i class="icon_pencil-edit"></i>
-              <span>Ajukan Kegiatan</span>
-            </a>
-          </li> -->
         </ul>
         <!-- sidebar menu end-->
       </div>
