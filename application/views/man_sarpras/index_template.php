@@ -29,7 +29,7 @@
       </div>
 
       <!--logo start-->
-      <a href="index.html" class="logo">Sekretaris <span class="lite">Departemen</span></a>
+      <a href="index.html" class="logo">Manajer <span class="lite">Sarana dan Prasarana</span></a>
       <!--logo end-->
       <div class="top-nav notification-row">                
         <!-- notificatoin dropdown start-->
@@ -81,14 +81,20 @@
           </li>
           <li>
             <a href="<?php echo site_url('Man_sarprasC/pengajuan_barang')?>">
-              <i class="icon_bag_alt"></i>
-              <span>Barang Diajukan</span>
+              <i class=" icon_box-checked"></i>
+              <span>Persetujuan Barang</span>
             </a>
           </li>
           <li>
             <a href="<?php echo site_url('Man_sarprasC/kegiatan_pegawai')?>">
               <i class="icon_ol"></i>
-              <span>Daftar Kegiatan</span>
+              <span>Pengajuan Kegitan</span>
+            </a>
+          </li>
+          <li>
+            <a href="<?php echo site_url('Man_sarprasC/pengajuan_barang')?>">
+              <i class="icon_bag_alt"></i>
+              <span>Pengajuan Barang</span>
             </a>
           </li>
         </ul>
