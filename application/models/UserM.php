@@ -71,4 +71,24 @@
 		}
 
 	}
+
+	public function ubah_data_barang($kode_barang, $data){ //edit data diri
+		$this->db->where('kode_barang', $kode_barang);
+		$this->db->update('barang', $data);
+		return TRUE;
+	}
+
+	function get_barang_by_kode_barang($kode_barang){ //menampilkan data seluruh barang
+		$this->db->select('*');
+		$this->db->from('barang');
+		$this->db->join('jenis_barang','jenis_barang.kode_jenis_barang = barang.kode_jenis_barang');
+		$this->db->where('barang.kode_barang', $kode_barang);
+		$query = $this->db->get();
+		if($query){
+			return $query;
+		}else{
+			return null;
+		}
+
+	}
 }  
