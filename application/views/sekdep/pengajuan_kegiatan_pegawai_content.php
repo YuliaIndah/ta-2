@@ -15,8 +15,8 @@
       <div class="col-lg-1"></div>
       <div class="col-lg-6">
         <div class="panel-body mt-2">
-          <?php echo form_open_multipart('SekdepC/post_pengajuan_kegiatan_pegawai');?>
-          <form role="form" action="<?php echo base_url(); ?>SekdepC/post_pengajuan_kegiatan_pegawai" method="post">
+          <?php echo form_open_multipart('KadepC/post_pengajuan_kegiatan_pegawai');?>
+          <form role="form" action="<?php echo base_url(); ?>KadepC/post_pengajuan_kegiatan_pegawai" method="post">
             <!-- Alert -->
             <?php 
             $data=$this->session->flashdata('sukses');
@@ -32,7 +32,7 @@
             <div class="form-group">
               <!-- <label>ID Pengguna Jabatan</label> -->
 
-              <input class="form-control" type="hidden" id="id_pengguna_jabatan" name="id_pengguna_jabatan" value="<?php echo $data_diri->id_pengguna_jabatan;?>" required> <!-- ambil id_pengguna_jabatan berdasarkan user yang login-->
+              <input class="form-control" type="hidden" id="no_identitas" name="no_identitas" value="<?php echo $data_diri->no_identitas;?>" required> <!-- ambil id_pengguna_jabatan berdasarkan user yang login-->
             </div>
             <div class="form-group">
               <!-- <label>Kode Jenis Kegiatan</label> -->

@@ -1,85 +1,97 @@
-<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-<!------ Include the above in your HEAD tag ---------->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">        
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Login | Sistem</title>
 
-<div class="container">    
-    <div id="loginbox" style="margin-top:22px;" class="mainbox col-md-4 col-md-offset-4 col-sm-8 col-sm-offset-2">        
-        <center>
-            <!-- <img src="<?php echo base_url();?>assets/image/logo/logo-ugm.png" style="height: 25%; width: 45%;"> -->
-            <!-- <h3>Silahkan Masuk : </h3> -->
-        </center>
-        <div class="panel panel-info" style="margin-top: 100px;" >
-            <div class="panel-heading">
-                <div class="panel-title">Silahkan Masuk Disini</div>                     
-            </div>     
+  <!-- CSS -->
+  <link rel="stylesheet" href="<?php echo base_url();?>assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="<?php echo base_url();?>assets/css/animate.css">
+  <link rel="stylesheet" href="<?php echo base_url();?>assets/css/form-elements.css">
+  <link rel="stylesheet" href="<?php echo base_url();?>assets/css/style_2.css">
+  <link rel="stylesheet" href="<?php echo base_url();?>assets/css/media-queries.css">
+</head>
 
-            <div style="padding-top:20px" class="panel-body" >
+<body>
 
-                <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
+  <!-- Loader -->
+  <div class="loader" style="display: none;">
+    <div class="loader-img" style="display: none;"></div>
+  </div>
 
-                <form action="<?php echo site_url('LoginC/signin'); ?>" method="post">
+  <!-- Top content -->
+  <div class="top-content" style="position: relative; z-index: 0; background: none;">
+   <header class="header-top">
 
-                    <?php 
-                    $data=$this->session->flashdata('sukses');
-                    if($data!=""){ ?>
-                    <div class="alert alert-success"><strong>Sukses! </strong> <?=$data;?></div>
-                    <?php } ?>
-                    <?php 
-                    $data2=$this->session->flashdata('error');
-                    if($data2!=""){ ?>
-                    <div class="alert alert-danger"><strong> Error! </strong> <?=$data2;?></div>
-                    <?php } ?>
+   </header>
+   <div class="background">
+    <div class="inner-bg">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-7 text sticky-top sticky-pills">
+            <div class="">
+              <img src="<?php echo base_url();?>assets/img/logo2.png" style="height: 20%; width: 20%;">
+              <h4> Sistem Pengajuan Kegiatan dan Pengadaan Barang</h4>
+              <h4>Departemen Teknik Elektro dan Informatika</h4>
+              <h4>Sekolah Vokasi</h4>
+              <h4>Universitas Gadjah Mada</h4>
+            </div>
+          </div>
+          <div class="col-sm-5 form-box wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
+            <div class="form-top-left">
+              <h3 style="text-align: left; margin-left: 30px;">Silahkan Masuk </h3>
+              <p>Masukkan email dan sandi anda disini : </p>
+            </div>
+            <div>
+            </div>
+            <div class="form-bottom">
+             <form action="<?php echo site_url('LoginC/signin'); ?>" method="post">
 
+              <?php 
+              $data=$this->session->flashdata('sukses');
+              if($data!=""){ ?>
+              <div class="alert alert-success"><strong>Sukses! </strong> <?=$data;?></div>
+              <?php } ?>
+              <?php 
+              $data2=$this->session->flashdata('error');
+              if($data2!=""){ ?>
+              <div class="alert alert-danger"><strong> Error! </strong> <?=$data2;?></div>
+              <?php } ?>
 
-                    <div style="margin-bottom: 20px" class="input-group">
-                        <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-                        <input type="text" name="email" class="form-email form-control" placeholder="email" autofocus required oninvalid="this.setCustomValidity('email tidak boleh kosong')" oninput="setCustomValidity('')">                                       
-                    </div>
-
-                    <div style="margin-bottom: 20px" class="input-group">
-                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                        <input type="password" name="password" class="form-password form-control" placeholder="Sandi" required oninvalid="this.setCustomValidity('Sandi tidak boleh kosong')" oninput="setCustomValidity('')">
-                    </div>
-
-                    <div style="margin-bottom: 20px; margin-left: 40px;" class="input-group" >
-                        <?=$cap_img?>
-                    </div>
-
-                    <div style="margin-bottom: 20px" class="input-group">
-                       <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-                       <input type="text" name="captcha" class="form-email form-control" placeholder="Masukkan Captcha" required oninvalid="this.setCustomValivdity('Captcha tidak boleh kosong')" oninput="setCustomValidity('')">
-                   </div>
-
-
-                   <div style="margin-top:10px" class="form-group">
-                    <!-- Button -->
-
-                    <div class="col-sm-12 controls">
-                       <button type="submit" class="btn btn-primary">Masuk</button>
-                       <a style="float: right; " href="#">Lupa Password</a>
-                   </div>
-               </div>
-
-
-               <div class="form-group">
-                <div class="col-md-12 control">
-                    <div style="border-top: 1px solid#888; margin-top:10px; margin-bottom: 10px; font-size:85%" >
-                    </div>
-                    <div>
-                      Belum punya akun ?
-                      <a href="<?php echo site_url('UserC/halaman_daftar')?>">Daftar</a>
-                  </div>
+              <div class="form-group">
+                <label class="sr-only" for="form-email">Email</label>
+                <input type="text" name="email" class="form-email form-control" placeholder="Masukkan email" autofocus required oninvalid="this.setCustomValidity('email tidak boleh kosong')" oninput="setCustomValidity('')">
               </div>
-          </div>    
-      </form>     
-  </div>                      
-  <div class="panel-footer panel-info">
-    <center>
-        <img src="<?php echo base_url();?>assets/image/logo/logo-ugm.png" style="height: 50px;">
-    </center>
-</div> 
-</div>
-</div>
 
-</div>
+              <div class="form-group">
+                <label class="sr-only" for="form-password">Sandi</label>
+                <input type="password" name="password" class="form-password form-control" placeholder="Masukkan kata sandi" required oninvalid="this.setCustomValidity('Password tidak boleh kosong')" oninput="setCustomValidity('')">
+              </div>
+
+              <div class="form-group">
+                <?=$cap_img?>
+              </div>
+
+              <div class="form-group">
+                <input type="text" name="captcha" class="form-control" placeholder="Masukkan Captcha" required oninvalid="this.setCustomValivdity('Captcha tidak boleh kosong')" oninput="setCustomValidity('')">
+              </div>
+
+              <button type="submit" class="btn btn-info col-sm-3">Masuk</button>
+              <div class="form-links">
+                <p>Belum punya akun? <a href="<?php echo site_url('LoginC/daftar')?>" class="launch-modal" data-modal-id="modal-privacy"> - Daftar</a></p>
+                <!-- <a href="" class="launch-modal" data-modal-id="modal-faq">FAQ</a> -->
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>       
+</div>             
+</body>
+</html>
