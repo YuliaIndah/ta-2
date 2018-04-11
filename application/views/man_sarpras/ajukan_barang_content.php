@@ -3,16 +3,31 @@
     <!--overview start-->
     <div class="row">
       <div class="col-lg-12">
-        <h3 class="page-header" style="margin-top: 0;"><i class="fa fa-pencil"></i>Daftar Barang</h3>
+        <h3 class="page-header" style="margin-top: 0;"><i class="fa fa-pencil"></i>Daftar Pengajuan Barang</h3>
       </div>
     </div>
     
     <div class="row">
       <div class="col-lg-12">
+         <!-- Alert -->
+            <?php 
+            $data=$this->session->flashdata('sukses');
+            if($data!=""){ ?>
+            <div class="alert alert-success"><strong>Sukses! </strong> <?=$data;?></div>
+            <?php } ?>
+            <?php 
+            $data2=$this->session->flashdata('error');
+            if($data2!=""){ ?>
+            <div class="alert alert-danger"><strong> Error! </strong> <?=$data2;?></div>
+            <?php } ?>
+            <!-- sampai sini -->
+            <div style="color: red;"><?php echo (isset($message))? $message : ""; ?></div>
+
         <div class="card mb-3">
           <div class="card-header">
             <div class="card-body">
-              <a class="btn btn-info" data-toggle="modal" data-target="#myModal"><i class="icon_plus_alt2"> </i> Tambah Barang</a>
+              <a class="btn btn-info" data-toggle="modal" data-target="#myModal"><i class="icon_plus_alt2"> </i>Ajukan Barang</a>
+               <a class="btn btn-info" data-toggle="modal" data-target="#myModal"><i class="icon_plus_alt2"> </i>Ajukan Barang Baru</a>
               <div class="table-responsive">
                   <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
                     <thead>
@@ -22,7 +37,7 @@
                         <th>Barang</th>
                         <th>Jenis Barang</th>
                         <th>Harga Satuan</th>
-                        <th>Jumlah</th>
+                        <th>Jumlah Barang</th>
                         <th>Status</th>
                         <th>Aksi</th>
                       </tr>
@@ -32,10 +47,15 @@
                       foreach ($data_ajukan_barang as $barang) {
                         ?>
                         <tr>
+                          <td><?php echo $barang->nama_item_pengajuan; ?></td>
+                          <td><?php echo $barang->file_gambar; ?></td>
                           <td><?php echo $barang->nama_barang; ?></td>
                           <td><?php echo $barang->nama_jenis_barang; ?></td>
+                          <td><?php echo $barang->harga_satuan; ?></td>
+                          <td><?php echo $barang->jumlah; ?></td>
+                          <td><?php echo $barang->status_pengajuan; ?></td>
                           <td>
-                              <a href="#myModal1" id="custId" data-toggle="modal" data-id="<?php echo $barang->kode_barang;?>" data-toggle="tooltip" title="Aksi" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-edit"></span></a>
+                              <a href="#myModal1" id="custId" data-toggle="modal" data-id="<?php echo $barang->kode_item_pengajuan;?>" data-toggle="tooltip" title="Aksi" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-edit"></span></a>
                           </td>
                         </tr>
 
@@ -66,32 +86,66 @@
         <div class="modal-content">
           <div class="modal-header">
             <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
-            <h4 class="modal-title">Tambah Barang</h4>
+            <h4 class="modal-title">Ajukan Barang</h4>
           </div>
-          <form class="form-horizontal" action="<?php echo base_url('Man_sarprasC/post_tambah_barang');?>" method="post" enctype="multipart/form-data" role="form">
+          <form class="form-horizontal" action="<?php echo base_url('Man_sarprasC/post_tambah_ajukan_barang');?>" method="post" enctype="multipart/form-data" role="form">
             <div class="modal-body">
               <div class="form-group">
-                <label class="col-lg-4 col-sm-2 control-label">Nama Barang :</label>
+                <label class="col-lg-4 col-sm-2 control-label" for="jenis_barang"> Barang :</label>
                 <div class="col-lg-8">
-                  <input type="text" class="form-control" id="nama_barang" name="nama_barang" placeholder="Nama Barang">
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-lg-4 col-sm-2 control-label" for="jenis_barang"> Jenis Barang :</label>
-                <div class="col-lg-8">
-                   <select class="form-control" name="kode_jenis_barang" id="kode_jenis_barang">
-                <option value="">---- Pilih Jenis Barang ---- </option>
+                   <select class="form-control" name="kode_barang" id="kode_barang">
+                <option value="">---- Pilih Barang ---- </option>
                 <?php 
-                foreach ($jenis_barang as $pilihan_jenis_barang) {
+                foreach ($pilihan_barang as $pilihan_barang) {
                   ?>
-                  <option value="<?php echo $pilihan_jenis_barang->kode_jenis_barang ;?>"> <?php echo $pilihan_jenis_barang->nama_jenis_barang ;?> </option>
+                  <option value="<?php echo $pilihan_barang->kode_barang ;?>"> <?php echo $pilihan_barang->nama_barang ;?> </option>
                   <?php
                 }
                 ?>
               </select>
-              <span class="text-danger" style="color: red;"><?php echo form_error('kode_jenis_barang'); ?></span>  
+              <span class="text-danger" style="color: red;"><?php echo form_error('kode_barang'); ?></span>  
                 </div>
               </div>
+              <div class="form-group">
+                <input class="form-control" type="hidden" id="no_identitas" name="no_identitas" value="<?php echo $data_diri->no_identitas;?>" required> <!-- ambil id_pengguna_jabatan berdasarkan user yang login-->
+                <label class="col-lg-4 col-sm-2 control-label">Nama Item Pengajuan Barang :</label>
+                <div class="col-lg-8">
+                  <input type="text" class="form-control" id="nama_item_pengajuan" name="nama_item_pengajuan" placeholder="Nama Item Pengajuan Barang">
+                </div>
+              </div>
+              <input type="hidden" class="form-control" placeholder id="tgl_item_pengajuan" name="tgl_item_pengajuan" required value="<?php echo date('Y-m-d');?>">
+            <div class="form-group">
+              <label class="col-lg-4 col-sm-2 control-label">url :</label>
+              <div class="col-lg-8">
+                <input type="text" class="form-control" id="url" name="url" placeholder="Url Barang">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-lg-4 col-sm-2 control-label">Harga Satuan :</label>
+              <div class="col-lg-8">
+                <input type="text" class="form-control" id="harga_satuan" name="harga_satuan" placeholder="Harga Satuan">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-lg-4 col-sm-2 control-label">Merek :</label>
+              <div class="col-lg-8">
+                <input type="text" class="form-control" id="merek" name="merek" placeholder="Merek">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-lg-4 col-sm-2 control-label">Jumlah :</label>
+              <div class="col-lg-8">
+                <input type="text" class="form-control" id="jumlah" name="jumlah" placeholder="Jumlah">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-lg-4 col-sm-2 control-label">Unggah Foto :</label>
+              <div class="col-lg-8">
+                <input type="file" id="file_gambar" name="file_gambar" >
+              </div>
+            </div>
+             
+
             </div>
              <div class="modal-footer">
               <button class="btn btn-info" type="submit"> Simpan </button>

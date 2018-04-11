@@ -92,7 +92,7 @@
             </a>
           </li>
           <li>
-            <a href="<?php echo site_url('Man_sarprasC/pengajuan_barang')?>">
+            <a href="<?php echo site_url('Man_sarprasC/ajukan_barang')?>">
               <i class="icon_bag_alt"></i>
               <span>Pengajuan Barang</span>
             </a>
