@@ -37,8 +37,8 @@
                       <tr>
                         <!-- <th>No. Identitas</th> -->
                         <th>Nama Kegiatan</th>
-                        <th>Tgl Kegiatan</th>
                         <th>Tgl Pengajuan</th>
+                        <th>Tgl Kegiatan</th>
                         <th>Dana Diajukan</th>
                         <th>Dana Disetujui</th>
                         <th>Status</th>

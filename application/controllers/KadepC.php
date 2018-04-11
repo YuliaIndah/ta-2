@@ -43,7 +43,7 @@ class KadepC extends CI_Controller {
 	public function persetujuan_kegiatan_pegawai(){ //halaman persetujuan kegiatan pegawai (kadep)
 		$kode_jenis_kegiatan = 1; //kegiatan pegawai
 		$kode_unit = ""; 
-		$kode_jabatan = "";
+		$kode_jabatan = "";	
 		$data['title'] = "Persetujuan Kegiatan Pegawai | Kepala Departemen";
 		$this->data['data_pengajuan_kegiatan_pegawai'] = $this->KadepM->get_data_pengajuan($kode_jenis_kegiatan, $kode_unit, $kode_jabatan)->result();
 		$this->data['data_diri'] = $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
@@ -124,14 +124,14 @@ class KadepC extends CI_Controller {
 				'tgl_pengajuan'			=> $tgl_pengajuan,
 				'dana_disetujui'		=> $dana_disetujui);
 
-			$insert_id = $this->KadepM->insert_pengajuan_kegiatan($data_pengajuan_kegiatan);
+			$insert_id = $this->UserM->insert_pengajuan_kegiatan($data_pengajuan_kegiatan);
 			if($insert_id){ //get last insert id
-				$upload = $this->KadepM->upload(); // lakukan upload file dengan memanggil function upload yang ada di KadepM.php
+				$upload = $this->UserM->upload(); // lakukan upload file dengan memanggil function upload yang ada di UserM.php
 			if($upload['result'] == "success"){ // Jika proses upload sukses
-				$this->KadepM->save($upload,$insert_id); // Panggil function save yang ada di KadepM.php untuk menyimpan data ke database
+				$this->UserM->save($upload,$insert_id); // Panggil function save yang ada di UserM.php untuk menyimpan data ke database
 			}else{ // Jika proses upload gagal
 				$data['message'] = $upload['error']; // Ambil pesan error uploadnya untuk dikirim ke file form dan ditampilkan
-				$this->KadepM->delete($insert_id);//hapus data pengajuan kegiatan ketka gagal upload file
+				$this->UserM->delete($insert_id);//hapus data pengajuan kegiatan ketka gagal upload file
 				$this->session->set_flashdata('error','Data Pengajuan Kegiatan anda tidak berhasil ditambahkan');
 				redirect('KadepC/pengajuan_kegiatan');
 			}
@@ -158,7 +158,7 @@ class KadepC extends CI_Controller {
 			'alamat'      => $alamat,
 			'no_hp'       => $no_hp
 		);
-		$this->KadepM->edit_data_diri($no_identitas,$data);
+		$this->UserM->edit_data_diri($no_identitas,$data);
 		$this->session->set_flashdata('sukses','Data anda berhasil disimpan');
 		redirect('KadepC/data_diri');
 	}
@@ -166,7 +166,7 @@ class KadepC extends CI_Controller {
 	public function detail_pengajuan($id){ //menampilkan modal dengan isi dari detail_pengajuan.php
 		$data['detail_kegiatan'] = $this->KadepM->get_data_pengajuan_by_id($id)->result()[0];
 		$data['data_diri'] = $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
-		$data['nama_progress'] = $this->KadepM->get_pilihan_nama_progress()->result();
+		$data['nama_progress'] = $this->UserM->get_pilihan_nama_progress()->result();
 		$this->load->view('kadep/detail_pengajuan', $data);
 	}
 
@@ -200,8 +200,8 @@ class KadepC extends CI_Controller {
 
 		);
 
-			if($this->KadepM->insert_progress($data)){ //insert progress
-				redirect('KadepC/pengajuan_kegiatan');
+			if($this->UserM->insert_progress($data)){ //insert progress
+				redirect('KadepC/persetujuan_kegiatan_pegawai');
 			}
 	}
 }

@@ -89,14 +89,13 @@ class Man_keuanganC extends CI_Controller {
 	public function detail_pengajuan($id){ //menampilkan modal dengan isi dari detail_pengajuan.php
 		$data['detail_kegiatan'] = $this->Man_keuanganM->get_data_pengajuan_by_id($id)->result()[0];
 		$data['data_diri'] = $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
-		$data['nama_progress'] = $this->Man_keuanganM->get_pilihan_nama_progress()->result();
+		$data['nama_progress'] = $this->UserM->get_pilihan_nama_progress()->result();
 		$this->load->view('man_keuangan/detail_pengajuan', $data);
 	}
 
 	public function detail_kegiatan($id){ //menampilkan modal dengan isi dari detail_pengajuan.php
 		$data['detail_kegiatan'] = $this->Man_keuanganM->get_data_pengajuan_by_id($id)->result()[0];
 		$data['data_diri'] = $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
-		$data['nama_progress'] = $this->Man_keuanganM->get_pilihan_nama_progress()->result();
 		$this->load->view('man_keuangan/detail_kegiatan', $data);
 	}
 
@@ -116,7 +115,7 @@ class Man_keuanganC extends CI_Controller {
 			'alamat'      => $alamat,
 			'no_hp'       => $no_hp
 		);
-		$this->Man_keuanganM->edit_data_diri($no_identitas,$data);
+		$this->UserM->edit_data_diri($no_identitas,$data);
 		$this->session->set_flashdata('sukses','Data anda berhasil disimpan');
 		redirect('Man_keuanganC/data_diri');
 	}
@@ -149,14 +148,14 @@ class Man_keuanganC extends CI_Controller {
 				'tgl_pengajuan'			=> $tgl_pengajuan,
 				'dana_disetujui'		=> $dana_disetujui);
 
-			$insert_id = $this->Man_keuanganM->insert_pengajuan_kegiatan($data_pengajuan_kegiatan);
+			$insert_id = $this->UserM->insert_pengajuan_kegiatan($data_pengajuan_kegiatan);
 				if($insert_id){ //get last insert id
-					$upload = $this->Man_keuanganM->upload(); // lakukan upload file dengan memanggil function upload yang ada di Man_keuanganM.php
+					$upload = $this->UserM->upload(); // lakukan upload file dengan memanggil function upload yang ada di UserM.php
 				if($upload['result'] == "success"){ // Jika proses upload sukses
-					$this->Man_keuanganM->save($upload,$insert_id); // Panggil function save yang ada di Man_keuanganM.php untuk menyimpan data ke database
+					$this->UserM->save($upload,$insert_id); // Panggil function save yang ada di UserM.php untuk menyimpan data ke database
 				}else{ // Jika proses upload gagal
 					$data['message'] = $upload['error']; // Ambil pesan error uploadnya untuk dikirim ke file form dan ditampilkan
-					$this->Man_keuanganM->delete($insert_id);//hapus data pengajuan kegiatan ketka gagal upload file
+					$this->UserM->delete($insert_id);//hapus data pengajuan kegiatan ketka gagal upload file
 					$this->session->set_flashdata('error','Data Pengajuan Kegiatan anda tidak berhasil ditambahkan');
 					redirect('Man_keuanganC/pengajuan_kegiatan');
 				}
@@ -191,8 +190,8 @@ class Man_keuanganC extends CI_Controller {
 		);
 		$data_kegiatan = array('dana_disetujui' => $dana_disetujui, );
 		if($this->Man_keuanganM->update_kegiatan($kode_fk, $data_kegiatan)){ //update dana disetujui
-			if($this->Man_keuanganM->insert_progress($data)){ //insert progress
-				redirect('Man_keuanganC/pengajuan_kegiatan');
+			if($this->UserM->insert_progress($data)){ //insert progress
+				redirect('Man_keuanganC/persetujuan_kegiatan_pegawai');
 			}else{
 				$this->Man_keuanganM->gajadi_update($kode_fk); //reset dana disetujui ke 0 ketika gagal insert
 			}

@@ -52,17 +52,16 @@ class SekdepC extends CI_Controller {
 		$this->load->view('sekdep/index_template', $data);
 	}
 
-	public function persetujuan_kegiatan($id){ //menampilkan modal dengan isi dari detail_pengajuan.php
+	public function detail_pengajuan($id){ //menampilkan modal dengan isi dari detail_pengajuan.php
 		$data['detail_kegiatan'] = $this->SekdepM->get_kegiatan_diajukan_by_id($id)->result()[0];
 		$data['data_diri'] = $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
-		$data['nama_progress'] = $this->SekdepM->get_pilihan_nama_progress()->result();
+		$data['nama_progress'] = $this->UserM->get_pilihan_nama_progress()->result();
 		$this->load->view('sekdep/detail_pengajuan', $data);
 	}
 
 	public function detail_kegiatan($id){ //menampilkan modal dengan isi dari detail_pengajuan.php
 		$data['detail_kegiatan'] = $this->SekdepM->get_kegiatan_diajukan_by_id($id)->result()[0];
 		$data['data_diri'] = $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
-		$data['nama_progress'] = $this->SekdepM->get_pilihan_nama_progress()->result();
 		$this->load->view('sekdep/detail_kegiatan', $data);
 	}
 
@@ -82,7 +81,7 @@ class SekdepC extends CI_Controller {
 			'alamat'      => $alamat,
 			'no_hp'       => $no_hp
 		);
-		$this->SekdepM->edit_data_diri($no_identitas,$data);
+		$this->UserM->edit_data_diri($no_identitas,$data);
 		$this->session->set_flashdata('sukses','Data anda berhasil disimpan');
 		redirect('SekdepC/data_diri');
 	}
@@ -115,14 +114,14 @@ class SekdepC extends CI_Controller {
 				'tgl_pengajuan'			=> $tgl_pengajuan,
 				'dana_disetujui'		=> $dana_disetujui);
 
-			$insert_id = $this->SekdepM->insert_pengajuan_kegiatan($data_pengajuan_kegiatan);
+			$insert_id = $this->UserM->insert_pengajuan_kegiatan($data_pengajuan_kegiatan);
 				if($insert_id){ //get last insert id
-					$upload = $this->SekdepM->upload(); // lakukan upload file dengan memanggil function upload yang ada di SekdepM.php
+					$upload = $this->UserM->upload(); // lakukan upload file dengan memanggil function upload yang ada di UserM.php
 				if($upload['result'] == "success"){ // Jika proses upload sukses
-					$this->SekdepM->save($upload,$insert_id); // Panggil function save yang ada di SekdepM.php untuk menyimpan data ke database
+					$this->UserM->save($upload,$insert_id); // Panggil function save yang ada di UserM.php untuk menyimpan data ke database
 				}else{ // Jika proses upload gagal
 					$data['message'] = $upload['error']; // Ambil pesan error uploadnya untuk dikirim ke file form dan ditampilkan
-					$this->SekdepM->delete($insert_id);//hapus data pengajuan kegiatan ketka gagal upload file
+					$this->UserM->delete($insert_id);//hapus data pengajuan kegiatan ketka gagal upload file
 					$this->session->set_flashdata('error','Data Pengajuan Kegiatan anda tidak berhasil ditambahkan');
 					redirect('SekdepC/pengajuan_kegiatan');
 				}
@@ -155,7 +154,7 @@ class SekdepC extends CI_Controller {
 			'waktu_progress'		=> $waktu_progress
 		);
 		
-			if($this->SekdepM->insert_progress($data)){ //insert progress
+			if($this->UserM->insert_progress($data)){ //insert progress
 				redirect('SekdepC/persetujuan_kegiatan_mahasiswa');
 			}
 	}

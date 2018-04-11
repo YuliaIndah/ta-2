@@ -41,7 +41,7 @@ class MahasiswaC extends CI_Controller {
 			'alamat'      => $alamat,
 			'no_hp'       => $no_hp
 		);
-		$this->MahasiswaM->edit_data_diri($no_identitas,$data);
+		$this->UserM->edit_data_diri($no_identitas,$data);
 		$this->session->set_flashdata('sukses','Data anda berhasil disimpan');
 		redirect('MahasiswaC/data_diri');
 	}
@@ -89,14 +89,14 @@ class MahasiswaC extends CI_Controller {
 				'tgl_pengajuan'			=> $tgl_pengajuan,
 				'dana_disetujui'		=> $dana_disetujui);
 
-			$insert_id = $this->MahasiswaM->insert_pengajuan_kegiatan($data_pengajuan_kegiatan);
+			$insert_id = $this->UserM->insert_pengajuan_kegiatan($data_pengajuan_kegiatan);
 				if($insert_id){ //get last insert id
-					$upload = $this->MahasiswaM->upload(); // lakukan upload file dengan memanggil function upload yang ada di MahasiswaM.php
+					$upload = $this->UserM->upload(); // lakukan upload file dengan memanggil function upload yang ada di UserM.php
 				if($upload['result'] == "success"){ // Jika proses upload sukses
-					$this->MahasiswaM->save($upload,$insert_id); // Panggil function save yang ada di MahasiswaM.php untuk menyimpan data ke database
+					$this->UserM->save($upload,$insert_id); // Panggil function save yang ada di UserM.php untuk menyimpan data ke database
 				}else{ // Jika proses upload gagal
 					$data['message'] = $upload['error']; // Ambil pesan error uploadnya untuk dikirim ke file form dan ditampilkan
-					$this->MahasiswaM->delete($insert_id);//hapus data pengajuan kegiatan ketka gagal upload file
+					$this->UserM->delete($insert_id);//hapus data pengajuan kegiatan ketka gagal upload file
 					$this->session->set_flashdata('error','Data Pengajuan Kegiatan anda tidak berhasil ditambahkan');
 					redirect('MahasiswaC/pengajuan_kegiatan');
 				}

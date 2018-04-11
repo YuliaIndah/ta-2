@@ -7,17 +7,8 @@
         <input type="hidden" name="kode_fk" value="<?php echo $detail_kegiatan->kode_kegiatan?>"> <!-- buat input ke tabel progress -->
         <input type="hidden" name="no_identitas" value="<?php echo $detail_kegiatan->no_identitas;?>"> <!-- buat input ke tabel progress -->
 
-        <?php
-        if($detail_kegiatan->nama_jabatan != "Mahasiswa"){
-            ?>
-            <input type="hidden" name="jenis_progress" id="jenis_progress" value="kegiatan"> <!-- buat input ke tabel progress -->
-            <?php
-        }else{
-            ?>
-            <input type="hidden" name="jenis_progress" id="jenis_progress" value="barang"> <!-- buat input ke tabel progress -->
-            <?php
-        }
-        ?>
+        <input type="hidden" name="jenis_progress" id="jenis_progress" value="kegiatan"> <!-- buat input ke tabel progress -->
+        
     </div>
     <div class="form-group">
         <label class="control-label col-sm-5" for="tgl_pengajuan" style="text-align: left;">Tanggal Pengajuan Kegiatan</label>

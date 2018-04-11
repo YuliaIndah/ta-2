@@ -136,7 +136,7 @@
             //menggunakan fungsi ajax untuk pengambilan data
             $.ajax({
               type : 'get',
-              url : '<?php echo base_url().'SekdepC/persetujuan_kegiatan/'?>'+rowid,
+              url : '<?php echo base_url().'SekdepC/detail_pengajuan/'?>'+rowid,
                 //data :  'rowid='+ rowid, // $_POST['rowid'] = rowid
                 success : function(data){
                 $('.fetched-data').html(data);//menampilkan data ke dalam modal
