@@ -28,7 +28,7 @@ class Man_sarprasC extends CI_Controller {
 		$this->load->view('man_sarpras/index_template', $data);
 	}
 
-	public function pengajuan_barang(){ //halaman pengajuan barang (man_sarpras)
+	public function pengajuan_barang(){ //halaman persetujuan barang (man_sarpras)
 		$data['title'] = "Pengajuan Barang | Manajer Sarana dan Prasarana";
 		$this->data['data_diri'] = $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
 		$this->data['data_pengajuan_barang'] = $this->Man_sarprasM->get_data_pengajuan()->result();
@@ -89,6 +89,8 @@ class Man_sarprasC extends CI_Controller {
 		$this->UserM->ubah_data_barang($kode_barang,$data);
 		redirect('Man_sarprasC/kelola_barang');
 	}
+
+	
 
 	// sebagai pegawai
 
@@ -151,8 +153,8 @@ class Man_sarprasC extends CI_Controller {
 			$this->session->set_flashdata('error','Data Pengajuan Kegiatan anda tidak berhasil ditambahkan');
 			redirect('Man_sarprasC/pengajuan_kegiatan_pegawai');
 		}
+		}
 	}
-}
 
 	public function edit_data_diri($no_identitas){ //edit data diri
 		$jen_kel    = $_POST['jen_kel'];
@@ -171,6 +173,14 @@ class Man_sarprasC extends CI_Controller {
 		$this->Man_sarprasM->edit_data_diri($no_identitas,$data);
 		$this->session->set_flashdata('sukses','Data anda berhasil disimpan');
 		redirect('Man_sarprasC/data_diri');
+	}
+
+	public function ajukan_barang(){ //halaman pengajuan barang
+		$data['title'] = "Daftar Pengajuan Barang | Kepala Departemen";
+		$this->data['data_diri'] = $this->UserM->get_data_diri()->result()[0]; //get data diri buat nampilin nama di pjok kanan
+		$this->data['data_ajukan_barang'] = $this->UserM->get_ajukan_barang()->result();	//menampilkan kegiatan yang diajukan user sebagai pegwai
+		$data['body'] = $this->load->view('man_sarpras/kegiatan_pegawai_content', $this->data, true);
+		$this->load->view('man_sarpras/index_template', $data);
 	}
 	
 }

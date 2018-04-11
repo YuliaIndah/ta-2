@@ -91,4 +91,22 @@
 		}
 
 	}
+
+	function get_ajukan_barang(){ //menampilkan pengajuan barang yang diajukan user sebagai pegwai
+		$no_identitas = $this->session->userdata('no_identitas');
+		$this->db->select('*');
+		$this->db->from('item_pengajuan');
+		$this->db->join('pengguna', 'pengguna.no_identitas = item_pengajuan.no_identitas');
+		$this->db->join('barang', 'barang.kode_barang = item_pengajuan.kode_barang');
+		$this->db->join('jenis_barang', 'jenis_barang.kode_jenis_barang = barang.kode_jenis_barangs');
+		$this->db->where('pengguna.no_identitas', $no_identitas);
+
+		$query = $this->db->get();
+		if($query){
+			return $query;
+		}else{
+			return null;
+		}
+	} 
+
 }  
