@@ -33,7 +33,7 @@
             <ul>
               <li><h2><?php echo $data_diri->nama;?></h2></li>
               <li><h4><?php echo $data_diri->no_identitas;?></h4></li>
-              <li><h4><?php echo $data_diri->nama_jabatan;?></h4></li>
+              <li><h4><?php echo $data_diri->nama_jabatan." ". $data_diri->nama_unit;?></h4></li>
               <br>
             </ul>
           </div>  

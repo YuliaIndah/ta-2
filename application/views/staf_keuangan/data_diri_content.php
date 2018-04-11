@@ -110,7 +110,7 @@
             <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
             <h4 class="modal-title">Ubah Data</h4>
           </div>
-          <form class="form-horizontal" action="<?php echo base_url('SekdepC/edit_data_diri')."/".$data_diri->no_identitas?>" method="post" enctype="multipart/form-data" role="form">
+          <form class="form-horizontal" action="<?php echo base_url('Staf_keuanganC/edit_data_diri')."/".$data_diri->no_identitas?>" method="post" enctype="multipart/form-data" role="form">
             <div class="modal-body">
               <div class="form-group">
                 <label class="col-lg-4 col-sm-2 control-label">Jenis Kelamin</label>

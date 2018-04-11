@@ -36,8 +36,8 @@
 
     function Staf_keuangan_access(){
         $ci=& get_instance();
-        if($ci->session->userdata('kode_jabatan') != 6 ){
-            redirect('LoginC');
+        if($ci->session->userdata('kode_jabatan') != 4  && $ci->session->userdata('kode_unit') != 3){
+            redirect('LoginC/logout');
         }
     }
 
@@ -48,23 +48,16 @@
         }
     }
 
-    function Pegawai_access(){
+    function Staf_access(){
         $ci=& get_instance();
-        if($ci->session->userdata('kode_jabatan') != 8 ){
-            redirect('LoginC');
+        if($ci->session->userdata('kode_jabatan') != 4  && $ci->session->userdata('kode_unit') == 3  || $ci->session->userdata('kode_unit') == 2){
+            redirect('LoginC/logout');
         }
     }
 
-    function Unit_access(){
+    function Kepala_unit_access(){
         $ci=& get_instance();
-        if($ci->session->userdata('kode_jabatan') != 9 ){
-            redirect('LoginC');
-        }
-    }
-
-     function Admin_access(){
-        $ci=& get_instance();
-        if($ci->session->userdata('kode_jabatan') != 10 ){
-            redirect('LoginC');
+        if($ci->session->userdata('kode_jabatan') != 1 && $ci->session->userdata('kode_unit') == 1){
+            redirect('LoginC/logout');
         }
     }
