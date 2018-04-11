@@ -75,10 +75,36 @@ class Man_sarprasM extends CI_Model{
 		return $this->db->insert('barang', $data);
 	}
 
-	public function get_pilihan_jenis_barang(){
+	public function get_pilihan_jenis_barang(){ 
 		$this->db->select('*');
 		$this->db->from('jenis_barang');
 		$query = $this->db->get();
 		return $query;
 	}
+
+	public function insert_pengajuan_barang($data){   //insert tabel item_pengajuan
+		if($this->db->insert('item_pengajuan', $data)){
+			return $this->db->insert_id(); //return last insert ID
+		} 
+	} 
+
+	public function upload_gambar(){ // Fungsi untuk upload gambar ke folder
+		$config['upload_path'] = './assets/file_gambar';
+		$config['allowed_types'] = 'jpg|png|jpeg|PNG';
+		$config['max_size']	= '';
+		$config['remove_space'] = TRUE;
+		$config['encrypt_name'] = TRUE;
+	
+		$this->load->library('upload', $config); // Load konfigurasi uploadnya
+		if($this->upload->do_upload('file_gambar')){ // Lakukan upload dan Cek jika proses upload berhasil
+			// Jika berhasil :
+			$return = array('result' => 'success', 'file' => $this->upload->data(), 'error' => '');
+			return $return;
+		}else{
+			// Jika gagal :
+			$return = array('result' => 'failed', 'file' => '', 'error' => $this->upload->display_errors());
+			return $return;
+		}
+	}
+
 }

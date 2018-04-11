@@ -107,7 +107,7 @@ class KadepC extends CI_Controller {
 		if($this->form_validation->run() == FALSE){
 			redirect('KadepC/pengajuan_kegiatan');
 		}else{
-			$no_identitas 	= $_POST['no_identitas'];
+			$no_identitas 	       	= $_POST['no_identitas'];
 			$kode_jenis_kegiatan 	= $_POST['kode_jenis_kegiatan'];
 			$nama_kegiatan 			= $_POST['nama_kegiatan'];
 			$tgl_kegiatan 			= $_POST['tgl_kegiatan'];

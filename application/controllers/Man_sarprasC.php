@@ -28,7 +28,7 @@ class Man_sarprasC extends CI_Controller {
 		$this->load->view('man_sarpras/index_template', $data);
 	}
 
-	public function pengajuan_barang(){ //halaman pengajuan barang (man_sarpras)
+	public function pengajuan_barang(){ //halaman persetujuan barang (man_sarpras)
 		$data['title'] = "Pengajuan Barang | Manajer Sarana dan Prasarana";
 		$this->data['data_diri'] = $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
 		$this->data['data_pengajuan_barang'] = $this->Man_sarprasM->get_data_pengajuan()->result();
@@ -66,8 +66,13 @@ class Man_sarprasC extends CI_Controller {
 				'nama_barang'		=> $nama_barang,
 				'kode_jenis_barang'	=> $kode_jenis_barang
 			);
-			$this->Man_sarprasM->insert_tambah_barang($data_pengguna);
-			redirect('Man_sarprasC/kelola_barang');
+			if($this->Man_sarprasM->insert_tambah_barang($data_pengguna)){
+				$this->session->set_flashdata('sukses','Data Barang berhasil ditambahkan');
+				redirect('Man_sarprasC/kelola_barang');
+			}else{
+				$this->session->set_flashdata('error','Data Barang tidak berhasil ditambahkan');
+				redirect('Man_sarprasC/kelola_barang');
+			}
 		}
 
 	}
@@ -151,8 +156,8 @@ class Man_sarprasC extends CI_Controller {
 			$this->session->set_flashdata('error','Data Pengajuan Kegiatan anda tidak berhasil ditambahkan');
 			redirect('Man_sarprasC/pengajuan_kegiatan_pegawai');
 		}
+		}
 	}
-}
 
 	public function edit_data_diri($no_identitas){ //edit data diri
 		$jen_kel    = $_POST['jen_kel'];
@@ -172,5 +177,73 @@ class Man_sarprasC extends CI_Controller {
 		$this->session->set_flashdata('sukses','Data anda berhasil disimpan');
 		redirect('Man_sarprasC/data_diri');
 	}
+
+	public function ajukan_barang(){ //halaman pengajuan barang
+		$data['title'] = "Daftar Pengajuan Barang | Kepala Departemen";
+		$this->data['data_diri'] = $this->UserM->get_data_diri()->result()[0]; //get data diri buat nampilin nama di pojok kanan
+		$this->data['data_ajukan_barang'] = $this->UserM->get_ajukan_barang()->result();	//menampilkan pengajuan barag yang diajukan user sebagai pegwai
+		$this->data['pilihan_barang'] = $this->UserM->get_pilihan_barang()->result();
+		$data['body'] = $this->load->view('man_sarpras/ajukan_barang_content', $this->data, true);
+		$this->load->view('man_sarpras/index_template', $data);
+	}
+
+	public function post_tambah_ajukan_barang(){ //fungsi untuk tambah pengajuan barang
+		$this->form_validation->set_rules('no_identitas', 'No Identitas','required');
+		$this->form_validation->set_rules('kode_barang', 'Nama Barang','required');
+		$this->form_validation->set_rules('tgl_item_pengajuan', 'Tanggal Item Pengajuan','required');
+		$this->form_validation->set_rules('nama_item_pengajuan', 'Nama Item Pengajuan','required');
+		$this->form_validation->set_rules('url', 'URL','required');
+		$this->form_validation->set_rules('harga_satuan', 'Harga Satuan','required');
+		$this->form_validation->set_rules('merek', 'Merek','required');
+		$this->form_validation->set_rules('jumlah', 'Jumlah Barang','required');
+		// $this->form_validation->set_rules('pimpinan', 'Pimpinan','required');
+		if($this->form_validation->run() == FALSE)
+		{
+			$this->session->set_flashdata('error','Data Pengajuan Kegiatan anda tidak berhasil ditambahkan 1');
+			redirect('Man_sarprasC/ajukan_barang') ;
+			//redirect ke halaman pengajuan barang
+		}else{
+			$upload = $this->Man_sarprasM->upload_gambar(); // lakukan upload file dengan memanggil function upload yang ada di KadepM.php
+			$no_identitas 		= $_POST['no_identitas'];
+			$kode_barang 		= $_POST['kode_barang'];
+			$tgl_item_pengajuan = $_POST['tgl_item_pengajuan'];
+			$nama_item_pengajuan= $_POST['nama_item_pengajuan'];
+			$url 				= $_POST['url'];
+			$harga_satuan 		= $_POST['harga_satuan'];
+			$merek 				= $_POST['merek'];
+			$jumlah 			= $_POST['jumlah'];
+			$file_gambar 		= $_POST['file_gambar'];
+			$pimpinan			= $_POST['pimpinan'];
+
+			$baru = "baru";
+
+			$data_pengguna		= array(
+				'no_identitas'			=> $no_identitas,
+				'kode_barang'			=> $kode_barang,
+				'status_pengajuan'		=> $baru,
+				'tgl_item_pengajuan'	=> $tgl_item_pengajuan,
+				'nama_item_pengajuan'	=> $nama_item_pengajuan,
+				'url'					=> $url,
+				'harga_satuan'			=> $harga_satuan,
+				'merek'					=> $merek,
+				'jumlah'				=> $jumlah,
+				'file_gambar' 			=> $upload['file']['file_name'],
+				'pimpinan'				=> $pimpinan
+
+			);
+			if($upload['result'] == "success"){ // Jika proses upload sukses
+				$this->Man_sarprasM->insert_tambah_barang($data_pengguna);
+				$this->session->set_flashdata('sukses','Data Barang berhasil ditambahkan');
+				redirect('Man_sarprasC/ajukan_barang');
+			}else{ // Jika proses upload gagal
+				$data['message'] = $upload['error']; // Ambil pesan error uploadnya untuk dikirim ke file form dan ditampilkan
+				$this->session->set_flashdata('error','Data Pengajuan Kegiatan anda tidak berhasil ditambahkan 2');
+				redirect('Man_sarprasC/ajukan_barang');
+			}
+
+		}
+
+	}	
+	
 	
 }
