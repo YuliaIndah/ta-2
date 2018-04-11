@@ -73,10 +73,21 @@
               <span>Beranda</span>
             </a>
           </li>
+          <li class="sub-menu">
+            <a href="javascript:;" class="">
+              <i class="icon_bag_alt"></i>
+              <span>Persetujuan</span>
+              <span class="menu-arrow arrow_carrot-right"></span>
+            </a>
+            <ul class="sub">
+              <li> <a href="<?php echo site_url('KadepC/persetujuan_kegiatan_mahasiswa')?>">Kegiatan Mahasiswa</a></li>
+              <li> <a href="<?php echo site_url('KadepC/persetujuan_kegiatan_pegawai')?>">Kegiatan Pegawai</a></li>
+            </ul>
+          </li>
           <li>
             <a href="<?php echo site_url('KadepC/pengajuan_kegiatan')?>">
-              <i class="icon_bag_alt"></i>
-              <span>Kegiatan Diajukan</span>
+              <i class="icon_ol"></i>
+              <span>Pengajuan Kegiatan</span>
             </a>
           </li>
           <li>
@@ -85,18 +96,6 @@
               <span>Daftar Pengguna</span>
             </a>
           </li>
-          <li>
-            <a href="<?php echo site_url('KadepC/kegiatan_pegawai')?>">
-              <i class="icon_ol"></i>
-              <span>Daftar Kegiatan</span>
-            </a>
-          </li>
-          <!-- <li>
-            <a href="<?php echo site_url('KadepC/pengajuan_kegiatan_pegawai')?>">
-              <i class="icon_pencil-edit"></i>
-              <span>Ajukan Kegiatan</span>
-            </a>
-          </li> -->
           <li>
             <a href="<?php echo site_url('KadepC/jabatan')?>">
               <i class="icon_ol"></i>

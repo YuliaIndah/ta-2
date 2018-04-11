@@ -63,7 +63,7 @@ class LoginC extends CI_Controller {
 							}else if ($this->session->userdata('kode_jabatan') == 1){
 								redirect('Kepala_unitC');
 							}else if ($this->session->userdata('kode_jabatan') == 4){
-								redirect('Staf_unitC');
+								redirect('StafC');
 							}else if ($this->session->userdata('kode_unit') == 8) {
 								if($this->session->userdata('kode_jabatan') == 5){
 									redirect('MahasiswaC');

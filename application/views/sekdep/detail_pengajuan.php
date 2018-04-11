@@ -1,4 +1,4 @@
-<form class="form-horizontal" action="<?php echo base_url(); ?>Man_keuanganC/post_progress" method="post">
+<form class="form-horizontal" action="<?php echo base_url(); ?>SekdepC/post_progress" method="post">
     <div class="form-group">
         <label class="control-label col-sm-5" for="nama_kegiatan" style="text-align: left;">Nama Kegiatan</label>
         <div class="col-sm-5">
@@ -50,12 +50,6 @@
                 }
                 ?>
             </select>
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="control-label col-sm-5" for="dana_disetujui"  style="text-align: left;">Dana Yang Disetujui</label>
-        <div class="col-sm-5">
-            <input name="dana_disetujui" id="dana_disetujui" class="form-control" id="focusedInput" type="text">
         </div>
     </div>
     <div class="form-group">

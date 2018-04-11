@@ -29,11 +29,25 @@ class KadepC extends CI_Controller {
 		$this->load->view('kadep/index_template', $data);
 	}
 
-	public function pengajuan_kegiatan(){ //halaman pengajuan kegiatan (kadep)
-		$data['title'] = "Kegiatan Diajukan | Kepala Departemen";
-		$this->data['data_pengajuan_kegiatan'] = $this->KadepM->get_data_pengajuan()->result();
+	public function persetujuan_kegiatan_mahasiswa(){ //halaman persetujuan kegiatan mahasiswa (kadep)
+		// menampilkan kegiatan mahasiswa yang telah di beri porgress oleh manajer Keuangan
+		$kode_jenis_kegiatan = 2; //kegiatan mahasiswa
+		$kode_unit = 3; // unit Keuangan
+		$kode_jabatan = 3; // jabatan manajer
+		$data['title'] = "Persetujuan Kegiatan Mahasiswa | Kepala Departemen";
+		$this->data['data_pengajuan_kegiatan_mahasiswa'] = $this->KadepM->get_data_pengajuan($kode_jenis_kegiatan, $kode_unit, $kode_jabatan)->result();
 		$this->data['data_diri'] = $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
-		$data['body'] = $this->load->view('kadep/pengajuan_kegiatan_content', $this->data, true) ;
+		$data['body'] = $this->load->view('kadep/persetujuan_kegiatan_mahasiswa_content', $this->data, true) ;
+		$this->load->view('kadep/index_template', $data);
+	}
+	public function persetujuan_kegiatan_pegawai(){ //halaman persetujuan kegiatan pegawai (kadep)
+		$kode_jenis_kegiatan = 1; //kegiatan pegawai
+		$kode_unit = ""; 
+		$kode_jabatan = "";
+		$data['title'] = "Persetujuan Kegiatan Pegawai | Kepala Departemen";
+		$this->data['data_pengajuan_kegiatan_pegawai'] = $this->KadepM->get_data_pengajuan($kode_jenis_kegiatan, $kode_unit, $kode_jabatan)->result();
+		$this->data['data_diri'] = $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
+		$data['body'] = $this->load->view('kadep/persetujuan_kegiatan_pegawai_content', $this->data, true) ;
 		$this->load->view('kadep/index_template', $data);
 	}
 
@@ -55,18 +69,11 @@ class KadepC extends CI_Controller {
     }
 
  	// sebagai pegawai
-
-	public function pengajuan_kegiatan_pegawai(){ //halaman pengajuan kegiatan (pegawai)
+	public function pengajuan_kegiatan(){ //halaman pengajuan kegiatan
 		$data['title'] = "Pengajuan Kegiatan | Kepala Departemen";
-		$this->data['data_diri'] = $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
-		$data['body'] = $this->load->view('kadep/pengajuan_kegiatan_pegawai_content', $this->data, true);
-		$this->load->view('kadep/index_template', $data);
-	}
-	public function kegiatan_pegawai(){ //halaman kegiatan pegawai
-		$data['title'] = "Daftar Kegiatan | Kepala Departemen";
 		$this->data['data_diri'] = $this->UserM->get_data_diri()->result()[0]; //get data diri buat nampilin nama di pjok kanan
 		$this->data['data_kegiatan'] = $this->UserM->get_kegiatan_pegawai()->result();	//menampilkan kegiatan yang diajukan user sebagai pegwai
-		$data['body'] = $this->load->view('kadep/kegiatan_pegawai_content', $this->data, true);
+		$data['body'] = $this->load->view('kadep/pengajuan_kegiatan_content', $this->data, true);
 		$this->load->view('kadep/index_template', $data);
 	}
 
@@ -98,7 +105,7 @@ class KadepC extends CI_Controller {
 		$this->form_validation->set_rules('tgl_pengajuan', 'Tanggal Pengajuan','required');
 		$this->form_validation->set_rules('dana_disetujui', 'Dana Disetujui');
 		if($this->form_validation->run() == FALSE){
-			redirect('KadepC/pengajuan_kegiatan_pegawai');
+			redirect('KadepC/pengajuan_kegiatan');
 		}else{
 			$no_identitas 	= $_POST['no_identitas'];
 			$kode_jenis_kegiatan 	= $_POST['kode_jenis_kegiatan'];
@@ -126,13 +133,13 @@ class KadepC extends CI_Controller {
 				$data['message'] = $upload['error']; // Ambil pesan error uploadnya untuk dikirim ke file form dan ditampilkan
 				$this->KadepM->delete($insert_id);//hapus data pengajuan kegiatan ketka gagal upload file
 				$this->session->set_flashdata('error','Data Pengajuan Kegiatan anda tidak berhasil ditambahkan');
-				redirect('KadepC/pengajuan_kegiatan_pegawai');
+				redirect('KadepC/pengajuan_kegiatan');
 			}
 			$this->session->set_flashdata('sukses','Data Pengajuan Kegiatan anda berhasil ditambahkan');
-			redirect('KadepC/kegiatan_pegawai');
+			redirect('KadepC/pengajuan_kegiatan');
 		}else{
 			$this->session->set_flashdata('error','Data Pengajuan Kegiatan anda tidak berhasil ditambahkan');
-			redirect('KadepC/pengajuan_kegiatan_pegawai');
+			redirect('KadepC/pengajuan_kegiatan');
 		}
 	}
 }
@@ -158,12 +165,14 @@ class KadepC extends CI_Controller {
 
 	public function detail_pengajuan($id){ //menampilkan modal dengan isi dari detail_pengajuan.php
 		$data['detail_kegiatan'] = $this->KadepM->get_data_pengajuan_by_id($id)->result()[0];
+		$data['data_diri'] = $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
 		$data['nama_progress'] = $this->KadepM->get_pilihan_nama_progress()->result();
 		$this->load->view('kadep/detail_pengajuan', $data);
 	}
 
 	public function detail_kegiatan($id){ //menampilkan modal dengan isi dari detail_kegiatan.php
 		$data['detail_kegiatan'] = $this->KadepM->get_data_pengajuan_by_id($id)->result()[0];
+		$data['data_diri'] = $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
 		$this->load->view('kadep/detail_kegiatan', $data);
 	}
 

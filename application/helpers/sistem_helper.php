@@ -2,35 +2,35 @@
     function Kadep_access(){
         $ci=& get_instance();
         if($ci->session->userdata('kode_jabatan') != 1 ){
-            redirect('LoginC');
+            redirect('LoginC/logout');
         }
     }
 
     function Sekdep_access(){
         $ci=& get_instance();
-        if($ci->session->userdata('kode_jabatan') != 2 && $ci->session->userdata('kode_unit' != 1) ){
-            redirect('LoginC');
+        if($ci->session->userdata('kode_jabatan') != 2 && $ci->session->userdata('kode_unit') != 1){
+            redirect('LoginC/logout');
         }
     }
 
     function Man_sarpras_access(){
         $ci=& get_instance();
         if($ci->session->userdata('kode_jabatan') != 3 ){
-            redirect('LoginC');
+            redirect('LoginC/logout');
         }
     }
 
     function Man_keuangan_acess(){
         $ci=& get_instance();
-        if($ci->session->userdata('kode_jabatan') != 3 && $ci->session->userdata('kode_unit' != 3) ){
-            redirect('LoginC');
+        if($ci->session->userdata('kode_jabatan') != 3 && $ci->session->userdata('kode_unit') != 3){
+            redirect('LoginC/logout');
         }
     }
 
     function Staf_sarpras_access(){
         $ci=& get_instance();
         if($ci->session->userdata('kode_jabatan') != 5 ){
-            redirect('LoginC');
+            redirect('LoginC/logout');
         }
     }
 
@@ -43,8 +43,8 @@
 
     function Mahasiswa_access(){
         $ci=& get_instance();
-        if($ci->session->userdata('kode_jabatan') != 7 ){
-            redirect('LoginC');
+        if($ci->session->userdata('kode_jabatan') != 5  && $ci->session->userdata('kode_unit') != 8){
+            redirect('LoginC/logout');
         }
     }
 

@@ -73,16 +73,20 @@
               <span>Beranda</span>
             </a>
           </li>
-          <li>
-            <a href="<?php echo site_url('SekdepC/kegiatan_diajukan')?>">
+          <li class="sub-menu">
+            <a href="javascript:;" class="">
               <i class="icon_bag_alt"></i>
-              <span>Kegiatan Diajukan</span>
+              <span>Persetujuan</span>
+              <span class="menu-arrow arrow_carrot-right"></span>
             </a>
+            <ul class="sub">
+              <li> <a href="<?php echo site_url('SekdepC/persetujuan_kegiatan_mahasiswa')?>">Kegiatan Mahasiswa</a></li>
+            </ul>
           </li>
           <li>
-            <a href="<?php echo site_url('SekdepC/kegiatan_pegawai')?>">
+            <a href="<?php echo site_url('SekdepC/pengajuan_kegiatan')?>">
               <i class="icon_ol"></i>
-              <span>Daftar Kegiatan</span>
+              <span>Pengajuan Kegiatan</span>
             </a>
           </li>
         </ul>

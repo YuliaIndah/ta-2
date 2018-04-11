@@ -35,21 +35,41 @@ class Man_keuanganC extends CI_Controller {
 		$this->load->view('man_keuangan/index_template', $data);
 	}
 
-	public function kegiatan_diajukan(){ //halaman pengajuan kegiatan (manajer keuangan)
-		$data['title'] = "Kegiatan Diajukan | Manajer Keuangan";
-		$this->data['data_pengajuan_kegiatan'] = $this->Man_keuanganM->get_kegiatan_diajukan()->result();
+	public function persetujuan_kegiatan_pegawai(){ //halaman persetujuan kegiatan pegawai (manajer keuangan)
+		$kode_jenis_kegiatan = 1; //kegiatan pegawai
+		$kode_unit = ""; 
+		$kode_jabatan = "";
+		$data['title'] = "Persetujuan Kegiatan Pegawai | Manajer Keuangan";
+		$this->data['data_pengajuan_kegiatan'] = $this->Man_keuanganM->get_data_pengajuan($kode_jenis_kegiatan, $kode_unit, $kode_jabatan)->result();
 		$this->data['data_diri'] = $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
-		$data['body'] = $this->load->view('man_keuangan/kegiatan_diajukan', $this->data, true) ;
+		$data['body'] = $this->load->view('man_keuangan/persetujuan_kegiatan_pegawai_content', $this->data, true) ;
+		$this->load->view('man_keuangan/index_template', $data);
+	}
+	public function persetujuan_kegiatan_mahasiswa(){ //halaman persetujuan kegiatan pegawai mahasiswa (manajer keuangan)
+		$kode_jenis_kegiatan = 2; //kegiatan mahasiswa
+		$kode_unit = 1; // departemen
+		$kode_jabatan = 2; //sekretaris
+		$data['title'] = "Persetujuan Kegiatan Mahasiswa  | Manajer Keuangan";
+		$this->data['data_pengajuan_kegiatan'] = $this->Man_keuanganM->get_data_pengajuan($kode_jenis_kegiatan, $kode_unit, $kode_jabatan)->result();
+		$this->data['data_diri'] = $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
+		$data['body'] = $this->load->view('man_keuangan/persetujuan_kegiatan_mahasiswa_content', $this->data, true) ;
+		$this->load->view('man_keuangan/index_template', $data);
+	}
+	public function persetujuan_kegiatan_staf(){ //halaman persetujuan kegiatan staf (manajer keuangan)
+		$data['title'] = "Persetujuan Kegiatan Staf | Manajer Keuangan";
+		$this->data['data_pengajuan_kegiatan'] = $this->Man_keuanganM->get_data_pengajuan_staf()->result();
+		$this->data['data_diri'] = $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
+		$data['body'] = $this->load->view('man_keuangan/persetujuan_kegiatan_staf_content', $this->data, true) ;
 		$this->load->view('man_keuangan/index_template', $data);
 	}
 
 	// sebagi pegawai
 
-	public function kegiatan_pegawai(){ //halaman kegiatan pegawai
-		$data['title'] = "Daftar Kegiatan | Manajer Keuangan";
+	public function pengajuan_kegiatan(){ //halaman pengajuan kegiatan pegawai
+		$data['title'] = "Pengajuan Kegiatan | Manajer Keuangan";
 		$this->data['data_diri'] = $this->UserM->get_data_diri()->result()[0]; //get data diri buat nampilin nama di pjok kanan
 		$this->data['data_kegiatan'] = $this->UserM->get_kegiatan_pegawai()->result();	//menampilkan kegiatan yang diajukan user sebagai pegwai
-		$data['body'] = $this->load->view('man_keuangan/kegiatan_pegawai_content', $this->data, true);
+		$data['body'] = $this->load->view('man_keuangan/pengajuan_kegiatan_content', $this->data, true);
 		$this->load->view('man_keuangan/index_template', $data);
 	}
 
@@ -60,15 +80,21 @@ class Man_keuanganC extends CI_Controller {
 		$this->load->view('man_keuangan/index_template', $data);
 	}
 
-	public function persetujuan_kegiatan($id){ //menampilkan modal dengan isi dari detail_pengajuan.php
-		$data['detail_kegiatan'] = $this->Man_keuanganM->get_kegiatan_diajukan_by_id($id)->result()[0];
+	// public function detail_pengajuan($id){ //menampilkan modal dengan isi dari detail_pengajuan.php
+	// 	$data['detail_kegiatan'] = $this->KadepM->get_data_pengajuan_by_id($id)->result()[0];
+	// 	$data['nama_progress'] = $this->KadepM->get_pilihan_nama_progress()->result();
+	// 	$this->load->view('man_keuangan/detail_pengajuan', $data);
+	// }
+
+	public function detail_pengajuan($id){ //menampilkan modal dengan isi dari detail_pengajuan.php
+		$data['detail_kegiatan'] = $this->Man_keuanganM->get_data_pengajuan_by_id($id)->result()[0];
 		$data['data_diri'] = $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
 		$data['nama_progress'] = $this->Man_keuanganM->get_pilihan_nama_progress()->result();
 		$this->load->view('man_keuangan/detail_pengajuan', $data);
 	}
 
 	public function detail_kegiatan($id){ //menampilkan modal dengan isi dari detail_pengajuan.php
-		$data['detail_kegiatan'] = $this->Man_keuanganM->get_kegiatan_diajukan_by_id($id)->result()[0];
+		$data['detail_kegiatan'] = $this->Man_keuanganM->get_data_pengajuan_by_id($id)->result()[0];
 		$data['data_diri'] = $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
 		$data['nama_progress'] = $this->Man_keuanganM->get_pilihan_nama_progress()->result();
 		$this->load->view('man_keuangan/detail_kegiatan', $data);
@@ -104,7 +130,7 @@ class Man_keuanganC extends CI_Controller {
 		$this->form_validation->set_rules('tgl_pengajuan', 'Tanggal Pengajuan','required');
 		$this->form_validation->set_rules('dana_disetujui', 'Dana Disetujui');
 		if($this->form_validation->run() == FALSE){
-			redirect('Man_keuanganC/pengajuan_kegiatan_pegawai');
+			redirect('Man_keuanganC/pengajuan_kegiatan_');
 		}else{
 			$no_identitas 			= $_POST['no_identitas'];
 			$kode_jenis_kegiatan 	= $_POST['kode_jenis_kegiatan'];
@@ -132,13 +158,13 @@ class Man_keuanganC extends CI_Controller {
 					$data['message'] = $upload['error']; // Ambil pesan error uploadnya untuk dikirim ke file form dan ditampilkan
 					$this->Man_keuanganM->delete($insert_id);//hapus data pengajuan kegiatan ketka gagal upload file
 					$this->session->set_flashdata('error','Data Pengajuan Kegiatan anda tidak berhasil ditambahkan');
-					redirect('Man_keuanganC/pengajuan_kegiatan_pegawai');
+					redirect('Man_keuanganC/pengajuan_kegiatan');
 				}
 				$this->session->set_flashdata('sukses','Data Pengajuan Kegiatan anda berhasil ditambahkan');
-				redirect('Man_keuanganC/kegiatan_pegawai');
+				redirect('Man_keuanganC/pengajuan_kegiatan');
 			}else{
 				$this->session->set_flashdata('error','Data Pengajuan Kegiatan anda tidak berhasil ditambahkan');
-				redirect('Man_keuanganC/pengajuan_kegiatan_pegawai');
+				redirect('Man_keuanganC/pengajuan_kegiatan');
 			}
 		}
 	}
@@ -166,7 +192,7 @@ class Man_keuanganC extends CI_Controller {
 		$data_kegiatan = array('dana_disetujui' => $dana_disetujui, );
 		if($this->Man_keuanganM->update_kegiatan($kode_fk, $data_kegiatan)){ //update dana disetujui
 			if($this->Man_keuanganM->insert_progress($data)){ //insert progress
-				redirect('Man_keuanganC/kegiatan_diajukan');
+				redirect('Man_keuanganC/pengajuan_kegiatan');
 			}else{
 				$this->Man_keuanganM->gajadi_update($kode_fk); //reset dana disetujui ke 0 ketika gagal insert
 			}

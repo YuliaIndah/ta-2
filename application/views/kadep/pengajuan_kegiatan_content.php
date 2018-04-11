@@ -3,156 +3,180 @@
     <!--overview start-->
     <div class="row">
       <div class="col-lg-12">
-        <h3 class="page-header" style="margin-top: 0;"><i class="fa fa-pencil"></i>Kegiatan Diajukan</h3>
-       <!--  <ol class="breadcrumb">
-          <li><i class="fa fa-user"></i><a href="#">Kepala Departemen</a></li>
-          <li><i class="fa fa-pencil"></i>Pengajuan Kegiatan</li>                
+        <h3 class="page-header text-center" style="margin-top: 0;">Pengajuan Kegiatan</h3>
+        <!-- <ol class="breadcrumb">
+          <li><i class="fa fa-user"></i><a href="#">Pegawai</a></li>
+          <li><i class="fa fa-pencil"></i>Kegiatan</li>                
         </ol> -->
       </div>
     </div>
+    
     <div class="row">
       <div class="col-lg-12">
-        <div class="card mb-3">
-          <div class="card-header">
-            <div class="card-body">
-              <div class="table-responsive">
-                <?php
-                  // var_dump($detail_kegiatan);
-                ?>
-                <table id="example" class="table table-striped table-bordered table-condensed" cellspacing="0" width="100%">
-                  <thead>
-                    <tr class="text-center">
-                      <!-- <th>No. Identitas</th> -->
-                      <th class="text-center">Nama Kegiatan</th>
-                      <th class="text-center">Tgl Pengajuan</th>
-                      <th class="text-center">Tgl Kegiatan</th>
-                      <th class="text-center">Dana Diajukan</th>
-                      <th class="text-center">Dana Disetujui</th>
-                      <th class="text-center">File</th>
-                      <!-- <th>Nama Pengaju</th> -->
-                      <!-- <th>Jabatan Pengaju</th> -->
-                      <th class="text-center">Jenis Kegiatan</th>
-                      <th class="text-center">Status</th>
-                      <th class="text-center">Aksi</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <?php
-                    foreach ($data_pengajuan_kegiatan as $kegiatan) {
-                      ?>
-                      <tr>
-                        <td class="text-center relative">
-                          <div class="relative">
-                            <strong><?php echo $kegiatan->nama_kegiatan;?></strong>
-                            <a href="#myModal1" id="custID" data-toggle="modal" data-id="<?php echo $kegiatan->kode_kegiatan;?>" title="klik untuk melihat detail kegiatan"><small class="kecil">Lihat detail</small></a>
-                          </div>
-                        </td>
-                        <?php 
-                        $tgl_pengajuan = $kegiatan->tgl_pengajuan;
-                        $new_tgl_pengajuan = date('d-m-Y',strtotime($tgl_pengajuan));
-                        ?>
-                        <td><?php echo $new_tgl_pengajuan;?></td>
+       <?php 
+       $data=$this->session->flashdata('sukses');
+       if($data!=""){ ?>
+       <div class="alert alert-success"><strong>Sukses! </strong> <?=$data;?></div>
+       <?php } ?>
+       <?php 
+       $data2=$this->session->flashdata('error');
+       if($data2!=""){ ?>
+       <div class="alert alert-danger"><strong> Error! </strong> <?=$data2;?></div>
+       <?php } ?>
 
-                        <?php
+       <div class="card mb-3">
+        <div class="card-header">
+          <div class="card-body">
+            <!-- <a href="<?php echo site_url('KadepC/pengajuan_kegiatan_pegawai')?>" class="btn btn-info"><i class="icon_plus_alt2"> </i> Ajukan Kegiatan</a> -->
+            <a class="btn btn-info" data-toggle="modal" data-target="#myModal"><i class="icon_plus_alt2"> </i> Ajukan Kegiatan </a>
+
+            <div class="table-responsive">
+               <!-- <?php
+                  var_dump($data_kegiatan);
+                  ?> -->
+                  <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                    <thead>
+                      <tr>
+                        <!-- <th>No. Identitas</th> -->
+                        <th>Nama Kegiatan</th>
+                        <th>Tgl Kegiatan</th>
+                        <th>Tgl Pengajuan</th>
+                        <th>Dana Diajukan</th>
+                        <th>Dana Disetujui</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <!-- <tfoot>
+                      <tr>
+                        <th>Nama</th>
+                        <th>No. Identitas</th>
+                        <th>Jabatan</th>
+                        <th>Jenis Kelamin</th>
+                        <th>No. HP</th>
+                        <th>Status Email</th>
+                        <th>Status Akun</th>
+                        <th>Aksi</th>
+                      </tr>
+                    </tfoot> -->
+                    <tbody>
+                      <?php
+                      foreach ($data_kegiatan as $kegiatan) {
+                        ?>
+                        <tr>
+                          <td><?php echo $kegiatan->nama_kegiatan; ?></td>
+                          <?php 
+                          $tgl_pengajuan = $kegiatan->tgl_pengajuan;
+                          $new_tgl_pengajuan = date('d-m-Y',strtotime($tgl_pengajuan));
                           $tgl_kegiatan = $kegiatan->tgl_kegiatan;
                           $new_tgl_kegiatan = date('d-m-Y', strtotime($tgl_kegiatan));
-                        ?>
-                        <td><?php echo $new_tgl_kegiatan;?></td>
-                        <td><?php echo $kegiatan->dana_diajukan;?></td>
-                        <td><?php echo $kegiatan->dana_disetujui;?></td>
-                        <?php $link = base_url()."assets/file_upload/".$kegiatan->nama_file;?>
-                        <td class="text-center"><a target="_blank" href="<?php echo $link?>"><span><img src="<?php echo base_url()?>assets/image/logo/pdf.svg" style="height: 30px;"></span></a></td>
-                        <!-- <td><?php echo $kegiatan->nama;?></td> -->
-                        <!-- <td><?php echo $kegiatan->nama_jabatan." ".$kegiatan->nama_unit;?></td> -->
-                        <td><?php echo $kegiatan->nama_jenis_kegiatan;?></td>
-                        <td>Status</td>
-                        <td>
-                          <a href="#myModal" id="custId" data-toggle="modal" data-id="<?php echo $kegiatan->kode_kegiatan;?>" data-toggle="tooltip" title="Aksi" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-edit"></span></a>
-                        </td>
-                      </tr>
-                      <?php
-                    }
-                    ?>
-                  </tbody>
-                </table>
+                          ?>
+                          <td><?php echo $kegiatan->tgl_pengajuan; ?></td>
+                          <td><?php echo $kegiatan->tgl_kegiatan; ?></td>
+                          <td><?php echo $kegiatan->dana_diajukan; ?></td>
+                          <td><?php echo $kegiatan->dana_disetujui; ?></td>
+                          <td><?php echo 'status'?></td>
+                        </tr>
+
+                        <?php
+                        # code...
+                      }
+                      ?>
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </div>
         </div>
+        <!-- project team & activity end -->
+
+      </section>
+      <div class="text-center">
+        <div class="credits">
+          <a href="https://bootstrapmade.com/free-business-bootstrap-themes-website-templates/">Business Bootstrap Themes</a> by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+        </div>
       </div>
     </section>
-    <div class="text-center">
-      <div class="credits">
-        <a href="https://bootstrapmade.com/free-business-bootstrap-themes-website-templates/">Business Bootstrap Themes</a> by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-      </div>
-    </div>
-  </section>
-<!-- modal detail pengajuan -->
-  <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Persetujuan Kegiatan</h4>
-        </div>
-        <div class="modal-body">
-          <div class="fetched-data"></div>
-        </div>
-        <div class="modal-footer">
+
+    <div aria-hidden="true" aria-labelledby="myModal" role="dialog" tabindex="-1" id="myModal" class="modal fade">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+            <h4 class="modal-title">Pengajuan Kegiatan</h4>
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="panel-body">
+               <div class="alert alert-danger">
+                <ol type="1"> <strong>Perhatian !</strong>
+                  <li>Isi <b>Nama Kegiatan</b> sesuai dengan kegiatan yang ingin dilaksanakan.</li>
+                  <li>Pengisian <b>Tanggal Kegiatan</b> minimal <b>1 bulan</b> setelah tanggal pengajuan.</li>
+                  <li>Pengisian <b>Dana yang diajukan</b> hanya menggunakan <b>angka</b> tanpa <b>titik(.)</b>.</li>
+                  <li>Berkas yang diunggah hanya <b>satu(1)</b> berupa berkas <b>.pdf</b>. Apabila membutuhkan lebih dari satu berkas, maka harus dijadikan satu berkas <b>.pdf</b>.</li>
+                  <li>Data yang sudah mendapat persetujuan <b>tidak dapat diubah</b>.</li>
+                </ol>
+              </div>
+              <?php echo form_open_multipart('KadepC/post_pengajuan_kegiatan_pegawai');?>
+              <form role="form" action="<?php echo base_url(); ?>KadepC/post_pengajuan_kegiatan_pegawai" method="post">
+                <!-- Alert -->
+                <!-- sampai sini -->
+                <div class="form-group">
+                  <!-- <label>ID Pengguna Jabatan</label> -->
+
+                  <input class="form-control" type="hidden" id="no_identitas" name="no_identitas" value="<?php echo $data_diri->no_identitas;?>" required> <!-- ambil id_pengguna_jabatan berdasarkan user yang login-->
+                </div>
+                <div class="form-group">
+                  <!-- <label>Kode Jenis Kegiatan</label> -->
+                  <?php 
+                  if($data_diri->kode_jabatan == '5'){
+                    ?>  
+                    <input class="form-control" type="hidden" id="kode_jenis_kegiatan" name="kode_jenis_kegiatan" value="2" required>
+                    <?php
+                  }else{
+                    ?>
+                    <input class="form-control" type="hidden" id="kode_jenis_kegiatan" name="kode_jenis_kegiatan" value="1" required>
+                    <?php
+                  }
+                  ?>
+                </div>
+                <div class="form-group">
+                  <label>Nama Kegiatan</label>
+                  <input class="form-control" placeholder="Nama Kegiatan" type="text" id="nama_kegiatan" name="nama_kegiatan" required>
+                  <span class="text-danger" style="color: red;"><?php echo form_error('nama_kegiatan'); ?></span>  
+                </div>
+                <div class="form-group">
+                  <label>Tanggal Kegiatan</label>
+                  <input type="date" class="form-control" placeholder id="tgl_kegiatan" name="tgl_kegiatan" required>
+                  <span class="text-danger" style="color: red;"><?php echo form_error('tgl_kegiatan'); ?></span>  
+                </div>
+                <div class="form-group">
+                  <input type="hidden" class="form-control" placeholder id="tgl_pengajuan" name="tgl_pengajuan" required value="<?php echo date('Y-m-d');?>">
+                </div>
+                <div class="form-group">
+                  <label>Dana yang diajukan</label>
+                  <input class="form-control" placeholder="Dana yang diajukan" type="text" id="dana_diajukan" name="dana_diajukan" required>
+                  <span class="text-danger" style="color: red;"><?php echo form_error('dana_diajukan'); ?></span>  
+                </div>
+                <div class="form-group">
+                  <input class="form-control" type="hidden" id="dana_disetujui" name="dana_disetujui" value="0">
+                </div>
+
+                <div style="color: red;"><?php echo (isset($message))? $message : ""; ?></div>
+                <div class="form-group">
+                  <label>Unggah Berkas</label>
+                  <input type="file" name="file_upload">
+                </div>
+              </div> 
+              <!-- <button type="reset" class="btn btn-default">Reset Button</button> -->
+              <div class="modal-footer">
+                <input type="submit" class="btn btn-info col-lg-2"  value="Submit">
+              </div> 
+              <?php echo form_close()?>
+            </form>
+          </div>
+          <div class="col-lg-1"></div>
         </div>
       </div>
     </div>
   </div>
-
-  <!-- modal detail kegiatan -->
-  <div class="modal fade" id="myModal1" role="dialog">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Detail Kegiatan</h4>
-        </div>
-        <div class="modal-body">
-          <div class="fetched-data"></div>
-        </div>
-        <div class="modal-footer">
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <script src="<?php echo base_url();?>assets/js/jquery.min.js"></script>
-  <script type="text/javascript">
-    // js detail pengajuan
-    $(document).ready(function(){
-      $('#myModal').on('show.bs.modal', function (e) {
-        var rowid = $(e.relatedTarget).data('id');
-            //menggunakan fungsi ajax untuk pengambilan data
-            $.ajax({
-              type : 'get',
-              url : '<?php echo base_url().'KadepC/detail_pengajuan/'?>'+rowid,
-                //data :  'rowid='+ rowid, // $_POST['rowid'] = rowid
-                success : function(data){
-                $('.fetched-data').html(data);//menampilkan data ke dalam modal
-              }
-            });
-          });
-    });
-
-// js detail kegiatan
-     $(document).ready(function(){
-      $('#myModal1').on('show.bs.modal', function (e) {
-        var rowid = $(e.relatedTarget).data('id');
-            //menggunakan fungsi ajax untuk pengambilan data
-            $.ajax({
-              type : 'get',
-              url : '<?php echo base_url().'KadepC/detail_kegiatan/'?>'+rowid,
-                //data :  'rowid='+ rowid, // $_POST['rowid'] = rowid
-                success : function(data){
-                $('.fetched-data').html(data);//menampilkan data ke dalam modal
-              }
-            });
-          });
-    });
-
-  </script>

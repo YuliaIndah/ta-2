@@ -14,11 +14,13 @@ class SekdepM extends CI_Model{
 	function get_kegiatan_diajukan(){ //ambil semua data kegiatan yang diajukan yang diajukan
 		$this->db->select('*');
 		$this->db->from('kegiatan');
+		// $this->db->join('progress', 'kegiatan.kode_kegiatan = progress.kode_fk');
 		$this->db->join('pengguna', 'pengguna.no_identitas = kegiatan.no_identitas');
 		$this->db->join('jabatan', 'jabatan.kode_jabatan = pengguna.kode_jabatan');
 		$this->db->join('unit', 'unit.kode_unit = pengguna.kode_unit');
 		$this->db->join('jenis_kegiatan', 'jenis_kegiatan.kode_jenis_kegiatan = kegiatan.kode_jenis_kegiatan');
 		$this->db->join('file_upload', 'file_upload.kode_kegiatan = kegiatan.kode_kegiatan');
+		$this->db->where('jenis_kegiatan.kode_jenis_kegiatan = 2'); //kegiatan Mahasiswa
 		$query = $this->db->get();
 		if($query){
 			return $query;
@@ -94,17 +96,4 @@ class SekdepM extends CI_Model{
 		$query = $this->db->insert('progress', $data);
 		return $query; 
 	}
-
-	public function update_kegiatan($kode_fk, $data_kegiatan){
-		$this->db->where('kode_kegiatan', $kode_fk);
-		$this->db->update('kegiatan' , $data_kegiatan);
-		return TRUE;
-	}
-	public function gajadi_update($id){ //reset dana disetujui ke 0 ketika gagal insert
-		$data = array('dana_disetujui' => 0, );
-		$this->db->where('kode_kegiatan', $id);
-		$this->db->update('kegiatan', $data);
-		return "berhasil delete";
-	}
-
 }

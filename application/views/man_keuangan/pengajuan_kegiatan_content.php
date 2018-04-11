@@ -3,7 +3,7 @@
     <!--overview start-->
     <div class="row">
       <div class="col-lg-12">
-        <h3 class="page-header" style="margin-top: 0;"><i class="fa fa-pencil"></i>Daftar Kegiatan</h3>
+        <h3 class="page-header text-center" style="margin-top: 0;">Pengajuan Kegiatan</h3>
         <!-- <ol class="breadcrumb">
           <li><i class="fa fa-user"></i><a href="#">Pegawai</a></li>
           <li><i class="fa fa-pencil"></i>Kegiatan</li>                
@@ -26,7 +26,7 @@
        <div class="card mb-3">
         <div class="card-header">
           <div class="card-body">
-            <!-- <a href="<?php echo site_url('SekdepC/pengajuan_kegiatan_pegawai')?>" class="btn btn-info"><i class="icon_plus_alt2"> </i> Ajukan Kegiatan</a> -->
+            <!-- <a href="<?php echo site_url('Man_keuanganC/pengajuan_kegiatan_pegawai')?>" class="btn btn-info"><i class="icon_plus_alt2"> </i> Ajukan Kegiatan</a> -->
             <a class="btn btn-info" data-toggle="modal" data-target="#myModal"><i class="icon_plus_alt2"> </i> Ajukan Kegiatan </a>
             <div class="table-responsive">
                <!-- <?php
@@ -68,8 +68,8 @@
                           $tgl_kegiatan = $kegiatan->tgl_kegiatan;
                           $new_tgl_kegiatan = date('d-m-Y', strtotime($tgl_kegiatan));
                           ?>
-                          <td><?php echo $new_tgl_pengajuan; ?></td>
-                          <td><?php echo $new_tgl_kegiatan; ?></td>
+                          <td><?php echo $kegiatan->tgl_pengajuan; ?></td>
+                          <td><?php echo $kegiatan->tgl_kegiatan; ?></td>
                           <td><?php echo $kegiatan->dana_diajukan; ?></td>
                           <td><?php echo $kegiatan->dana_disetujui; ?></td>
                           <td><?php echo 'status'?></td>
@@ -96,6 +96,7 @@
       </div>
     </section>
 
+
     <div aria-hidden="true" aria-labelledby="myModal" role="dialog" tabindex="-1" id="myModal" class="modal fade">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -115,8 +116,8 @@
                   <li>Data yang sudah mendapat persetujuan <b>tidak dapat diubah</b>.</li>
                 </ol>
               </div>
-              <?php echo form_open_multipart('SekdepC/post_pengajuan_kegiatan_pegawai');?>
-              <form role="form" action="<?php echo base_url(); ?>SekdepC/post_pengajuan_kegiatan_pegawai" method="post">
+              <?php echo form_open_multipart('Man_keuanganC/post_pengajuan_kegiatan_pegawai');?>
+              <form role="form" action="<?php echo base_url(); ?>Man_keuanganC/post_pengajuan_kegiatan_pegawai" method="post">
                 <!-- Alert -->
                 <!-- sampai sini -->
                 <div class="form-group">

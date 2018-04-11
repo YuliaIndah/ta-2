@@ -4,13 +4,10 @@
     <div class="row">
       <div class="col-lg-12">
         <h3 class="page-header" style="margin-top: 0;"><i class="fa fa-home"></i> Beranda</h3>
-        <ol class="breadcrumb">
-          <li><i class="fa fa-home"></i><a href="#">Beranda</a></li>
-        </ol>
       </div>
     </div>
     
-   <div class="row">
+    <div class="row">
       <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
         <div class="info-box blue-bg">
           <i class="fa fa-cloud-download"></i>

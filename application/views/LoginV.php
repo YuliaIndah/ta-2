@@ -40,13 +40,18 @@
             </div>
           </div>
           <div class="col-sm-5 form-box wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
-            <div class="form-top-left">
-              <h3 style="text-align: left; margin-left: 30px;">Silahkan Masuk </h3>
-              <p>Masukkan email dan sandi anda disini : </p>
-            </div>
-            <div>
-            </div>
-            <div class="form-bottom">
+            <div class="form-top">
+              <div class="form-top-left">
+                <h3>Silahkan Masuk </h3>
+                <p>Masukkan email dan sandi anda disini : </p>
+              </div>
+              <div>
+              <!--   <div>  
+                  <p><?php echo $this->session->flashdata('msg'); ?></p>  
+               </div> -->
+             </div>
+           </div>
+           <div class="form-bottom">
              <form action="<?php echo site_url('LoginC/signin'); ?>" method="post">
 
               <?php 
@@ -62,12 +67,12 @@
 
               <div class="form-group">
                 <label class="sr-only" for="form-email">Email</label>
-                <input type="text" name="email" class="form-email form-control" placeholder="Masukkan email" autofocus required oninvalid="this.setCustomValidity('email tidak boleh kosong')" oninput="setCustomValidity('')">
+                <input type="text" name="email" class="form-email form-control" placeholder="email" autofocus required oninvalid="this.setCustomValidity('email tidak boleh kosong')" oninput="setCustomValidity('')">
               </div>
 
               <div class="form-group">
                 <label class="sr-only" for="form-password">Sandi</label>
-                <input type="password" name="password" class="form-password form-control" placeholder="Masukkan kata sandi" required oninvalid="this.setCustomValidity('Password tidak boleh kosong')" oninput="setCustomValidity('')">
+                <input type="password" name="password" class="form-password form-control" placeholder="Password" required oninvalid="this.setCustomValidity('Password tidak boleh kosong')" oninput="setCustomValidity('')">
               </div>
 
               <div class="form-group">
@@ -78,9 +83,9 @@
                 <input type="text" name="captcha" class="form-control" placeholder="Masukkan Captcha" required oninvalid="this.setCustomValivdity('Captcha tidak boleh kosong')" oninput="setCustomValidity('')">
               </div>
 
-              <button type="submit" class="btn btn-info col-sm-3">Masuk</button>
+              <button type="submit" class="btn">Masuk</button>
               <div class="form-links">
-                <p>Belum punya akun? <a href="<?php echo site_url('LoginC/daftar')?>" class="launch-modal" data-modal-id="modal-privacy"> - Daftar</a></p>
+                <p>Belum punya akun? <a href="<?php echo site_url('UserC/daftar')?>" class="launch-modal" data-modal-id="modal-privacy"> - Daftar</a></p>
                 <!-- <a href="" class="launch-modal" data-modal-id="modal-faq">FAQ</a> -->
               </div>
             </form>

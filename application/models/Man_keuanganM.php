@@ -11,14 +11,25 @@ class Man_keuanganM extends CI_Model{
 		return TRUE;
 	}
 
-	function get_kegiatan_diajukan(){ //ambil semua data kegiatan yang diajukan yang diajukan
+	function get_data_pengajuan($kode_jenis_kegiatan, $kode_unit, $kode_jabatan){ //ambil semua data kegiatan yang diajukan 
 		$this->db->select('*');
 		$this->db->from('kegiatan');
-		$this->db->join('pengguna', 'pengguna.no_identitas = kegiatan.no_identitas');
-		$this->db->join('jabatan', 'jabatan.kode_jabatan = pengguna.kode_jabatan');
-		$this->db->join('unit', 'unit.kode_unit = pengguna.kode_unit');
 		$this->db->join('jenis_kegiatan', 'jenis_kegiatan.kode_jenis_kegiatan = kegiatan.kode_jenis_kegiatan');
 		$this->db->join('file_upload', 'file_upload.kode_kegiatan = kegiatan.kode_kegiatan');
+		$this->db->where('jenis_kegiatan.kode_jenis_kegiatan', $kode_jenis_kegiatan);
+		if($kode_jenis_kegiatan == 2){ //kegiatan mahasiswa
+			$this->db->join('progress', 'progress.kode_fk = kegiatan.kode_kegiatan');
+			$this->db->join('pengguna', 'pengguna.no_identitas = progress.no_identitas');
+			$this->db->join('jabatan', 'jabatan.kode_jabatan = pengguna.kode_jabatan');
+			$this->db->join('unit', 'unit.kode_unit = pengguna.kode_unit');
+			$this->db->where('unit.kode_unit', $kode_unit);
+			$this->db->where('jabatan.kode_jabatan', $kode_jabatan);
+		}else{ //kegiatan pegawai
+			$this->db->join('pengguna', 'pengguna.no_identitas = kegiatan.no_identitas');
+			$this->db->join('jabatan', 'jabatan.kode_jabatan = pengguna.kode_jabatan');
+			$this->db->join('unit', 'unit.kode_unit = pengguna.kode_unit');
+		}
+		
 		$query = $this->db->get();
 		if($query){
 			return $query;
@@ -27,7 +38,29 @@ class Man_keuanganM extends CI_Model{
 		}
 	}
 
-	public function get_kegiatan_diajukan_by_id($id){ //ambil data kegiatan yang diajukan sesuai id
+	function get_data_pengajuan_staf(){ //ambil semua kegiatan yang diajukan staf
+		$kode_unit = 3; //keuangan
+		$kode_jabatan = 4;  //staf
+		$this->db->select('*');
+		$this->db->from('kegiatan');
+		$this->db->join('pengguna', 'pengguna.no_identitas = kegiatan.no_identitas');
+		$this->db->join('jabatan', 'jabatan.kode_jabatan = pengguna.kode_jabatan');
+		$this->db->join('unit', 'unit.kode_unit = pengguna.kode_unit');
+		$this->db->join('jenis_kegiatan', 'jenis_kegiatan.kode_jenis_kegiatan = kegiatan.kode_jenis_kegiatan');
+		$this->db->join('file_upload', 'file_upload.kode_kegiatan = kegiatan.kode_kegiatan');
+		$this->db->where('unit.kode_unit', $kode_unit);
+		$this->db->where('jabatan.kode_jabatan', $kode_jabatan);
+		$this->db->where('jenis_kegiatan.kode_jenis_kegiatan = 1'); //kegiatan pegawai
+
+		$query = $this->db->get();
+		if($query){
+			return $query;
+		}else{
+			return null;
+		}
+	}
+
+	public function get_data_pengajuan_by_id($id){ //ambil data kegiatan yang diajukan sesuai id
 		$this->db->select('*');
 		$this->db->from('kegiatan');
 		$this->db->join('pengguna', 'pengguna.no_identitas = kegiatan.no_identitas');

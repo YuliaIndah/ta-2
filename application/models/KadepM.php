@@ -14,16 +14,24 @@ class KadepM extends CI_Model{
 		return $query;
 	}
 
-	function get_data_pengajuan(){ //ambil semua data pengajuan yang diajukan
+	function get_data_pengajuan($kode_jenis_kegiatan, $kode_unit, $kode_jabatan){ //ambil semua data pengajuan yang diajukan
 		$this->db->select('*');
 		$this->db->from('kegiatan');
 		$this->db->join('jenis_kegiatan', 'jenis_kegiatan.kode_jenis_kegiatan = kegiatan.kode_jenis_kegiatan');
 		$this->db->join('file_upload', 'file_upload.kode_kegiatan = kegiatan.kode_kegiatan');
-		$this->db->join('progress', 'progress.kode_fk = kegiatan.kode_kegiatan');
-		$this->db->join('pengguna', 'pengguna.no_identitas = progress.no_identitas');
-		$this->db->join('jabatan', 'jabatan.kode_jabatan = pengguna.kode_jabatan');
-		$this->db->join('unit', 'unit.kode_unit = pengguna.kode_unit');
-		$this->db->where('unit.kode_unit = 3 AND jabatan.kode_jabatan = 3'); //menampilkan kegiatan yang progress nya inputan man_keuangan
+		$this->db->where('jenis_kegiatan.kode_jenis_kegiatan', $kode_jenis_kegiatan);
+		if($kode_jenis_kegiatan == 2){ //kegiatan mahasiswa
+			$this->db->join('progress', 'progress.kode_fk = kegiatan.kode_kegiatan');
+			$this->db->join('pengguna', 'pengguna.no_identitas = progress.no_identitas');
+			$this->db->join('jabatan', 'jabatan.kode_jabatan = pengguna.kode_jabatan');
+			$this->db->join('unit', 'unit.kode_unit = pengguna.kode_unit');
+			$this->db->where('unit.kode_unit', $kode_unit);
+			$this->db->where('jabatan.kode_jabatan', $kode_jabatan);
+		}else{
+			$this->db->join('pengguna', 'pengguna.no_identitas = kegiatan.no_identitas');
+			$this->db->join('jabatan', 'jabatan.kode_jabatan = pengguna.kode_jabatan');
+			$this->db->join('unit', 'unit.kode_unit = pengguna.kode_unit');
+		}
 		
 		$query = $this->db->get();
 		if($query){
@@ -63,7 +71,7 @@ class KadepM extends CI_Model{
 		$config['max_size']	= '';
 		$config['remove_space'] = TRUE;
 		$config['encrypt_name'] = TRUE;
-	
+
 		$this->load->library('upload', $config); // Load konfigurasi uploadnya
 		if($this->upload->do_upload('file_upload')){ // Lakukan upload dan Cek jika proses upload berhasil
 			// Jika berhasil :
