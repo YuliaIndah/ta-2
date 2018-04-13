@@ -201,7 +201,7 @@ class KadepC extends CI_Controller {
 		);
 
 			if($this->UserM->insert_progress($data)){ //insert progress
-				redirect('KadepC/persetujuan_kegiatan_pegawai');
+				redirect_back(); // redirect kembali ke halaman sebelumnya
 			}
 	}
 }

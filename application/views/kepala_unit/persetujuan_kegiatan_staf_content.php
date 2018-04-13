@@ -133,11 +133,10 @@
     $(document).ready(function(){
       $('#myModal').on('show.bs.modal', function (e) {
         var rowid = $(e.relatedTarget).data('id');
-        var kode  = 3;
             //menggunakan fungsi ajax untuk pengambilan data
             $.ajax({
               type : 'get',
-              url : '<?php echo base_url().'Man_keuanganC/detail_pengajuan/'?>'+rowid,
+              url : '<?php echo base_url().'Kepala_unitC/detail_pengajuan/'?>'+rowid,
                 //data :  'rowid='+ rowid, // $_POST['rowid'] = rowid
                 success : function(data){
                 $('.fetched-data').html(data);//menampilkan data ke dalam modal
@@ -153,7 +152,7 @@
             //menggunakan fungsi ajax untuk pengambilan data
             $.ajax({
               type : 'get',
-              url : '<?php echo base_url().'Man_keuanganC/detail_kegiatan/'?>'+rowid,
+              url : '<?php echo base_url().'Kepala_unitC/detail_kegiatan/'?>'+rowid,
                 //data :  'rowid='+ rowid, // $_POST['rowid'] = rowid
                 success : function(data){
                 $('.fetched-data').html(data);//menampilkan data ke dalam modal

@@ -73,16 +73,16 @@
               <span>Beranda</span>
             </a>
           </li>
-          <!-- <li class="sub-menu">
+         <li class="sub-menu">
             <a href="javascript:;" class="">
               <i class="icon_bag_alt"></i>
               <span>Persetujuan</span>
               <span class="menu-arrow arrow_carrot-right"></span>
             </a>
             <ul class="sub">
-              <li> <a href="<?php echo site_url('Kepala_unitC/persetujuan_kegiatan_mahasiswa')?>">Kegiatan Mahasiswa</a></li>
+              <li> <a href="<?php echo site_url('Kepala_unitC/persetujuan_kegiatan_staf')?>">Staf</a></li>
             </ul>
-          </li> -->
+          </li>
           <li>
             <a href="<?php echo site_url('Kepala_unitC/pengajuan_kegiatan')?>">
               <i class="icon_ol"></i>

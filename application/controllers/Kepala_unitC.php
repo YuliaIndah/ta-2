@@ -12,7 +12,7 @@ class Kepala_unitC extends CI_Controller {
 		Kepala_unit_access();
 	}
 	public function data_diri(){ //halaman data diri
-		$data['title'] = "Data Diri | Staf Keuangan";
+		$data['title'] = "Data Diri | Kepala Unit";
 		$this->data['data_diri'] = $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
 		$data['body'] = $this->load->view('kepala_unit/data_diri_content', $this->data, true) ;
 		$this->load->view('kepala_unit/index_template', $data);
@@ -39,14 +39,14 @@ class Kepala_unitC extends CI_Controller {
 
 
 	public function index(){ //halaman index Sekretaris Departemen (dashboard)
-		$data['title'] = "Beranda | Staf Keuangan";
+		$data['title'] = "Beranda | Kepala Unit";
 		$this->data['data_diri'] = $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
 		$data['body'] = $this->load->view('kepala_unit/index_content', $this->data, true) ;
 		$this->load->view('kepala_unit/index_template', $data);
 	}
 
 	public function pengajuan_kegiatan(){ //halaman kegiatan pegawai
-		$data['title'] = "Pengajuan Kegiatan | Staf Keuangan";
+		$data['title'] = "Pengajuan Kegiatan | Kepala Unit";
 		$this->data['data_diri'] = $this->UserM->get_data_diri()->result()[0]; //get data diri buat nampilin nama di pjok kanan
 		$this->data['data_kegiatan'] = $this->UserM->get_kegiatan_pegawai()->result();	//menampilkan kegiatan yang diajukan user sebagai pegwai
 		$data['body'] = $this->load->view('kepala_unit/pengajuan_kegiatan_content', $this->data, true);
@@ -102,9 +102,56 @@ class Kepala_unitC extends CI_Controller {
 	}
 
 	public function pengaturan_akun(){ //halaman pengaturan akun
-		$data['title'] = "Pengaturan Akun | Sekretaris Departemen";
+		$data['title'] = "Pengaturan Akun | Kepala Unit";
 		$this->data['data_diri'] = $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
 		$data['body'] = $this->load->view('kepala_unit/pengaturan_akun_content', $this->data, true) ;
 		$this->load->view('kepala_unit/index_template', $data);
+	}
+
+	public function persetujuan_kegiatan_staf(){ //halaman persetujuan kegiatan staf (manajer keuangan)
+
+		$data['title'] = "Persetujuan Kegiatan Staf | Kepla Unit";
+		$this->data['data_pengajuan_kegiatan'] = $this->Kepala_unitM->get_data_pengajuan_staf()->result();
+		$this->data['data_diri'] = $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
+		$data['body'] = $this->load->view('kepala_unit/persetujuan_kegiatan_staf_content', $this->data, true) ;
+		$this->load->view('kepala_unit/index_template', $data);
+	}
+
+	public function detail_pengajuan($id){ //menampilkan modal dengan isi dari detail_pengajuan.php
+		$data['detail_kegiatan'] = $this->Kepala_unitM->get_data_pengajuan_by_id($id)->result()[0];
+		$data['data_diri'] = $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
+		$data['nama_progress'] = $this->UserM->get_pilihan_nama_progress()->result();
+		$this->load->view('kepala_unit/detail_pengajuan', $data);
+	}
+
+	public function detail_kegiatan($id){ //menampilkan modal dengan isi dari detail_pengajuan.php
+		$data['detail_kegiatan'] = $this->Kepala_unitM->get_data_pengajuan_by_id($id)->result()[0];
+		$data['data_diri'] = $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
+		$this->load->view('kepala_unit/detail_kegiatan', $data);
+	}
+
+	public function post_progress(){ //posting progress dan update kegiatan (dana disetujui)
+		$no_identitas		= $_POST['no_identitas'];
+		$kode_fk			= $_POST['kode_fk'];
+		$kode_nama_progress	= $_POST['kode_nama_progress'];
+		$komentar			= $_POST['komentar'];
+		$jenis_progress		= $_POST['jenis_progress'];
+		$format_tgl 	= "%Y-%m-%d";
+		$tgl_progress 	= mdate($format_tgl);
+		$format_waktu 	= "%H:%i";
+		$waktu_progress	= mdate($format_waktu);
+		$data = array(
+			'no_identitas' 			=> $no_identitas,
+			'kode_fk'				=> $kode_fk,
+			'kode_nama_progress' 	=> $kode_nama_progress,
+			'komentar'				=> $komentar,
+			'jenis_progress'		=> $jenis_progress,
+			'tgl_progress'			=> $tgl_progress,
+			'waktu_progress'		=> $waktu_progress
+		);
+		
+			if($this->UserM->insert_progress($data)){ //insert progress
+				redirect_back(); // redirect kembali ke halaman sebelumnya
+			}
 	}
 }

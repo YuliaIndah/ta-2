@@ -190,8 +190,8 @@ class Man_keuanganC extends CI_Controller {
 		);
 		$data_kegiatan = array('dana_disetujui' => $dana_disetujui, );
 		if($this->Man_keuanganM->update_kegiatan($kode_fk, $data_kegiatan)){ //update dana disetujui
-			if($this->UserM->insert_progress($data)){ //insert progress
-				redirect('Man_keuanganC/persetujuan_kegiatan_pegawai');
+			if($this->UserM->insert_progress($data)){
+				redirect_back(); // redirect kembali ke halaman sebelumnya
 			}else{
 				$this->Man_keuanganM->gajadi_update($kode_fk); //reset dana disetujui ke 0 ketika gagal insert
 			}

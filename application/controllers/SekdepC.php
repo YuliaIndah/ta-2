@@ -155,7 +155,7 @@ class SekdepC extends CI_Controller {
 		);
 		
 			if($this->UserM->insert_progress($data)){ //insert progress
-				redirect('SekdepC/persetujuan_kegiatan_mahasiswa');
+				redirect_back(); // redirect kembali ke halaman sebelumnya
 			}
 	}
 
