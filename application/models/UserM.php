@@ -116,6 +116,17 @@
 		return $query; 
 	}
 
+	public function get_id_pimpinan($kode_unit){
+		$this->db->select('pengguna.no_identitas');
+		$this->db->from('pengguna');
+		$this->db->join('jabatan', 'jabatan.kode_jabatan = pengguna.kode_jabatan');
+		$this->db->join('unit', 'unit.kode_unit = pengguna.kode_unit');
+		$this->db->where('unit.kode_unit', $kode_unit);
+		$this->db->where('jabatan.kode_jabatan != "4"');
+
+		return $query = $this->db->get();
+	}
+
 	// =================BARANG================
 
 	function get_barang(){ //menampilkan data seluruh barang

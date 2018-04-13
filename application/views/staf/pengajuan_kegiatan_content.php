@@ -14,6 +14,7 @@
     <div class="row">
       <div class="col-lg-12">
        <?php 
+       var_dump($id_pimpinan);
        $data=$this->session->flashdata('sukses');
        if($data!=""){ ?>
        <div class="alert alert-success"><strong>Sukses! </strong> <?=$data;?></div>
