@@ -34,13 +34,26 @@ class KadepM extends CI_Model{
 			$this->db->join('jabatan', 'jabatan.kode_jabatan = pengguna.kode_jabatan');
 			$this->db->join('unit', 'unit.kode_unit = pengguna.kode_unit');
 		}
-		
 		$query = $this->db->get();
 		if($query){
 			return $query;
 		}else{
 			return null;
 		}
+	}
+
+	function get_data_status($array_data_pengajuan, $no_identitas){
+		$this->db->select('progress.kode_fk');
+		$this->db->from('progress');
+		// $this->db->join('pengguna', 'progress.no_identitas = pengguna.no_identitas');
+		$this->db->where('progress.no_identitas', $no_identitas);
+		$this->db->where_in('progress.kode_fk', $array_data_pengajuan);
+		$this->db->where('progress.jenis_progress = "kegiatan"');
+		return $query = $this->db->get();
+
+		// $names = array('Frank', 'Todd', 'James');
+		// $this->db->where_in('username', $names);
+
 	}
 
 	public function get_data_pengajuan_by_id($id){ //ambil data pengajuan sesuai id

@@ -31,15 +31,32 @@ class KadepC extends CI_Controller {
 
 	public function persetujuan_kegiatan_mahasiswa(){ //halaman persetujuan kegiatan mahasiswa (kadep)
 		// menampilkan kegiatan mahasiswa yang telah di beri porgress oleh manajer Keuangan
+		$no_identitas = $this->session->userdata('no_identitas');
 		$kode_jenis_kegiatan = 2; //kegiatan mahasiswa
 		$kode_unit = 3; // unit Keuangan
 		$kode_jabatan = 3; // jabatan manajer
 		$data['title'] = "Persetujuan Kegiatan Mahasiswa | Kepala Departemen";
 		$this->data['data_pengajuan_kegiatan_mahasiswa'] = $this->KadepM->get_data_pengajuan($kode_jenis_kegiatan, $kode_unit, $kode_jabatan)->result();
+
+		//mengumpulkan kode kegiatan (kode_fk) yang tampil di persetujuan mahasiswa
+		$array_data_pengajuan = array();
+		foreach ($this->data['data_pengajuan_kegiatan_mahasiswa'] as $pengajuan) {
+			array_push($array_data_pengajuan, $pengajuan->kode_kegiatan);
+		}
+		$this->data['data_status'] = $this->KadepM->get_data_status($array_data_pengajuan, $no_identitas)->result(); //select kode_fk(progress) yang kode fk nya ada di array_data_pengajuan 
+		
+		//mengumpulkan kode kegiatan (kode_fk) yang ada progress nya dijadikan array
+		$array_data_status = array();
+		foreach ($this->data['data_status'] as $status) {
+			array_push($array_data_status, $status->kode_fk);
+		}
+		$this->data['array_data_status'] = $array_data_status;
+
 		$this->data['data_diri'] = $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
 		$data['body'] = $this->load->view('kadep/persetujuan_kegiatan_mahasiswa_content', $this->data, true) ;
 		$this->load->view('kadep/index_template', $data);
 	}
+
 	public function persetujuan_kegiatan_pegawai(){ //halaman persetujuan kegiatan pegawai (kadep)
 		$kode_jenis_kegiatan = 1; //kegiatan pegawai
 		$kode_unit = ""; 

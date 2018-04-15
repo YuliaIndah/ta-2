@@ -16,9 +16,6 @@
           <div class="card-header">
             <div class="card-body">
               <div class="table-responsive">
-                <?php
-                  // var_dump($detail_kegiatan);
-                ?>
                 <table id="example" class="table table-striped table-bordered table-condensed" cellspacing="0" width="100%">
                   <thead>
                     <tr class="text-center">
@@ -39,6 +36,8 @@
                   <tbody>
                     <?php
                     foreach ($data_pengajuan_kegiatan_mahasiswa as $kegiatan) {
+                      // foreach ($data_status[0] as $status) {
+
                       ?>
                       <tr>
                         <td class="text-center relative">
@@ -54,8 +53,8 @@
                         <td><?php echo $new_tgl_pengajuan;?></td>
 
                         <?php
-                          $tgl_kegiatan = $kegiatan->tgl_kegiatan;
-                          $new_tgl_kegiatan = date('d-m-Y', strtotime($tgl_kegiatan));
+                        $tgl_kegiatan = $kegiatan->tgl_kegiatan;
+                        $new_tgl_kegiatan = date('d-m-Y', strtotime($tgl_kegiatan));
                         ?>
                         <td><?php echo $new_tgl_kegiatan;?></td>
                         <td><?php echo $kegiatan->dana_diajukan;?></td>
@@ -65,64 +64,77 @@
                         <!-- <td><?php echo $kegiatan->nama;?></td> -->
                         <!-- <td><?php echo $kegiatan->nama_jabatan." ".$kegiatan->nama_unit;?></td> -->
                         <td><?php echo $kegiatan->nama_jenis_kegiatan;?></td>
-                        <td>Status</td>
                         <td>
-                          <a href="#myModal" id="custId" data-toggle="modal" data-id="<?php echo $kegiatan->kode_kegiatan;?>" data-toggle="tooltip" title="Aksi" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-edit"></span></a>
-                        </td>
-                      </tr>
-                      <?php
-                    }
-                    ?>
-                  </tbody>
-                </table>
+                          <!-- cek apakah kode kegiatan nya ada didalam array gak -->
+                         </td>
+                          <td>
+                          <?php
+                          if(in_array($kegiatan->kode_kegiatan, $array_data_status)){
+                            echo "Sudah input progress";  
+                          }
+                          else{
+                            ?>
+                             <a href="#myModal" id="custId" data-toggle="modal" data-id="<?php echo $kegiatan->kode_kegiatan;?>" data-toggle="tooltip" title="Aksi" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-edit"></span></a>
+                          <?php
+                            // echo "tidak ada";  
+                          }
+                          ?>
+                          </td>
+                        </tr>
+                        <?php
+                    // }
+                      }
+                      ?>
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </div>
         </div>
+      </section>
+      <div class="text-center">
+        <div class="credits">
+          <a href="https://bootstrapmade.com/free-business-bootstrap-themes-website-templates/">Business Bootstrap Themes</a> by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+        </div>
       </div>
     </section>
-    <div class="text-center">
-      <div class="credits">
-        <a href="https://bootstrapmade.com/free-business-bootstrap-themes-website-templates/">Business Bootstrap Themes</a> by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-      </div>
-    </div>
-  </section>
-<!-- modal detail pengajuan -->
-  <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Persetujuan Kegiatan</h4>
-        </div>
-        <div class="modal-body">
-          <div class="fetched-data"></div>
-        </div>
-        <div class="modal-footer">
+    <!-- modal detail pengajuan -->
+    <div class="modal fade" id="myModal" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Persetujuan Kegiatan</h4>
+          </div>
+          <div class="modal-body">
+            <div class="fetched-data"></div>
+          </div>
+          <div class="modal-footer">
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- modal detail kegiatan -->
-  <div class="modal fade" id="myModal1" role="dialog">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Detail Kegiatan</h4>
-        </div>
-        <div class="modal-body">
-          <div class="fetched-data"></div>
-        </div>
-        <div class="modal-footer">
+    <!-- modal detail kegiatan -->
+    <div class="modal fade" id="myModal1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Detail Kegiatan</h4>
+          </div>
+          <div class="modal-body">
+            <div class="fetched-data"></div>
+          </div>
+          <div class="modal-footer">
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <script src="<?php echo base_url();?>assets/js/jquery.min.js"></script>
-  <script type="text/javascript">
+    <script src="<?php echo base_url();?>assets/js/jquery.min.js"></script>
+    <script type="text/javascript">
     // js detail pengajuan
     $(document).ready(function(){
       $('#myModal').on('show.bs.modal', function (e) {
@@ -140,9 +152,9 @@
     });
 
 // js detail kegiatan
-     $(document).ready(function(){
-      $('#myModal1').on('show.bs.modal', function (e) {
-        var rowid = $(e.relatedTarget).data('id');
+$(document).ready(function(){
+  $('#myModal1').on('show.bs.modal', function (e) {
+    var rowid = $(e.relatedTarget).data('id');
             //menggunakan fungsi ajax untuk pengambilan data
             $.ajax({
               type : 'get',
@@ -153,6 +165,14 @@
               }
             });
           });
-    });
+});
 
-  </script>
+</script>
+
+<!-- <script type="text/javascript">
+  $(document).ready(function () {
+    var site_url = "<?php echo base_url('/controller'); ?>";
+    $("#season").load(site_url);
+  });
+</script>
+<div id="season"> </div> -->
