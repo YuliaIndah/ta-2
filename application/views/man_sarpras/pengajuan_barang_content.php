@@ -16,9 +16,6 @@
           <div class="card-header">
             <div class="card-body">
               <div class="table-responsive">
-                <!-- <?php
-                  var_dump($data_pengajuan_kegiatan);
-                  ?> -->
                   <table id="example" class="table table-striped table-bordered table-condensed" cellspacing="0" width="100%">
                     <thead>
                       <tr class="text-center">
@@ -39,9 +36,10 @@
                           ?>
                           <tr>
                           <td><?php echo $barang->nama_barang;?></td>
-                          <td><?php echo $barang->nama_barang;?></td>
+                          <td><img style="height: 50px;" src="<?php echo base_url();?>assets/file_gambar/<?php echo $barang->file_gambar;?>"></td>
                           <td><?php echo $barang->tgl_item_pengajuan;?></td>
                           <td><?php echo $barang->jumlah;?></td>
+                          <td><?php echo $barang->status_pengajuan;?></td>
                           <td><?php echo $barang->nama;?></td>
                           <td><?php echo $barang->nama_jabatan;?></td>
                           <td></td>

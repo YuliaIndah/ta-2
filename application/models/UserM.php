@@ -73,7 +73,7 @@
 
 	public function upload(){ // Fungsi untuk upload file ke folder
 		$config['upload_path'] = './assets/file_upload';
-		$config['allowed_types'] = 'pdf';
+		$config['allowed_types'] = 'pdf|jpg|PNG|JPG|jpeg';
 		$config['max_size']	= '';
 		$config['remove_space'] = TRUE;
 		$config['encrypt_name'] = TRUE;
