@@ -27,7 +27,7 @@
           <div class="card-header">
             <div class="card-body">
               <a class="btn btn-info" data-toggle="modal" data-target="#myModal"><i class="icon_plus_alt2"> </i>Ajukan Barang</a>
-               <a class="btn btn-info" data-toggle="modal" data-target="#myModal"><i class="icon_plus_alt2"> </i>Ajukan Barang Baru</a>
+               <a class="btn btn-info" data-toggle="modal" data-target="#myModal1"><i class="icon_plus_alt2"> </i>Ajukan Barang Baru</a>
               <div class="table-responsive">
                   <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
                     <thead>
@@ -48,14 +48,14 @@
                         ?>
                         <tr>
                           <td><?php echo $barang->nama_item_pengajuan; ?></td>
-                          <td><?php echo $barang->file_gambar; ?></td>
+                          <td><img style="height: 50px;" src="<?php echo base_url();?>assets/file_gambar/<?php echo $barang->file_gambar;?>"></td>
                           <td><?php echo $barang->nama_barang; ?></td>
                           <td><?php echo $barang->nama_jenis_barang; ?></td>
                           <td><?php echo $barang->harga_satuan; ?></td>
                           <td><?php echo $barang->jumlah; ?></td>
                           <td><?php echo $barang->status_pengajuan; ?></td>
                           <td>
-                              <a href="#myModal1" id="custId" data-toggle="modal" data-id="<?php echo $barang->kode_item_pengajuan;?>" data-toggle="tooltip" title="Aksi" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-edit"></span></a>
+                              <a href="#myModal2" id="custId" data-toggle="modal" data-id="<?php echo $barang->kode_item_pengajuan;?>" data-toggle="tooltip" title="Aksi" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-edit"></span></a>
                           </td>
                         </tr>
 
@@ -80,7 +80,7 @@
       </div>
     </section>
 
-<!-- Modal Ubah -->
+<!-- Modal Tambah Pengajuan Barang -->
     <div aria-hidden="true" aria-labelledby="myModal" role="dialog" tabindex="-1" id="myModal" class="modal fade">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -127,9 +127,9 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-lg-4 col-sm-2 control-label">Merek :</label>
+              <label class="col-lg-4 col-sm-2 control-label">Merk :</label>
               <div class="col-lg-8">
-                <input type="text" class="form-control" id="merek" name="merek" placeholder="Merek">
+                <input type="text" class="form-control" id="merk" name="merk" placeholder="Merk">
               </div>
             </div>
             <div class="form-group">
@@ -143,8 +143,7 @@
               <div class="col-lg-8">
                 <input type="file" id="file_gambar" name="file_gambar" >
               </div>
-            </div>
-             
+            </div>           
 
             </div>
              <div class="modal-footer">
@@ -156,10 +155,10 @@
       </div>
     </div>
   </div>
-<!-- END Modal Ubah -->
+<!-- END Modal Tambah Pengajuan Barang -->
 
 <!-- modal ubah barang -->
-  <div class="modal fade" id="myModal1" role="dialog">
+  <div class="modal fade" id="myModal2" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">

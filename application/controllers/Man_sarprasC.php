@@ -194,7 +194,7 @@ class Man_sarprasC extends CI_Controller {
 		$this->form_validation->set_rules('nama_item_pengajuan', 'Nama Item Pengajuan','required');
 		$this->form_validation->set_rules('url', 'URL','required');
 		$this->form_validation->set_rules('harga_satuan', 'Harga Satuan','required');
-		$this->form_validation->set_rules('merek', 'Merek','required');
+		$this->form_validation->set_rules('merk', 'Merk','required');
 		$this->form_validation->set_rules('jumlah', 'Jumlah Barang','required');
 		// $this->form_validation->set_rules('pimpinan', 'Pimpinan','required');
 		if($this->form_validation->run() == FALSE)
@@ -203,17 +203,17 @@ class Man_sarprasC extends CI_Controller {
 			redirect('Man_sarprasC/ajukan_barang') ;
 			//redirect ke halaman pengajuan barang
 		}else{
-			$upload = $this->Man_sarprasM->upload_gambar(); // lakukan upload file dengan memanggil function upload yang ada di KadepM.php
+			$upload = $this->Man_sarprasM->upload(); // lakukan upload file dengan memanggil function upload yang ada di Man_sarprasM.php
 			$no_identitas 		= $_POST['no_identitas'];
 			$kode_barang 		= $_POST['kode_barang'];
 			$tgl_item_pengajuan = $_POST['tgl_item_pengajuan'];
 			$nama_item_pengajuan= $_POST['nama_item_pengajuan'];
 			$url 				= $_POST['url'];
 			$harga_satuan 		= $_POST['harga_satuan'];
-			$merek 				= $_POST['merek'];
+			$merk 				= $_POST['merk'];
 			$jumlah 			= $_POST['jumlah'];
-			$file_gambar 		= $_POST['file_gambar'];
-			$pimpinan			= $_POST['pimpinan'];
+			// $file_gambar 		= $_POST['file_gambar'];
+			// $pimpinan			= $_POST['pimpinan'];
 
 			$baru = "baru";
 
@@ -225,14 +225,14 @@ class Man_sarprasC extends CI_Controller {
 				'nama_item_pengajuan'	=> $nama_item_pengajuan,
 				'url'					=> $url,
 				'harga_satuan'			=> $harga_satuan,
-				'merek'					=> $merek,
+				'merk'					=> $merk,
 				'jumlah'				=> $jumlah,
-				'file_gambar' 			=> $upload['file']['file_name'],
-				'pimpinan'				=> $pimpinan
+				'file_gambar' 			=> $upload['file']['file_name']
+				// 'pimpinan'				=> $pimpinan
 
 			);
 			if($upload['result'] == "success"){ // Jika proses upload sukses
-				$this->Man_sarprasM->insert_tambah_barang($data_pengguna);
+				$this->Man_sarprasM->insert_pengajuan_barang($data_pengguna);
 				$this->session->set_flashdata('sukses','Data Barang berhasil ditambahkan');
 				redirect('Man_sarprasC/ajukan_barang');
 			}else{ // Jika proses upload gagal
