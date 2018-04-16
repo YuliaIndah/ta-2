@@ -29,7 +29,7 @@ function Man_keuangan_acess(){
 
 function Staf_sarpras_access(){
     $ci=& get_instance();
-    if($ci->session->userdata('kode_jabatan') != 5 ){
+    if($ci->session->userdata('kode_jabatan') != 4 && $ci->session->userdata('kode_unit') != 2){
         redirect('LoginC/logout');
     }
 }

@@ -31,9 +31,22 @@ class Man_sarprasC extends CI_Controller {
 	public function pengajuan_barang(){ //halaman persetujuan barang (man_sarpras)
 		$data['title'] = "Pengajuan Barang | Manajer Sarana dan Prasarana";
 		$this->data['data_diri'] = $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
+
 		$this->data['data_pengajuan_barang'] = $this->Man_sarprasM->get_data_pengajuan()->result();
 		$data['body'] = $this->load->view('man_sarpras/pengajuan_barang_content', $this->data, true) ;
 		$this->load->view('man_sarpras/index_template', $data);
+	}
+
+	public function detail_persetujuan_terima($id){ //menampilkan modal dengan isi dari detail_pengajuan.php
+		$data['detail_barang'] = $this->Man_sarprasM->get_data_pengajuan_by_id($id)->result()[0];
+		$data['data_diri'] = $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
+		$this->load->view('man_sarpras/detail_persetujuan_terima', $data);
+	}
+
+	public function detail_persetujuan_tolak($id){ //menampilkan modal dengan isi dari detail_pengajuan.php
+		$data['detail_barang'] = $this->Man_sarprasM->get_data_pengajuan_by_id($id)->result()[0];
+		$data['data_diri'] = $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
+		$this->load->view('man_sarpras/detail_persetujuan_tolak', $data);
 	}
 
 	public function kelola_barang(){ //halaman kelola barang(man_sarpras)
@@ -94,6 +107,54 @@ class Man_sarprasC extends CI_Controller {
 		$this->UserM->ubah_data_barang($kode_barang,$data);
 		redirect('Man_sarprasC/kelola_barang');
 	}
+
+	public function post_persetujuan_barang(){ //fungsi untuk tambah progress persetujuan barang
+		$this->form_validation->set_rules('no_identitas', 'No Identitas','required');
+		$this->form_validation->set_rules('kode_fk', 'Kode FK','required');
+		$this->form_validation->set_rules('kode_nama_progress', 'Kode Nama Progress','required');
+		$this->form_validation->set_rules('komentar', 'Komentar','required');
+		$this->form_validation->set_rules('jenis_progress', 'Merk','required');
+		if($this->form_validation->run() == FALSE)
+		{
+			$this->session->set_flashdata('error','Data Persetujuan anda tidak berhasil ditambahkan1 ');
+			redirect('Man_sarprasC/pengajuan_barang') ;
+			//redirect ke halaman pengajuan barang
+		}else{
+			
+			$no_identitas 		= $_POST['no_identitas'];
+			$kode_fk 		    = $_POST['kode_fk'];
+			$kode_nama_progress = $_POST['kode_nama_progress'];
+			$komentar           = $_POST['komentar'];
+			$jenis_progress 	= $_POST['jenis_progress'];
+
+			$format_waktu 		= "%H:%i";
+			$waktu_progress 	= mdate($format_waktu);
+
+			$format_tgl 		= "%Y-%m-%d";
+			$tgl_progress 		= mdate($format_tgl);
+
+
+			$data_progress		= array(
+				'no_identitas'		=> $no_identitas,
+				'kode_fk'			=> $kode_fk,
+				'kode_nama_progress'=> $kode_nama_progress,
+				'komentar'			=> $komentar,
+				'jenis_progress'	=> $jenis_progress,
+				'tgl_progress'		=> $tgl_progress,
+				'waktu_progress'	=> $waktu_progress
+
+			);
+			if($this->UserM->insert_progress($data_progress)){
+				$this->session->set_flashdata('sukses','Data Barang berhasil ditambahkan');
+				redirect('Man_sarprasC/pengajuan_barang');
+			}else{
+				$this->session->set_flashdata('error','Data Barang tidak berhasil ditambahkan2');
+				redirect('Man_sarprasC/pengajuan_barang');
+			}
+
+		}
+
+	}	
 
 	// sebagai pegawai
 
@@ -215,7 +276,7 @@ class Man_sarprasC extends CI_Controller {
 			// $file_gambar 		= $_POST['file_gambar'];
 			// $pimpinan			= $_POST['pimpinan'];
 
-			$baru = "baru";
+			$baru = "baru"; //buat status pengajuan berstatus baru ketika baru dibuat
 
 			$data_pengguna		= array(
 				'no_identitas'			=> $no_identitas,
@@ -232,13 +293,13 @@ class Man_sarprasC extends CI_Controller {
 
 			);
 			if($upload['result'] == "success"){ // Jika proses upload sukses
-				$this->Man_sarprasM->insert_pengajuan_barang($data_pengguna);
+				$this->Man_sarprasM->insert_pengajuan_barang($data_pengguna);  // untuk memasukkan data ke tabel item_pengajuan
 				$this->session->set_flashdata('sukses','Data Barang berhasil ditambahkan');
-				redirect('Man_sarprasC/ajukan_barang');
+				redirect('Man_sarprasC/ajukan_barang');//redirect ke halaman pengajuan barang
 			}else{ // Jika proses upload gagal
 				$data['message'] = $upload['error']; // Ambil pesan error uploadnya untuk dikirim ke file form dan ditampilkan
 				$this->session->set_flashdata('error','Data Pengajuan Kegiatan anda tidak berhasil ditambahkan 2');
-				redirect('Man_sarprasC/ajukan_barang');
+				redirect('Man_sarprasC/ajukan_barang');//redirect ke halaman pengajuan barang
 			}
 
 		}
