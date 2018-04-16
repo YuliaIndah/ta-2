@@ -4,5 +4,4 @@ class StafM extends CI_Model{
 		parent:: __construct();
 		$this->load->database();
 	}
-
 }

@@ -13,6 +13,7 @@
     
     <div class="row">
       <div class="col-lg-12">
+        <!-- Alert -->
        <?php 
        $data=$this->session->flashdata('sukses');
        if($data!=""){ ?>
@@ -23,6 +24,7 @@
        if($data2!=""){ ?>
        <div class="alert alert-danger"><strong> Error! </strong> <?=$data2;?></div>
        <?php } ?>
+
        <div class="card mb-3">
         <div class="card-header">
           <div class="card-body">
@@ -68,8 +70,8 @@
                           $tgl_kegiatan = $kegiatan->tgl_kegiatan;
                           $new_tgl_kegiatan = date('d-m-Y', strtotime($tgl_kegiatan));
                           ?>
-                          <td><?php echo $kegiatan->tgl_pengajuan; ?></td>
-                          <td><?php echo $kegiatan->tgl_kegiatan; ?></td>
+                          <td><?php echo $new_tgl_pengajuan; ?></td>
+                          <td><?php echo $new_tgl_kegiatan; ?></td>
                           <td><?php echo $kegiatan->dana_diajukan; ?></td>
                           <td><?php echo $kegiatan->dana_disetujui; ?></td>
                           <td><?php echo 'status'?></td>

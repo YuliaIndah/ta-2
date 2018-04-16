@@ -12,6 +12,18 @@
     </div>
     <div class="row">
       <div class="col-lg-12">
+        <!-- Alert -->
+        <?php 
+        $data=$this->session->flashdata('sukses');
+        if($data!=""){ ?>
+        <div class="alert alert-success"><strong>Sukses! </strong> <?=$data;?></div>
+        <?php } ?>
+        <?php 
+        $data2=$this->session->flashdata('error');
+        if($data2!=""){ ?>
+        <div class="alert alert-danger"><strong> Error! </strong> <?=$data2;?></div>
+        <?php } ?>
+        
         <div class="card mb-3">
           <div class="card-header">
             <div class="card-body">
@@ -22,15 +34,12 @@
                 <table id="example" class="table table-striped table-bordered table-condensed" cellspacing="0" width="100%">
                   <thead>
                     <tr class="text-center">
-                      <!-- <th>No. Identitas</th> -->
                       <th class="text-center">Nama Kegiatan</th>
                       <th class="text-center">Tgl Pengajuan</th>
                       <th class="text-center">Tgl Kegiatan</th>
                       <th class="text-center">Dana Diajukan</th>
                       <th class="text-center">Dana Disetujui</th>
                       <th class="text-center">File</th>
-                      <!-- <th>Nama Pengaju</th> -->
-                      <!-- <th>Jabatan Pengaju</th> -->
                       <th class="text-center">Jenis Kegiatan</th>
                       <th class="text-center">Status</th>
                       <th class="text-center">Aksi</th>
@@ -54,20 +63,27 @@
                         <td><?php echo $new_tgl_pengajuan;?></td>
 
                         <?php
-                          $tgl_kegiatan = $kegiatan->tgl_kegiatan;
-                          $new_tgl_kegiatan = date('d-m-Y', strtotime($tgl_kegiatan));
+                        $tgl_kegiatan = $kegiatan->tgl_kegiatan;
+                        $new_tgl_kegiatan = date('d-m-Y', strtotime($tgl_kegiatan));
                         ?>
                         <td><?php echo $new_tgl_kegiatan;?></td>
                         <td><?php echo $kegiatan->dana_diajukan;?></td>
                         <td><?php echo $kegiatan->dana_disetujui;?></td>
                         <?php $link = base_url()."assets/file_upload/".$kegiatan->nama_file;?>
                         <td class="text-center"><a target="_blank" href="<?php echo $link?>"><span><img src="<?php echo base_url()?>assets/image/logo/pdf.svg" style="height: 30px;"></span></a></td>
-                        <!-- <td><?php echo $kegiatan->nama;?></td> -->
-                        <!-- <td><?php echo $kegiatan->nama_jabatan." ".$kegiatan->nama_unit;?></td> -->
                         <td><?php echo $kegiatan->nama_jenis_kegiatan;?></td>
                         <td>Status</td>
-                        <td>
-                          <a href="#myModal" id="custId" data-toggle="modal" data-id="<?php echo $kegiatan->kode_kegiatan;?>" data-toggle="tooltip" title="Aksi" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-edit"></span></a>
+                        <td class="text-center">
+                          <?php
+                          if(in_array($kegiatan->kode_kegiatan, $array_data_status)){
+                            echo '<span class="glyphicon glyphicon-ok"></span> Selesai';  
+                          }
+                          else{
+                            ?>
+                            <a href="#myModal" id="custId" data-toggle="modal" data-id="<?php echo $kegiatan->kode_kegiatan;?>" data-toggle="tooltip" title="Masukkan Persetujuan" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-edit"></span></a>
+                            <?php
+                          }
+                          ?>
                         </td>
                       </tr>
                       <?php
@@ -87,7 +103,7 @@
       </div>
     </div>
   </section>
-<!-- modal detail pengajuan -->
+  <!-- modal detail pengajuan -->
   <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -140,9 +156,9 @@
     });
 
 // js detail kegiatan
-     $(document).ready(function(){
-      $('#myModal1').on('show.bs.modal', function (e) {
-        var rowid = $(e.relatedTarget).data('id');
+$(document).ready(function(){
+  $('#myModal1').on('show.bs.modal', function (e) {
+    var rowid = $(e.relatedTarget).data('id');
             //menggunakan fungsi ajax untuk pengambilan data
             $.ajax({
               type : 'get',
@@ -153,6 +169,6 @@
               }
             });
           });
-    });
+});
 
-  </script>
+</script>

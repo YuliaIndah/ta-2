@@ -27,23 +27,38 @@ class MahasiswaC extends CI_Controller {
 		$this->load->view('mahasiswa/index_template', $data);
 	}
 
-	public function edit_data_diri($no_identitas){ // post edit data diri
-		$jen_kel    = $_POST['jen_kel'];
-		$tmp_lahir  = $_POST['tmp_lahir'];
-		$tgl_lahir  = $_POST['tgl_lahir'];
-		$alamat     = $_POST['alamat'];
-		$no_hp      = $_POST['no_hp'];
+	public function edit_data_diri($no_identitas){ //edit data diri
+		$this->form_validation->set_rules('jen_kel', 'Jenis Kelamin','required');
+		$this->form_validation->set_rules('tmp_lahir', 'Tempat Lahir','required');
+		$this->form_validation->set_rules('tgl_lahir', 'Tanggal Lahir','required');
+		$this->form_validation->set_rules('alamat', 'Alamat','required');
+		$this->form_validation->set_rules('no_hp', 'no_hp','required');
+		if($this->form_validation->run() == FALSE){
+			redirect('MahasiswaC/pengajuan_kegiatan');
+			$this->session->set_flashdata('error','Data anda tidak berhasil disimpan');
+		}else{
+			$jen_kel    = $_POST['jen_kel'];
+			$tmp_lahir  = $_POST['tmp_lahir'];
+			$tgl_lahir  = $_POST['tgl_lahir'];
+			$alamat     = $_POST['alamat'];
+			$no_hp      = $_POST['no_hp'];
 
-		$data = array(
-			'jen_kel'     => $jen_kel,
-			'tmp_lahir'   => $tmp_lahir,
-			'tgl_lahir'   => $tgl_lahir,
-			'alamat'      => $alamat,
-			'no_hp'       => $no_hp
-		);
-		$this->UserM->edit_data_diri($no_identitas,$data);
-		$this->session->set_flashdata('sukses','Data anda berhasil disimpan');
-		redirect('MahasiswaC/data_diri');
+			$data = array(
+				'jen_kel'     => $jen_kel,
+				'tmp_lahir'   => $tmp_lahir,
+				'tgl_lahir'   => $tgl_lahir,
+				'alamat'      => $alamat,
+				'no_hp'       => $no_hp
+			);
+
+			if($this->UserM->edit_data_diri($no_identitas,$data)){
+				$this->session->set_flashdata('sukses','Data anda berhasil disimpan');
+				redirect('MahasiswaC/data_diri');
+			}else{
+				redirect('MahasiswaC/pengajuan_kegiatan');
+				$this->session->set_flashdata('error','Data anda tidak berhasil disimpan');
+			}	
+		}
 	}
 
 	public function pengaturan_akun(){ //halaman pengaturan akun
@@ -70,6 +85,7 @@ class MahasiswaC extends CI_Controller {
 		$this->form_validation->set_rules('tgl_pengajuan', 'Tanggal Pengajuan','required');
 		$this->form_validation->set_rules('dana_disetujui', 'Dana Disetujui');
 		if($this->form_validation->run() == FALSE){
+			$this->session->set_flashdata('error','Data Pengajuan Kegiatan anda tidak berhasil ditambahkan');
 			redirect('MahasiswaC/pengajuan_kegiatan');
 		}else{
 			$no_identitas 			= $_POST['no_identitas'];

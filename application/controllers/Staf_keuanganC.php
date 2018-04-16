@@ -19,23 +19,38 @@ class Staf_keuanganC extends CI_Controller {
 		$this->load->view('staf_keuangan/index_template', $data);
 	}
 
-	public function edit_data_diri($no_identitas){ // post edit data diri
-		$jen_kel    = $_POST['jen_kel'];
-		$tmp_lahir  = $_POST['tmp_lahir'];
-		$tgl_lahir  = $_POST['tgl_lahir'];
-		$alamat     = $_POST['alamat'];
-		$no_hp      = $_POST['no_hp'];
+	public function edit_data_diri($no_identitas){ //edit data diri
+		$this->form_validation->set_rules('jen_kel', 'Jenis Kelamin','required');
+		$this->form_validation->set_rules('tmp_lahir', 'Tempat Lahir','required');
+		$this->form_validation->set_rules('tgl_lahir', 'Tanggal Lahir','required');
+		$this->form_validation->set_rules('alamat', 'Alamat','required');
+		$this->form_validation->set_rules('no_hp', 'no_hp','required');
+		if($this->form_validation->run() == FALSE){
+			redirect('Staf_keuanganC/pengajuan_kegiatan');
+			$this->session->set_flashdata('error','Data anda tidak berhasil disimpan');
+		}else{
+			$jen_kel    = $_POST['jen_kel'];
+			$tmp_lahir  = $_POST['tmp_lahir'];
+			$tgl_lahir  = $_POST['tgl_lahir'];
+			$alamat     = $_POST['alamat'];
+			$no_hp      = $_POST['no_hp'];
 
-		$data = array(
-			'jen_kel'     => $jen_kel,
-			'tmp_lahir'   => $tmp_lahir,
-			'tgl_lahir'   => $tgl_lahir,
-			'alamat'      => $alamat,
-			'no_hp'       => $no_hp
-		);
-		$this->UserM->edit_data_diri($no_identitas,$data);
-		$this->session->set_flashdata('sukses','Data anda berhasil disimpan');
-		redirect('Staf_keuanganC/data_diri');
+			$data = array(
+				'jen_kel'     => $jen_kel,
+				'tmp_lahir'   => $tmp_lahir,
+				'tgl_lahir'   => $tgl_lahir,
+				'alamat'      => $alamat,
+				'no_hp'       => $no_hp
+			);
+
+			if($this->UserM->edit_data_diri($no_identitas,$data)){
+			$this->session->set_flashdata('sukses','Data anda berhasil disimpan');
+				redirect('Staf_keuanganC/data_diri');
+			}else{
+				redirect('Staf_keuanganC/pengajuan_kegiatan');
+				$this->session->set_flashdata('error','Data anda tidak berhasil disimpan');
+			}	
+		}
 	}
 
 
@@ -47,9 +62,12 @@ class Staf_keuanganC extends CI_Controller {
 	}
 
 	public function pengajuan_kegiatan(){ //halaman kegiatan pegawai
+		$kode_unit = $this->session->userdata('kode_unit');
+
 		$data['title'] = "Pengajuan Kegiatan | Staf Keuangan";
 		$this->data['data_diri'] = $this->UserM->get_data_diri()->result()[0]; //get data diri buat nampilin nama di pjok kanan
 		$this->data['data_kegiatan'] = $this->UserM->get_kegiatan_pegawai()->result();	//menampilkan kegiatan yang diajukan user sebagai pegwai
+		$this->data['id_pimpinan'] 		= $this->UserM->get_id_pimpinan($kode_unit)->result()[0]->no_identitas; //ambil id pimpinan
 		$data['body'] = $this->load->view('staf_keuangan/pengajuan_kegiatan_content', $this->data, true);
 		$this->load->view('staf_keuangan/index_template', $data);
 	}
@@ -62,7 +80,9 @@ class Staf_keuanganC extends CI_Controller {
 		$this->form_validation->set_rules('dana_diajukan', 'Dana Diajukan','required');
 		$this->form_validation->set_rules('tgl_pengajuan', 'Tanggal Pengajuan','required');
 		$this->form_validation->set_rules('dana_disetujui', 'Dana Disetujui');
+		$this->form_validation->set_rules('id_pimpinan', 'ID Pimpinan','required');
 		if($this->form_validation->run() == FALSE){
+			$this->session->set_flashdata('error','Data Pengajuan Kegiatan anda tidak berhasil ditambahkan');
 			redirect('staf_keuanganC/pengajuan_kegiatan');
 		}else{
 			$no_identitas 			= $_POST['no_identitas'];
@@ -72,6 +92,7 @@ class Staf_keuanganC extends CI_Controller {
 			$dana_diajukan 			= $_POST['dana_diajukan'];
 			$tgl_pengajuan 			= $_POST['tgl_pengajuan'];
 			$dana_disetujui			= $_POST['dana_disetujui'];
+			$id_pimpinan			= $_POST['id_pimpinan'];
 
 			$data_pengajuan_kegiatan = array(
 				'no_identitas' 			=> $no_identitas,
@@ -80,6 +101,7 @@ class Staf_keuanganC extends CI_Controller {
 				'tgl_kegiatan'			=> $tgl_kegiatan,
 				'dana_diajukan' 		=> $dana_diajukan,
 				'tgl_pengajuan'			=> $tgl_pengajuan,
+				'pimpinan'				=> $id_pimpinan,
 				'dana_disetujui'		=> $dana_disetujui);
 
 			$insert_id = $this->UserM->insert_pengajuan_kegiatan($data_pengajuan_kegiatan);

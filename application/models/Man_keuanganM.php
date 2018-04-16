@@ -22,9 +22,14 @@ class Man_keuanganM extends CI_Model{
 			$this->db->where('progress.kode_nama_progress = "1"'); //kegiatan yang diterima
 
 		}else{ //kegiatan pegawai
-			$this->db->join('pengguna', 'pengguna.no_identitas = kegiatan.no_identitas');
+			$this->db->join('progress', 'progress.kode_fk = kegiatan.kode_kegiatan');
+			$this->db->join('pengguna', 'pengguna.no_identitas = progress.no_identitas');
 			$this->db->join('jabatan', 'jabatan.kode_jabatan = pengguna.kode_jabatan');
 			$this->db->join('unit', 'unit.kode_unit = pengguna.kode_unit');
+			$this->db->where('unit.kode_unit = "1"'); //departemen
+			$this->db->where('jabatan.kode_jabatan = "1"'); //kepala
+			$this->db->where('progress.jenis_progress = "kegiatan"');//jenis progress kegiatan bukan barang
+			$this->db->where('progress.kode_nama_progress = "1"'); //kegiatan yang diterima
 		}
 		
 		$query = $this->db->get();

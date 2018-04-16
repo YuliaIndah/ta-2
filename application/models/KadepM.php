@@ -29,10 +29,12 @@ class KadepM extends CI_Model{
 			$this->db->where('jabatan.kode_jabatan', $kode_jabatan);
 			$this->db->where('progress.jenis_progress = "kegiatan"'); //jenis progress kegiatan bukan barang
 			$this->db->where('progress.kode_nama_progress = "1"'); //kegiatan yang diterima
-		}else{
-			$this->db->join('pengguna', 'pengguna.no_identitas = kegiatan.no_identitas');
+		}else{ //kegiatan pegawai
+			$this->db->join('progress', 'progress.kode_fk = kegiatan.kode_kegiatan');
+			$this->db->join('pengguna', 'pengguna.no_identitas = progress.no_identitas');
 			$this->db->join('jabatan', 'jabatan.kode_jabatan = pengguna.kode_jabatan');
 			$this->db->join('unit', 'unit.kode_unit = pengguna.kode_unit');
+			$this->db->where('kegiatan.pimpinan = progress.no_identitas');
 		}
 		$query = $this->db->get();
 		if($query){
@@ -40,20 +42,6 @@ class KadepM extends CI_Model{
 		}else{
 			return null;
 		}
-	}
-
-	function get_data_status($array_data_pengajuan, $no_identitas){
-		$this->db->select('progress.kode_fk');
-		$this->db->from('progress');
-		// $this->db->join('pengguna', 'progress.no_identitas = pengguna.no_identitas');
-		$this->db->where('progress.no_identitas', $no_identitas);
-		$this->db->where_in('progress.kode_fk', $array_data_pengajuan);
-		$this->db->where('progress.jenis_progress = "kegiatan"');
-		return $query = $this->db->get();
-
-		// $names = array('Frank', 'Todd', 'James');
-		// $this->db->where_in('username', $names);
-
 	}
 
 	public function get_data_pengajuan_by_id($id){ //ambil data pengajuan sesuai id

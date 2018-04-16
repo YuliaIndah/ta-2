@@ -127,6 +127,25 @@
 		return $query = $this->db->get();
 	}
 
+	//buat select progress yang sesuai data persetujuan mahasiswa KADEP
+	//cek progress sudah input belom
+	function get_data_status_kegiatan($array_data_pengajuan, $no_identitas){
+		$this->db->select('progress.kode_fk');
+		$this->db->from('progress');
+		$this->db->join('pengguna', 'progress.no_identitas = pengguna.no_identitas');
+		$this->db->join('jabatan', 'jabatan.kode_jabatan = pengguna.kode_jabatan');
+		$this->db->join('unit', 'unit.kode_unit = pengguna.kode_unit');
+		$this->db->where('progress.no_identitas', $no_identitas);
+		$this->db->where_in('progress.kode_fk', $array_data_pengajuan);
+		$this->db->where('progress.jenis_progress = "kegiatan"');
+		$query = $this->db->get();
+		if($query){
+			return $query;
+		}else{
+			return null;
+		}
+	}
+
 	// =================BARANG================
 
 	function get_barang(){ //menampilkan data seluruh barang

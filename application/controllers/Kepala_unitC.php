@@ -18,23 +18,38 @@ class Kepala_unitC extends CI_Controller {
 		$this->load->view('kepala_unit/index_template', $data);
 	}
 
-	public function edit_data_diri($no_identitas){ // post edit data diri
-		$jen_kel    = $_POST['jen_kel'];
-		$tmp_lahir  = $_POST['tmp_lahir'];
-		$tgl_lahir  = $_POST['tgl_lahir'];
-		$alamat     = $_POST['alamat'];
-		$no_hp      = $_POST['no_hp'];
+	public function edit_data_diri($no_identitas){ //edit data diri
+		$this->form_validation->set_rules('jen_kel', 'Jenis Kelamin','required');
+		$this->form_validation->set_rules('tmp_lahir', 'Tempat Lahir','required');
+		$this->form_validation->set_rules('tgl_lahir', 'Tanggal Lahir','required');
+		$this->form_validation->set_rules('alamat', 'Alamat','required');
+		$this->form_validation->set_rules('no_hp', 'no_hp','required');
+		if($this->form_validation->run() == FALSE){
+			redirect('Kepala_unitC/pengajuan_kegiatan');
+			$this->session->set_flashdata('error','Data anda tidak berhasil disimpan');
+		}else{
+			$jen_kel    = $_POST['jen_kel'];
+			$tmp_lahir  = $_POST['tmp_lahir'];
+			$tgl_lahir  = $_POST['tgl_lahir'];
+			$alamat     = $_POST['alamat'];
+			$no_hp      = $_POST['no_hp'];
 
-		$data = array(
-			'jen_kel'     => $jen_kel,
-			'tmp_lahir'   => $tmp_lahir,
-			'tgl_lahir'   => $tgl_lahir,
-			'alamat'      => $alamat,
-			'no_hp'       => $no_hp
-		);
-		$this->UserM->edit_data_diri($no_identitas,$data);
-		$this->session->set_flashdata('sukses','Data anda berhasil disimpan');
-		redirect('Kepala_unitC/data_diri');
+			$data = array(
+				'jen_kel'     => $jen_kel,
+				'tmp_lahir'   => $tmp_lahir,
+				'tgl_lahir'   => $tgl_lahir,
+				'alamat'      => $alamat,
+				'no_hp'       => $no_hp
+			);
+
+			if($this->UserM->edit_data_diri($no_identitas,$data)){
+				$this->session->set_flashdata('sukses','Data anda berhasil disimpan');
+				redirect('Kepala_unitC/data_diri');
+			}else{
+				redirect('Kepala_unitC/pengajuan_kegiatan');
+				$this->session->set_flashdata('error','Data anda tidak berhasil disimpan');
+			}	
+		}
 	}
 
 
@@ -62,6 +77,7 @@ class Kepala_unitC extends CI_Controller {
 		$this->form_validation->set_rules('tgl_pengajuan', 'Tanggal Pengajuan','required');
 		$this->form_validation->set_rules('dana_disetujui', 'Dana Disetujui');
 		if($this->form_validation->run() == FALSE){
+			$this->session->set_flashdata('error','Data Pengajuan Kegiatan anda tidak berhasil ditambahkan');
 			redirect('Kepala_unitC/pengajuan_kegiatan');
 		}else{
 			$no_identitas 			= $_POST['no_identitas'];
@@ -79,6 +95,7 @@ class Kepala_unitC extends CI_Controller {
 				'tgl_kegiatan'			=> $tgl_kegiatan,
 				'dana_diajukan' 		=> $dana_diajukan,
 				'tgl_pengajuan'			=> $tgl_pengajuan,
+				'pimpinan'				=> $no_identitas,
 				'dana_disetujui'		=> $dana_disetujui);
 
 			$insert_id = $this->UserM->insert_pengajuan_kegiatan($data_pengajuan_kegiatan);
@@ -86,6 +103,27 @@ class Kepala_unitC extends CI_Controller {
 					$upload = $this->UserM->upload(); // lakukan upload file dengan memanggil function upload yang ada di UserM.php
 				if($upload['result'] == "success"){ // Jika proses upload sukses
 					$this->UserM->save($upload,$insert_id); // Panggil function save yang ada di UserM.php untuk menyimpan data ke database
+
+					$format_tgl 	= "%Y-%m-%d";
+					$tgl_progress 	= mdate($format_tgl);
+					$format_waktu 	= "%H:%i:%s";
+					$waktu_progress	= mdate($format_waktu);
+					$kode_nama_progress	= "1";
+					$komentar			= "insert otomatis";
+					$jenis_progress		= "kegiatan";
+
+					$data = array(
+						'no_identitas' 			=> $no_identitas,
+						'kode_fk'				=> $insert_id,
+						'kode_nama_progress' 	=> $kode_nama_progress,
+						'komentar'				=> $komentar,
+						'jenis_progress'		=> $jenis_progress,
+						'tgl_progress'			=> $tgl_progress,
+						'waktu_progress'		=> $waktu_progress
+
+					);
+				$this->UserM->insert_progress($data); //insert progress langsung ketika mengajukan kegiatan untuk manajer, kepala, dan pimpinan yang lain
+
 				}else{ // Jika proses upload gagal
 					$data['message'] = $upload['error']; // Ambil pesan error uploadnya untuk dikirim ke file form dan ditampilkan
 					$this->UserM->delete($insert_id);//hapus data pengajuan kegiatan ketka gagal upload file
@@ -130,28 +168,47 @@ class Kepala_unitC extends CI_Controller {
 		$this->load->view('kepala_unit/detail_kegiatan', $data);
 	}
 
-	public function post_progress(){ //posting progress dan update kegiatan (dana disetujui)
-		$no_identitas		= $_POST['no_identitas'];
-		$kode_fk			= $_POST['kode_fk'];
-		$kode_nama_progress	= $_POST['kode_nama_progress'];
-		$komentar			= $_POST['komentar'];
-		$jenis_progress		= $_POST['jenis_progress'];
-		$format_tgl 	= "%Y-%m-%d";
-		$tgl_progress 	= mdate($format_tgl);
-		$format_waktu 	= "%H:%i";
-		$waktu_progress	= mdate($format_waktu);
-		$data = array(
-			'no_identitas' 			=> $no_identitas,
-			'kode_fk'				=> $kode_fk,
-			'kode_nama_progress' 	=> $kode_nama_progress,
-			'komentar'				=> $komentar,
-			'jenis_progress'		=> $jenis_progress,
-			'tgl_progress'			=> $tgl_progress,
-			'waktu_progress'		=> $waktu_progress
-		);
-		
+	public function post_progress(){ //posting progress dan update kegiatan (dana disetujuin)
+		$this->form_validation->set_rules('no_identitas', 'No Identitas','required');
+		$this->form_validation->set_rules('kode_fk', 'Kode Kegiatan','required');
+		$this->form_validation->set_rules('kode_nama_progress', 'Nama Progress','required'); //diterima/ditolak
+		$this->form_validation->set_rules('komentar', 'Komentar','required');
+		$this->form_validation->set_rules('jenis_progress', 'Jenis Progress','required'); //kegiatan/barang
+		if($this->form_validation->run() == FALSE){
+			$this->session->set_flashdata('error','Data anda tidak berhasil disimpan');
+			redirect_back(); //kembali ke halaman sebelumnya -> helper
+		}else{
+			$no_identitas		= $_POST['no_identitas'];
+			$kode_fk			= $_POST['kode_fk'];
+			$kode_nama_progress	= $_POST['kode_nama_progress'];
+			$komentar			= $_POST['komentar'];
+			$jenis_progress		= $_POST['jenis_progress'];
+
+
+			$format_tgl 	= "%Y-%m-%d";
+			$tgl_progress 	= mdate($format_tgl);
+			$format_waktu 	= "%H:%i";
+			$waktu_progress	= mdate($format_waktu);
+
+			$data = array(
+				'no_identitas' 			=> $no_identitas,
+				'kode_fk'				=> $kode_fk,
+				'kode_nama_progress' 	=> $kode_nama_progress,
+				'komentar'				=> $komentar,
+				'jenis_progress'		=> $jenis_progress,
+				'tgl_progress'			=> $tgl_progress,
+				'waktu_progress'		=> $waktu_progress
+
+			);
+
 			if($this->UserM->insert_progress($data)){ //insert progress
+				$this->session->set_flashdata('sukses','Data anda berhasil disimpan');
 				redirect_back(); // redirect kembali ke halaman sebelumnya
+			}else{
+				$this->session->set_flashdata('error','Data anda tidak berhasil disimpan');
+				redirect_back(); //kembali ke halaman sebelumnya -> helper
 			}
+		}
 	}
+}
 }

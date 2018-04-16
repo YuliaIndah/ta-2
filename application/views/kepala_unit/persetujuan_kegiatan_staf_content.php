@@ -12,6 +12,18 @@
     </div>
     <div class="row">
       <div class="col-lg-12">
+        <!-- Alert -->
+        <?php 
+        $data=$this->session->flashdata('sukses');
+        if($data!=""){ ?>
+        <div class="alert alert-success"><strong>Sukses! </strong> <?=$data;?></div>
+        <?php } ?>
+        <?php 
+        $data2=$this->session->flashdata('error');
+        if($data2!=""){ ?>
+        <div class="alert alert-danger"><strong> Error! </strong> <?=$data2;?></div>
+        <?php } ?>
+        
         <div class="card mb-3">
           <div class="card-header">
             <div class="card-body">
@@ -97,7 +109,7 @@
   </section>
 
 
-<!-- modal persetujuan kegiatan -->
+  <!-- modal persetujuan kegiatan -->
   <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -112,7 +124,7 @@
     </div>
   </div>
 
-<!-- modal detail kegiatan -->
+  <!-- modal detail kegiatan -->
   <div class="modal fade" id="myModal1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -161,4 +173,4 @@
           });
     });
 
-</script
+    </script

@@ -122,7 +122,7 @@
                 <div class="form-group">
                   <!-- <label>ID Pengguna Jabatan</label> -->
 
-                  <input class="form-control" type="hidden" id="no_identitas" name="no_identitas" value="<?php echo $data_diri->no_identitas;?>" required> <!-- ambil id_pengguna_jabatan berdasarkan user yang login-->
+                  <input class="form-control" type="hidden" id="no_identitas" name="no_identitas" value="<?php echo $data_diri->no_identitas;?>" required> 
                 </div>
                 <div class="form-group">
                   <!-- <label>Kode Jenis Kegiatan</label> -->

@@ -19,23 +19,38 @@ class StafC extends CI_Controller {
 		$this->load->view('staf/index_template', $data);
 	}
 
-	public function edit_data_diri($no_identitas){ // post edit data diri
-		$jen_kel    = $_POST['jen_kel'];
-		$tmp_lahir  = $_POST['tmp_lahir'];
-		$tgl_lahir  = $_POST['tgl_lahir'];
-		$alamat     = $_POST['alamat'];
-		$no_hp      = $_POST['no_hp'];
+	public function edit_data_diri($no_identitas){ //edit data diri
+		$this->form_validation->set_rules('jen_kel', 'Jenis Kelamin','required');
+		$this->form_validation->set_rules('tmp_lahir', 'Tempat Lahir','required');
+		$this->form_validation->set_rules('tgl_lahir', 'Tanggal Lahir','required');
+		$this->form_validation->set_rules('alamat', 'Alamat','required');
+		$this->form_validation->set_rules('no_hp', 'no_hp','required');
+		if($this->form_validation->run() == FALSE){
+			redirect('StafC/pengajuan_kegiatan');
+			$this->session->set_flashdata('error','Data anda tidak berhasil disimpan');
+		}else{
+			$jen_kel    = $_POST['jen_kel'];
+			$tmp_lahir  = $_POST['tmp_lahir'];
+			$tgl_lahir  = $_POST['tgl_lahir'];
+			$alamat     = $_POST['alamat'];
+			$no_hp      = $_POST['no_hp'];
 
-		$data = array(
-			'jen_kel'     => $jen_kel,
-			'tmp_lahir'   => $tmp_lahir,
-			'tgl_lahir'   => $tgl_lahir,
-			'alamat'      => $alamat,
-			'no_hp'       => $no_hp
-		);
-		$this->UserM->edit_data_diri($no_identitas,$data);
-		$this->session->set_flashdata('sukses','Data anda berhasil disimpan');
-		redirect('StafC/data_diri');
+			$data = array(
+				'jen_kel'     => $jen_kel,
+				'tmp_lahir'   => $tmp_lahir,
+				'tgl_lahir'   => $tgl_lahir,
+				'alamat'      => $alamat,
+				'no_hp'       => $no_hp
+			);
+
+			if($this->UserM->edit_data_diri($no_identitas,$data)){
+				$this->session->set_flashdata('sukses','Data anda berhasil disimpan');
+				redirect('StafC/data_diri');
+			}else{
+				redirect('StafC/pengajuan_kegiatan');
+				$this->session->set_flashdata('error','Data anda tidak berhasil disimpan');
+			}	
+		}
 	}
 
 
@@ -64,8 +79,10 @@ class StafC extends CI_Controller {
 		$this->form_validation->set_rules('tgl_kegiatan', 'Tanggal Kegiatan','required');
 		$this->form_validation->set_rules('dana_diajukan', 'Dana Diajukan','required');
 		$this->form_validation->set_rules('tgl_pengajuan', 'Tanggal Pengajuan','required');
+		$this->form_validation->set_rules('id_pimpinan', 'ID Pimpinan','required');
 		$this->form_validation->set_rules('dana_disetujui', 'Dana Disetujui');
 		if($this->form_validation->run() == FALSE){
+			$this->session->set_flashdata('error','Data Pengajuan Kegiatan anda tidak berhasil ditambahkan');
 			redirect('StafC/pengajuan_kegiatan');
 		}else{
 			$no_identitas 			= $_POST['no_identitas'];
@@ -75,6 +92,7 @@ class StafC extends CI_Controller {
 			$dana_diajukan 			= $_POST['dana_diajukan'];
 			$tgl_pengajuan 			= $_POST['tgl_pengajuan'];
 			$dana_disetujui			= $_POST['dana_disetujui'];
+			$id_pimpinan			= $_POST['id_pimpinan'];
 
 			$data_pengajuan_kegiatan = array(
 				'no_identitas' 			=> $no_identitas,
@@ -83,6 +101,7 @@ class StafC extends CI_Controller {
 				'tgl_kegiatan'			=> $tgl_kegiatan,
 				'dana_diajukan' 		=> $dana_diajukan,
 				'tgl_pengajuan'			=> $tgl_pengajuan,
+				'pimpinan'				=> $id_pimpinan,
 				'dana_disetujui'		=> $dana_disetujui);
 
 			$insert_id = $this->UserM->insert_pengajuan_kegiatan($data_pengajuan_kegiatan);

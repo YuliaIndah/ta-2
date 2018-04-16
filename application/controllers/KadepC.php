@@ -5,8 +5,7 @@ class KadepC extends CI_Controller {
 
 	var $data = array();
 
-	public function __construct()
-	{
+	public function __construct(){
 		parent::__construct();
 		$this->load->model(['UserM','KadepM']);
 		Kadep_access(); //helper buat batasi akses login/session
@@ -21,7 +20,6 @@ class KadepC extends CI_Controller {
 	}
 
 	// Sebagai kepala Departemen
-
 	public function index(){ //halaman index kadep (dashboard)
 		$data['title'] = "Beranda | Kepala Departemen";
 		$this->data['data_diri'] = $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
@@ -43,7 +41,7 @@ class KadepC extends CI_Controller {
 		foreach ($this->data['data_pengajuan_kegiatan_mahasiswa'] as $pengajuan) {
 			array_push($array_data_pengajuan, $pengajuan->kode_kegiatan);
 		}
-		$this->data['data_status'] = $this->KadepM->get_data_status($array_data_pengajuan, $no_identitas)->result(); //select kode_fk(progress) yang kode fk nya ada di array_data_pengajuan 
+		$this->data['data_status'] = $this->UserM->get_data_status_kegiatan($array_data_pengajuan, $no_identitas)->result(); //select kode_fk(progress) yang kode fk nya ada di array_data_pengajuan 
 		
 		//mengumpulkan kode kegiatan (kode_fk) yang ada progress nya dijadikan array
 		$array_data_status = array();
@@ -58,11 +56,25 @@ class KadepC extends CI_Controller {
 	}
 
 	public function persetujuan_kegiatan_pegawai(){ //halaman persetujuan kegiatan pegawai (kadep)
+		$no_identitas = $this->session->userdata('no_identitas');
 		$kode_jenis_kegiatan = 1; //kegiatan pegawai
 		$kode_unit = ""; 
 		$kode_jabatan = "";	
 		$data['title'] = "Persetujuan Kegiatan Pegawai | Kepala Departemen";
 		$this->data['data_pengajuan_kegiatan_pegawai'] = $this->KadepM->get_data_pengajuan($kode_jenis_kegiatan, $kode_unit, $kode_jabatan)->result();
+
+		$array_data_pengajuan = array();
+		foreach ($this->data['data_pengajuan_kegiatan_pegawai'] as $pengajuan) {
+			array_push($array_data_pengajuan, $pengajuan->kode_kegiatan);
+		}
+		$this->data['data_status'] = $this->UserM->get_data_status_kegiatan($array_data_pengajuan, $no_identitas)->result(); //select kode_fk(progress) yang kode fk nya ada di array_data_pengajuan 
+		
+		//mengumpulkan kode kegiatan (kode_fk) yang ada progress nya dijadikan array
+		$array_data_status = array();
+		foreach ($this->data['data_status'] as $status) {
+			array_push($array_data_status, $status->kode_fk);
+		}
+		$this->data['array_data_status'] = $array_data_status;
 		$this->data['data_diri'] = $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
 		$data['body'] = $this->load->view('kadep/persetujuan_kegiatan_pegawai_content', $this->data, true) ;
 		$this->load->view('kadep/index_template', $data);
@@ -111,6 +123,13 @@ class KadepC extends CI_Controller {
 		$this->load->view('kadep/index_template', $data);
 	}
 
+	public function konfigurasi_sistem(){
+		$data['title'] = "Konfigurasi Sistem | Kepala Departemen";
+		$this->data['data_diri'] = $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
+		$data['body'] = $this->load->view('kadep/konfigurasi_sistem_content', $this->data, true);
+		$this->load->view('kadep/index_template', $data);
+	}
+
 	// =============================
 	
 	public function post_pengajuan_kegiatan_pegawai(){ //fungsi post pengajuan kegiatan pegawai
@@ -131,53 +150,93 @@ class KadepC extends CI_Controller {
 			$dana_diajukan 			= $_POST['dana_diajukan'];
 			$tgl_pengajuan 			= $_POST['tgl_pengajuan'];
 			$dana_disetujui			= $_POST['dana_disetujui'];
+			$pimpinan				= $_POST['pimpinan'];
 
 			$data_pengajuan_kegiatan = array(
-				'no_identitas' 	=> $no_identitas,
+				'no_identitas' 			=> $no_identitas,
 				'kode_jenis_kegiatan' 	=> $kode_jenis_kegiatan,
 				'nama_kegiatan' 		=> $nama_kegiatan,
 				'tgl_kegiatan'			=> $tgl_kegiatan,
 				'dana_diajukan' 		=> $dana_diajukan,
 				'tgl_pengajuan'			=> $tgl_pengajuan,
+				'pimpinan'				=> $pimpinan,
 				'dana_disetujui'		=> $dana_disetujui);
+
+			
 
 			$insert_id = $this->UserM->insert_pengajuan_kegiatan($data_pengajuan_kegiatan);
 			if($insert_id){ //get last insert id
 				$upload = $this->UserM->upload(); // lakukan upload file dengan memanggil function upload yang ada di UserM.php
-			if($upload['result'] == "success"){ // Jika proses upload sukses
-				$this->UserM->save($upload,$insert_id); // Panggil function save yang ada di UserM.php untuk menyimpan data ke database
-			}else{ // Jika proses upload gagal
-				$data['message'] = $upload['error']; // Ambil pesan error uploadnya untuk dikirim ke file form dan ditampilkan
-				$this->UserM->delete($insert_id);//hapus data pengajuan kegiatan ketka gagal upload file
+				if($upload['result'] == "success"){ // Jika proses upload sukses
+					$this->UserM->save($upload,$insert_id); // Panggil function save yang ada di UserM.php untuk menyimpan data ke database
+
+					$format_tgl 	= "%Y-%m-%d";
+					$tgl_progress 	= mdate($format_tgl);
+					$format_waktu 	= "%H:%i:%s";
+					$waktu_progress	= mdate($format_waktu);
+
+					$kode_nama_progress	= "1";
+					$komentar			= "insert otomatis";
+					$jenis_progress		= "kegiatan";
+
+					$data = array(
+						'no_identitas' 			=> $no_identitas,
+						'kode_fk'				=> $insert_id,
+						'kode_nama_progress' 	=> $kode_nama_progress,
+						'komentar'				=> $komentar,
+						'jenis_progress'		=> $jenis_progress,
+						'tgl_progress'			=> $tgl_progress,
+						'waktu_progress'		=> $waktu_progress
+
+					);
+					$this->UserM->insert_progress($data); //insert progress langsung ketika mengajukan kegiatan untuk manajer, kepala, dan pimpinan yang lain
+				}else{ // Jika proses upload gagal
+					$data['message'] = $upload['error']; // Ambil pesan error uploadnya untuk dikirim ke file form dan ditampilkan
+					$this->UserM->delete($insert_id);//hapus data pengajuan kegiatan ketka gagal upload file
+					$this->session->set_flashdata('error','Data Pengajuan Kegiatan anda tidak berhasil ditambahkan');
+					redirect('KadepC/pengajuan_kegiatan');
+				}
+				$this->session->set_flashdata('sukses','Data Pengajuan Kegiatan anda berhasil ditambahkan');
+				redirect('KadepC/pengajuan_kegiatan');
+			}else{
 				$this->session->set_flashdata('error','Data Pengajuan Kegiatan anda tidak berhasil ditambahkan');
 				redirect('KadepC/pengajuan_kegiatan');
 			}
-			$this->session->set_flashdata('sukses','Data Pengajuan Kegiatan anda berhasil ditambahkan');
-			redirect('KadepC/pengajuan_kegiatan');
-		}else{
-			$this->session->set_flashdata('error','Data Pengajuan Kegiatan anda tidak berhasil ditambahkan');
-			redirect('KadepC/pengajuan_kegiatan');
 		}
 	}
-}
 
 	public function edit_data_diri($no_identitas){ //edit data diri
-		$jen_kel    = $_POST['jen_kel'];
-		$tmp_lahir  = $_POST['tmp_lahir'];
-		$tgl_lahir  = $_POST['tgl_lahir'];
-		$alamat     = $_POST['alamat'];
-		$no_hp      = $_POST['no_hp'];
+		$this->form_validation->set_rules('jen_kel', 'Jenis Kelamin','required');
+		$this->form_validation->set_rules('tmp_lahir', 'Tempat Lahir','required');
+		$this->form_validation->set_rules('tgl_lahir', 'Tanggal Lahir','required');
+		$this->form_validation->set_rules('alamat', 'Alamat','required');
+		$this->form_validation->set_rules('no_hp', 'no_hp','required');
+		if($this->form_validation->run() == FALSE){
+			redirect('KadepC/pengajuan_kegiatan');
+			$this->session->set_flashdata('error','Data anda tidak berhasil disimpan');
+		}else{
+			$jen_kel    = $_POST['jen_kel'];
+			$tmp_lahir  = $_POST['tmp_lahir'];
+			$tgl_lahir  = $_POST['tgl_lahir'];
+			$alamat     = $_POST['alamat'];
+			$no_hp      = $_POST['no_hp'];
 
-		$data = array(
-			'jen_kel'     => $jen_kel,
-			'tmp_lahir'   => $tmp_lahir,
-			'tgl_lahir'   => $tgl_lahir,
-			'alamat'      => $alamat,
-			'no_hp'       => $no_hp
-		);
-		$this->UserM->edit_data_diri($no_identitas,$data);
-		$this->session->set_flashdata('sukses','Data anda berhasil disimpan');
-		redirect('KadepC/data_diri');
+			$data = array(
+				'jen_kel'     => $jen_kel,
+				'tmp_lahir'   => $tmp_lahir,
+				'tgl_lahir'   => $tgl_lahir,
+				'alamat'      => $alamat,
+				'no_hp'       => $no_hp
+			);
+
+			if($this->UserM->edit_data_diri($no_identitas,$data)){
+				$this->session->set_flashdata('sukses','Data anda berhasil disimpan');
+				redirect('KadepC/data_diri');
+			}else{
+				redirect('KadepC/pengajuan_kegiatan');
+				$this->session->set_flashdata('error','Data anda tidak berhasil disimpan');
+			}	
+		}
 	}
 
 	public function detail_pengajuan($id){ //menampilkan modal dengan isi dari detail_pengajuan.php
@@ -193,32 +252,46 @@ class KadepC extends CI_Controller {
 		$this->load->view('kadep/detail_kegiatan', $data);
 	}
 
-	public function post_progress(){ //posting progress dan update kegiatan (dana disetujuix`)
-		$no_identitas		= $_POST['no_identitas'];
-		$kode_fk			= $_POST['kode_fk'];
-		$kode_nama_progress	= $_POST['kode_nama_progress'];
-		$komentar			= $_POST['komentar'];
-		$jenis_progress		= $_POST['jenis_progress'];
+	public function post_progress(){ //posting progress dan update kegiatan (dana disetujuin)
+		$this->form_validation->set_rules('no_identitas', 'No Identitas','required');
+		$this->form_validation->set_rules('kode_fk', 'Kode Kegiatan','required');
+		$this->form_validation->set_rules('kode_nama_progress', 'Nama Progress','required'); //diterima/ditolak
+		$this->form_validation->set_rules('komentar', 'Komentar','required');
+		$this->form_validation->set_rules('jenis_progress', 'Jenis Progress','required'); //kegiatan/barang
+		if($this->form_validation->run() == FALSE){
+			$this->session->set_flashdata('error','Data anda tidak berhasil disimpan');
+			redirect_back(); //kembali ke halaman sebelumnya -> helper
+		}else{
+			$no_identitas		= $_POST['no_identitas'];
+			$kode_fk			= $_POST['kode_fk'];
+			$kode_nama_progress	= $_POST['kode_nama_progress'];
+			$komentar			= $_POST['komentar'];
+			$jenis_progress		= $_POST['jenis_progress'];
 
 
-		$format_tgl 	= "%Y-%m-%d";
-		$tgl_progress 	= mdate($format_tgl);
-		$format_waktu 	= "%H:%i";
-		$waktu_progress	= mdate($format_waktu);
+			$format_tgl 	= "%Y-%m-%d";
+			$tgl_progress 	= mdate($format_tgl);
+			$format_waktu 	= "%H:%i";
+			$waktu_progress	= mdate($format_waktu);
 
-		$data = array(
-			'no_identitas' 			=> $no_identitas,
-			'kode_fk'				=> $kode_fk,
-			'kode_nama_progress' 	=> $kode_nama_progress,
-			'komentar'				=> $komentar,
-			'jenis_progress'		=> $jenis_progress,
-			'tgl_progress'			=> $tgl_progress,
-			'waktu_progress'		=> $waktu_progress
+			$data = array(
+				'no_identitas' 			=> $no_identitas,
+				'kode_fk'				=> $kode_fk,
+				'kode_nama_progress' 	=> $kode_nama_progress,
+				'komentar'				=> $komentar,
+				'jenis_progress'		=> $jenis_progress,
+				'tgl_progress'			=> $tgl_progress,
+				'waktu_progress'		=> $waktu_progress
 
-		);
+			);
 
 			if($this->UserM->insert_progress($data)){ //insert progress
+				$this->session->set_flashdata('sukses','Data anda berhasil disimpan');
 				redirect_back(); // redirect kembali ke halaman sebelumnya
+			}else{
+				$this->session->set_flashdata('error','Data anda tidak berhasil disimpan');
+				redirect_back(); //kembali ke halaman sebelumnya -> helper
 			}
+		}
 	}
 }
