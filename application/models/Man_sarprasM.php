@@ -79,6 +79,15 @@ class Man_sarprasM extends CI_Model{
 		return $query;
 	}
 
+	public function get_pilihan_jenis_barang_by_id($kode_barang){ // untuk menampilkan pilihan jenis barang dengan dropdown
+		$this->db->select('*');
+		$this->db->from('jenis_barang');
+		$this->db->join('barang', 'barang.kode_jenis_barang = jenis_barang.kode_jenis_barang');
+		$this->db->where('barang.kode_barang',$kode_barang);
+		$query = $this->db->get();
+		return $query;
+	}
+
 	public function insert_pengajuan_barang($data){   //insert tabel item_pengajuan
 		if($this->db->insert('item_pengajuan', $data)){
 			return $this->db->insert_id(); //return last insert ID

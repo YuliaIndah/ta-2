@@ -88,7 +88,7 @@
             <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
             <h4 class="modal-title">Ajukan Barang</h4>
           </div>
-          <form class="form-horizontal" action="<?php echo base_url('Man_sarprasC/post_tambah_ajukan_barang');?>" method="post" enctype="multipart/form-data" role="form">
+          <form class="form-horizontal" action="<?php echo base_url('Staf_sarprasC/post_tambah_ajukan_barang');?>" method="post" enctype="multipart/form-data" role="form">
             <div class="modal-body">
               <div class="form-group">
                 <label class="col-lg-4 col-sm-2 control-label" for="jenis_barang"> Barang :</label>

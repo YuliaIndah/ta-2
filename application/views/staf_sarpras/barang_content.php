@@ -75,7 +75,7 @@
             <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
             <h4 class="modal-title">Tambah Barang</h4>
           </div>
-          <form class="form-horizontal" action="<?php echo base_url('Man_sarprasC/post_tambah_barang');?>" method="post" enctype="multipart/form-data" role="form">
+          <form class="form-horizontal" action="<?php echo base_url('Staf_sarprasC/post_tambah_barang');?>" method="post" enctype="multipart/form-data" role="form">
             <div class="modal-body">
               <div class="form-group">
                 <label class="col-lg-4 col-sm-2 control-label">Nama Barang :</label>
@@ -145,7 +145,7 @@ $(document).ready(function() {
             //menggunakan fungsi ajax untuk pengambilan data
             $.ajax({
               type : 'get',
-              url : '<?php echo base_url().'Man_sarprasC/ubah_barang/'?>'+rowid,
+              url : '<?php echo base_url().'Staf_sarprasC/ubah_barang/'?>'+rowid,
                 //data :  'rowid='+ rowid, // $_POST['rowid'] = rowid
                 success : function(data){
                 $('.fetched-data').html(data);//menampilkan data ke dalam modal

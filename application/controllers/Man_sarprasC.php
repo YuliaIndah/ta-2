@@ -92,7 +92,7 @@ class Man_sarprasC extends CI_Controller {
 
 	public function ubah_barang($kode_barang){ //menampilkan modal dengan isi dari ubah_barang.php
 		$data['ubah_barang']          = $this->UserM->get_barang_by_kode_barang($kode_barang)->result()[0];
-		$data['pilihan_jenis_barang'] = $this->Man_sarprasM->get_pilihan_jenis_barang()->result();
+		$data['pilihan_jenis_barang_by_id'] = $this->Man_sarprasM->get_pilihan_jenis_barang_by_id($kode_barang)->result();
 		$this->load->view('man_sarpras/detail_ubah_barang', $data);
 	}
 

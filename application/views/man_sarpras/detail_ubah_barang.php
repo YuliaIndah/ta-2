@@ -14,9 +14,9 @@
             <select class="form-control" name="kode_jenis_barang" id="kode_jenis_barang">
                 <!-- <option> ----- pilih nama progress ----- </option> -->
                 <?php 
-                foreach ($pilihan_jenis_barang as $pilihan_jenis_barang) {
+                foreach ($pilihan_jenis_barang_by_id as $pilihan_jenis_barang_by_id) {
                     ?>
-                    <option value="<?php echo $pilihan_jenis_barang->kode_jenis_barang ;?>"> <?php echo $pilihan_jenis_barang->nama_jenis_barang ;?> </option>
+                    <option value="<?php echo $pilihan_jenis_barang_by_id->kode_jenis_barang ;?>"> <?php echo $pilihan_jenis_barang_by_id->nama_jenis_barang ;?> </option>
                     <?php
                 }
                 ?>
