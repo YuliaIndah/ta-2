@@ -1,5 +1,5 @@
 
-<form class="form-horizontal" action="<?php echo base_url(); ?>Man_sarprasC/ubah_data_barang" method="post">
+<form class="form-horizontal" action="<?php echo base_url(); ?>Staf_sarprasC/ubah_data_barang" method="post">
     <div class="form-group">
         <label class="control-label col-sm-5" for="nama_kegiatan" style="text-align: left;">Nama Barang</label>
         <div class="col-sm-5">
