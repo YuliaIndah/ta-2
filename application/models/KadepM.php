@@ -78,5 +78,9 @@ class KadepM extends CI_Model{
 		$this->db->update('pengguna', $data);
 		return;
 	}
+
+
+
+	// konfigurasi siste
 	
 }

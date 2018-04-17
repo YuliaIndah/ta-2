@@ -144,26 +144,17 @@
 
       // CSS data DataTable
 
-      // $(document).ready(function() {
-      //   $('#example').DataTable();
-      // } );
       $(document).ready(function() {
-        var table = $('#example').DataTable();
-        
-        $("#example tfoot th").each( function ( i ) {
-          var select = $('<select><option value=""></option></select>')
-          .appendTo( $(this).empty() )
-          .on( 'change', function () {
-            table.column( i )
-            .search( $(this).val() )
-            .draw();
-          } );
-          
-          table.column( i ).data().unique().sort().each( function ( d, j ) {
-            select.append( '<option value="'+d+'">'+d+'</option>' )
-          } );
-        } );
-      } );
+        $('#jabatan').DataTable();
+        $('#unit').DataTable();
+        $('#jenis_barang').DataTable();
+        $('#jenis_kegiatan').DataTable();
+        $('#nama_progress').DataTable();
+        $('#persetujuan_kegiatan').DataTable();
+        $('#example').DataTable();
+
+      } 
+      );
     </script>
 
   </body>
