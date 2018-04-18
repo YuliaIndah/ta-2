@@ -111,23 +111,6 @@
     </div>
   </div>
 <!-- END Modal Tambah Barang -->
-
-<!-- modal ubah barang -->
-  <div class="modal fade" id="myModal1" role="dialog">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Ubah Barang</h4>
-        </div>
-        <div class="modal-body">
-          <div class="fetched-data"></div>
-        </div>
-        <div class="modal-footer">
-        </div>
-      </div>
-    </div>
-  </div>
   
 <script>
 $(document).ready(function() {
@@ -154,7 +137,6 @@ function edit(id) {
         });
         $('#nama_barang').val(data.ubah_barang.nama_barang);
         $('#kode_jenis_barang option[value='+data.ubah_barang.kode_jenis_barang+']').attr('selected','selected');
-        // $("#kode_jenis_barang select").val(data.ubah_barang.kode_jenis_barang);
       }
     });
    $('#buttonbatal').removeAttr('data-dismiss');
@@ -188,21 +170,3 @@ function edit(id) {
   }
 </script>
 <script src="<?php echo base_url();?>assets/js/jquery.min.js"></script>
-<script type="text/javascript">
-    // js 
-    // $(document).ready(function(){
-    //   $('#myModal1').on('show.bs.modal', function (e) {
-    //     var rowid = $(e.relatedTarget).data('id');
-    //         //menggunakan fungsi ajax untuk pengambilan data
-    //         $.ajax({
-    //           type : 'get',
-    //           url : '<?php //echo base_url().'Man_sarprasC/ubah_barang/'?>'+rowid,
-    //             //data :  'rowid='+ rowid, // $_POST['rowid'] = rowid
-    //             success : function(data){
-    //             $('.fetched-data').html(data);//menampilkan data ke dalam modal
-    //           }
-    //         });
-    //       });
-    // });
-
-  </script>

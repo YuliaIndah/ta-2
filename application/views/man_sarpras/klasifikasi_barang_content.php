@@ -26,37 +26,24 @@
         <div class="card mb-3">
           <div class="card-header">
             <div class="card-body">
-              <a class="btn btn-info" data-toggle="modal" data-target="#myModal"><i class="icon_plus_alt2"> </i>Ajukan Barang</a>
-               <a class="btn btn-info" data-toggle="modal" data-target="#myModal1"><i class="icon_plus_alt2"> </i>Ajukan Barang Baru</a>
               <div class="table-responsive">
                   <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
                     <thead>
                       <tr>
                         <th>Nama Item Pengajuan</th>
-                        <th>File</th>
-                        <th>Barang</th>
-                        <th>Jenis Barang</th>
-                        <th>Harga Satuan</th>
-                        <th>Jumlah Barang</th>
-                        <th>Status</th>
                         <th>Aksi</th>
                       </tr>
                     </thead>
                     <tbody>
                       <?php
-                      foreach ($data_ajukan_barang as $barang) {
+                      foreach ($data_klasifikasi as $barang) {
                         ?>
                         <tr>
-                          <td><?php echo $barang->nama_item_pengajuan; ?></td>
-                          <td><img style="height: 50px;" src="<?php echo base_url();?>assets/file_gambar/<?php echo $barang->file_gambar;?>"></td>
                           <td><?php echo $barang->nama_barang; ?></td>
-                          <td><?php echo $barang->nama_jenis_barang; ?></td>
-                          <td><?php echo $barang->harga_satuan; ?></td>
-                          <td><?php echo $barang->jumlah; ?></td>
-                          <td><?php echo $barang->status_pengajuan; ?></td>
-                          <td>
-                              <a href="#myModal2" id="custId" data-toggle="modal" data-id="<?php echo $barang->kode_item_pengajuan;?>" data-toggle="tooltip" title="Aksi" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-edit"></span></a>
-                          </td>
+                             <td><center>
+                                <a href="<?php echo base_url('Man_sarprasC/update_klasifikasi/'."2/".$barang->kode_barang);?>" id="custId" data-toggle="tooltip" data-toggle="tooltip" title="Aksi" class="btn btn-success btn-sm">Aset</span></a>
+                                 <a href="<?php echo base_url('Man_sarprasC/update_klasifikasi/'."1/".$barang->kode_barang);?>" id="custId" data-toggle="tooltip" data-toggle="tooltip" title="Aksi" class="btn btn-danger btn-sm">Habis Pakai</span></a>
+                              </center></td>
                         </tr>
 
                         <?php

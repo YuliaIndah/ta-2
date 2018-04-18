@@ -80,6 +80,12 @@
             </a>
           </li>
           <li>
+            <a href="<?php echo site_url('Man_sarprasC/klasifikasi_barang')?>">
+              <i class="icon_pencil-edit"></i>
+              <span>Klasifikasi Barang</span>
+            </a>
+          </li>
+          <li>
             <a href="<?php echo site_url('Man_sarprasC/pengajuan_barang')?>">
               <i class=" icon_box-checked"></i>
               <span>Persetujuan Barang</span>
