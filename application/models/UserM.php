@@ -161,8 +161,8 @@
 
 	}
 
-	public function ubah_data_barang($kode_barang, $data){ //edit data diri
-		$this->db->where('kode_barang', $kode_barang);
+	public function ubah_data_barang($id, $data){ //edit data diri
+		$this->db->where('kode_barang', $id);
 		$this->db->update('barang', $data);
 		return TRUE;
 	}

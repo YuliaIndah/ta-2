@@ -92,19 +92,25 @@ class Man_sarprasC extends CI_Controller {
 
 	public function ubah_barang($kode_barang){ //menampilkan modal dengan isi dari ubah_barang.php
 		$data['ubah_barang']          = $this->UserM->get_barang_by_kode_barang($kode_barang)->result()[0];
-		$data['pilihan_jenis_barang_by_id'] = $this->Man_sarprasM->get_pilihan_jenis_barang_by_id($kode_barang)->result();
-		$this->load->view('man_sarpras/detail_ubah_barang', $data);
+		$data['pilihan_jenis_barang'] = $this->Man_sarprasM->get_pilihan_jenis_barang($kode_barang)->result();
+		echo json_encode($data);
+		// $this->load->view('man_sarpras/detail_ubah_barang', $data);
+	}
+	public function getListAjax()
+	{
+		$data = $this->db->get('jenis_barang')->result();
+		echo json_encode($data);
 	}
 
 	public function ubah_data_barang(){ //update data barang
-		$kode_barang 		= $_POST['kode_barang'];
+		$id 				= $_POST['id'];
+		$kode_barang 		= $_POST['nama_barang'];
 		$kode_jenis_barang  = $_POST['kode_jenis_barang'];
-
 		$data = array(
-			'kode_barang'       => $kode_barang,
+			'nama_barang'       => $kode_barang,
 			'kode_jenis_barang' => $kode_jenis_barang
 		);
-		$this->UserM->ubah_data_barang($kode_barang,$data);
+		$this->UserM->ubah_data_barang($id,$data);
 		redirect('Man_sarprasC/kelola_barang');
 	}
 
