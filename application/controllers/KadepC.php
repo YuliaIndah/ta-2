@@ -125,10 +125,12 @@ class KadepC extends CI_Controller {
 
 	public function konfigurasi_sistem(){
 		$data['title'] = "Konfigurasi Sistem | Kepala Departemen";
-		$this->data['jenis_barang']	= $this->UserM->get_jenis_barang()->result();
-		$this->data['jabatan']		= $this->UserM->get_pilihan_jabatan()->result();
-		$this->data['unit']			= $this->UserM->get_pilihan_unit()->result();
-		$this->data['data_diri'] 	= $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
+		$this->data['nama_progress']	= $this->UserM->get_nama_progress()->result();
+		$this->data['jenis_kegiatan']	= $this->UserM->get_jenis_kegiatan()->result();
+		$this->data['jenis_barang']		= $this->UserM->get_jenis_barang()->result();
+		$this->data['jabatan']			= $this->UserM->get_pilihan_jabatan()->result();
+		$this->data['unit']				= $this->UserM->get_pilihan_unit()->result();
+		$this->data['data_diri'] 		= $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
 		$data['body'] = $this->load->view('kadep/konfigurasi_sistem_content', $this->data, true);
 		$this->load->view('kadep/index_template', $data);
 	}
@@ -442,6 +444,110 @@ class KadepC extends CI_Controller {
 
 			$data = array(
 				'nama_jenis_barang'      => $nama_jenis_barang);
+
+			if($this->UserM->insert($db, $data)){
+				$this->session->set_flashdata('sukses','Data anda berhasil disimpan');
+				redirect_back(); // redirect kembali ke halaman sebelumnya
+			}else{
+				$this->session->set_flashdata('error','Data anda tidak berhasil disimpan');
+				redirect_back(); //kembali ke halaman sebelumnya -> helper
+			}
+		}
+	}
+
+	public function detail_jenis_kegiatan($id){ //menampilkan modal dengan isi dari detail_jenis_kegiatan.php
+		$data['detail_jenis_kegiatan'] = $this->UserM->get_jenis_kegiatan_by_id($id)->result()[0];
+		$this->load->view('kadep/detail_jenis_kegiatan', $data);
+	}
+
+	public function update_jenis_kegiatan(){
+		$this->form_validation->set_rules('kode_jenis_kegiatan', 'Kode Jenis Kegiatan','required');
+		$this->form_validation->set_rules('nama_jenis_kegiatan', 'Nama Jenis Kegiatan','required');
+		if($this->form_validation->run() == FALSE){
+			$this->session->set_flashdata('error','Data anda tidak berhasil disimpan');
+			redirect_back(); //kembali ke halaman sebelumnya -> helper
+		}else{
+			$kode_jenis_kegiatan = $_POST['kode_jenis_kegiatan'];
+			$nama_jenis_kegiatan = $_POST['nama_jenis_kegiatan'];
+			$db = "jenis_kegiatan";
+			$kode = "kode_jenis_kegiatan";
+
+			$data = array(
+				'nama_jenis_kegiatan'      => $nama_jenis_kegiatan);
+
+			if($this->UserM->update($kode_jenis_kegiatan, $kode, $db, $data)){
+				$this->session->set_flashdata('sukses','Data anda berhasil disimpan');
+				redirect_back(); // redirect kembali ke halaman sebelumnya
+			}else{
+				$this->session->set_flashdata('error','Data anda tidak berhasil disimpan');
+				redirect_back(); //kembali ke halaman sebelumnya -> helper
+			}
+		}
+	}
+
+	public function tambah_jenis_kegiatan(){
+		$this->form_validation->set_rules('nama_jenis_kegiatan', 'Nama Jenis kegiatan','required');
+		if($this->form_validation->run() == FALSE){
+			$this->session->set_flashdata('error','Data anda tidak berhasil disimpan');
+			redirect_back(); //kembali ke halaman sebelumnya -> helper
+		}else{
+			$nama_jenis_kegiatan = $_POST['nama_jenis_kegiatan'];
+			$db 		= "jenis_kegiatan";
+
+			$data = array(
+				'nama_jenis_kegiatan'      => $nama_jenis_kegiatan);
+
+			if($this->UserM->insert($db, $data)){
+				$this->session->set_flashdata('sukses','Data anda berhasil disimpan');
+				redirect_back(); // redirect kembali ke halaman sebelumnya
+			}else{
+				$this->session->set_flashdata('error','Data anda tidak berhasil disimpan');
+				redirect_back(); //kembali ke halaman sebelumnya -> helper
+			}
+		}
+	}
+
+	public function detail_nama_progress($id){ //menampilkan modal dengan isi dari detail_jenis_kegiatan.php
+		$data['detail_nama_progress'] = $this->UserM->get_nama_progress_by_id($id)->result()[0];
+		$this->load->view('kadep/detail_nama_progress', $data);
+	}
+
+	public function update_nama_progress(){
+		$this->form_validation->set_rules('kode_nama_progress', 'Kode Nama Progress','required');
+		$this->form_validation->set_rules('nama_progress', 'Nama Progress','required');
+		if($this->form_validation->run() == FALSE){
+			$this->session->set_flashdata('error','Data anda tidak berhasil disimpan');
+			redirect_back(); //kembali ke halaman sebelumnya -> helper
+		}else{
+			$kode_nama_progress = $_POST['kode_nama_progress'];
+			$nama_progress = $_POST['nama_progress'];
+			$db = "nama_progress";
+			$kode = "kode_nama_progress";
+
+			$data = array(
+				'nama_progress'      => $nama_progress);
+
+			if($this->UserM->update($kode_nama_progress, $kode, $db, $data)){
+				$this->session->set_flashdata('sukses','Data anda berhasil disimpan');
+				redirect_back(); // redirect kembali ke halaman sebelumnya
+			}else{
+				$this->session->set_flashdata('error','Data anda tidak berhasil disimpan');
+				redirect_back(); //kembali ke halaman sebelumnya -> helper
+			}
+		}
+	}
+
+	public function tambah_nama_progress(){
+		$this->form_validation->set_rules('nama_progress', ' Nama Progress','required');
+		if($this->form_validation->run() == FALSE){
+			$this->session->set_flashdata('error','Data anda tidak berhasil disimpan');
+			redirect_back(); //kembali ke halaman sebelumnya -> helper
+		}else{
+			$nama_progress = $_POST['nama_progress'];
+			$db 		= "nama_progress";
+
+			$data = array(
+				'nama_progress'      => $nama_progress);
 
 			if($this->UserM->insert($db, $data)){
 				$this->session->set_flashdata('sukses','Data anda berhasil disimpan');

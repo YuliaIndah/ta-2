@@ -227,7 +227,7 @@
     <div class="col-lg-12">
       <div style="margin-top: 20px;">
         <a class="btn btn-info" data-toggle="modal" data-target="#modal_tambah_jenis_barang"><i class="icon_plus_alt2"> </i> Tambah Jenis Barang </a>
-       <div class="table-responsive">
+        <div class="table-responsive">
          <table id="jenis_barang" class="table table-striped table-bordered" cellspacing="0" width="100%">
           <thead>
             <tr>
@@ -309,28 +309,46 @@
 <!-- Data tabel jenis_kegiatan-->
 <div id="4" class="tab-pane" role="tabpanel">
   <div class="row pt-5">
-    <div class="col-lg-12">
-      <div>
-       <div class="table-responsive">
-         <table id="jenis_kegiatan" class="table table-striped table-bordered" cellspacing="0" width="100%">
-          <thead>
+    <div style="margin-top: 20px;">
+      <a class="btn btn-info" data-toggle="modal" data-target="#modal_tambah_jenis_kegiatan"><i class="icon_plus_alt2"> </i> Tambah Jenis Kegiatan </a>
+      <div class="table-responsive">
+       <table id="jenis_kegiatan" class="table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+            <th style="width: 10px;">No</th>
+            <th style="width: 10px;">ID</th>
+            <th>Nama Jenis Kegiatan</th>
+            <th>Status</th>
+            <th style="width: 50px;">Aksi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php
+          $i=0;
+          foreach ($jenis_kegiatan as $jenis_kegiatan) {
+            $i++;
+            ?>
             <tr>
-              <th style="width: 10px;">No</th>
-              <th style="width: 10px;">ID</th>
-              <th>Nama Jenis Kegiatan</th>
-              <th>Status</th>
-              <th style="width: 50px;">Aksi</th>
+              <td><?php echo $i;?></td>
+              <td><?php echo $jenis_kegiatan->kode_jenis_kegiatan;?></td>
+              <td><?php echo $jenis_kegiatan->nama_jenis_kegiatan;?></td>
+              <td><?php echo "status";?></td>
+              <td class="text-center"> 
+                <a href="#modal_jenis_kegiatan" id="custId" data-toggle="modal" data-id="<?php echo $jenis_kegiatan->kode_jenis_kegiatan;?>" data-toggle="tooltip" title="Edit Jenis Kegiatan" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-edit"></span></a>
+              </td>
             </tr>
-          </thead>
-        </table>
-      </div>
+            <?php
+          }
+          ?>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
 </div>
 
 <!-- modal edit jenis kegiatan -->
-<div class="modal fade" id="jenis_kegiatan" role="dialog">
+<div class="modal fade" id="modal_jenis_kegiatan" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -346,12 +364,38 @@
   </div>
 </div>
 
+<!-- modal tambah_jenis_kegiatan -->
+<div aria-hidden="true" aria-labelledby="modal_tambah_jenis_kegiatan" role="dialog" tabindex="-1" id="modal_tambah_jenis_kegiatan" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+        <h4 class="modal-title">Tambah Jenis Kegiatan</h4>
+      </div>
+      <div class="modal-body">
+        <?php echo form_open_multipart('KadepC/tambah_jenis_kegiatan');?>
+        <form role="form" action="<?php echo base_url(); ?>KadepC/tambah_jenis_kegiatan" method="post">
+          <div class="form-group">
+            <label>Nama Jenis Barang</label>
+            <input class="form-control" placeholder="Nama Jenis Kegiatan" type="text" id="nama_jenis_kegiatan" name="nama_jenis_kegiatan" required>
+          </div>
+          <div class="modal-footer">
+            <input type="submit" class="btn btn-info col-lg-2"  value="Simpan">
+          </div> 
+          <?php echo form_close()?>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- Data tabel nama_progress-->
 <div id="5" class="tab-pane" role="tabpanel">
   <div class="row pt-5">
     <div class="col-lg-12">
-      <div>
-       <div class="table-responsive">
+      <div style="margin-top: 20px;">
+        <a class="btn btn-info" data-toggle="modal" data-target="#tambah_nama_progress"><i class="icon_plus_alt2"> </i> Tambah Nama Progress </a>
+        <div class="table-responsive">
          <table id="nama_progress" class="table table-striped table-bordered" cellspacing="0" width="100%">
           <thead>
             <tr>
@@ -362,6 +406,25 @@
               <th style="width: 50px;">Aksi</th>
             </tr>
           </thead>
+          <tbody>
+            <?php
+            $i=0;
+            foreach ($nama_progress as $nama_progress) {
+              $i++;
+              ?>
+              <tr>
+                <td><?php echo $i;?></td>
+                <td><?php echo $nama_progress->kode_nama_progress;?></td>
+                <td><?php echo $nama_progress->nama_progress;?></td>
+                <td><?php echo "status";?></td>
+                <td class="text-center"> 
+                  <a href="#modal_nama_progress" id="custId" data-toggle="modal" data-id="<?php echo $nama_progress->kode_nama_progress;?>" data-toggle="tooltip" title="Edit Nama Progress" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-edit"></span></a>
+                </td>
+              </tr>
+              <?php
+            }
+            ?>
+          </tbody>
         </table>
       </div>
     </div>
@@ -370,12 +433,12 @@
 </div>
 
 <!-- modal edit nama_progress -->
-<div class="modal fade" id="nama_progress" role="dialog">
+<div class="modal fade" id="modal_nama_progress" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Edit Nama Progress/h4>
+        <h4 class="modal-title">Edit Nama Progress</h4>
         </div>
         <div class="modal-body">
           <div class="fetched-data"></div>
@@ -386,12 +449,38 @@
     </div>
   </div>
 
+  <!-- modal tambah nama progress -->
+<div aria-hidden="true" aria-labelledby="tambah_nama_progress" role="dialog" tabindex="-1" id="tambah_nama_progress" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+        <h4 class="modal-title">Tambah Nama Progress</h4>
+      </div>
+      <div class="modal-body">
+        <?php echo form_open_multipart('KadepC/tambah_nama_progress');?>
+        <form role="form" action="<?php echo base_url(); ?>KadepC/tambah_nama_progress" method="post">
+          <div class="form-group">
+            <label>Nama Progress</label>
+            <input class="form-control" placeholder="Nama Progress" type="text" id="nama_progress" name="nama_progress" required>
+          </div>
+          <div class="modal-footer">
+            <input type="submit" class="btn btn-info col-lg-2"  value="Simpan">
+          </div> 
+          <?php echo form_close()?>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
   <!-- Data tabel persetujuan_kegiatan-->
   <div id="6" class="tab-pane" role="tabpanel">
     <div class="row pt-5">
       <div class="col-lg-12">
-        <div>
-         <div class="table-responsive">
+        <div style="margin-top: 20px;">
+          <a class="btn btn-info" data-toggle="modal" data-target="#tambah_persetujuan_kegiatan"><i class="icon_plus_alt2"> </i> Tambah Persetujuan </a>
+          <div class="table-responsive">
            <table id="persetujuan_kegiatan" class="table table-striped table-bordered" cellspacing="0" width="100%">
             <thead>
               <tr>
@@ -412,7 +501,7 @@
 </div>
 
 <!-- modal edit Persetujuan kegiatan -->
-<div class="modal fade" id="persetujuan_kegiatan" role="dialog">
+<div class="modal fade" id="modal_persetujuan_kegiatan" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -423,6 +512,31 @@
         <div class="fetched-data"></div>
       </div>
       <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+
+ <!-- modal tambah persetujuan kegiatan -->
+<div aria-hidden="true" aria-labelledby="tambah_persetujuan_kegiatan" role="dialog" tabindex="-1" id="tambah_persetujuan_kegiatan" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+        <h4 class="modal-title">Tambah Persetujuan Kegiatan</h4>
+      </div>
+      <div class="modal-body">
+        <?php echo form_open_multipart('KadepC/tambah_persetujuan_kegiatan');?>
+        <form role="form" action="<?php echo base_url(); ?>KadepC/tambah_persetujuan_kegiatan" method="post">
+          <div class="form-group">
+            <label>Nama Progress</label>
+            <input class="form-control" placeholder="Nama Progress" type="text" id="persetujuan_kegiatan" name="persetujuan_kegiatan" required>
+          </div>
+          <div class="modal-footer">
+            <input type="submit" class="btn btn-info col-lg-2"  value="Simpan">
+          </div> 
+          <?php echo form_close()?>
+        </form>
       </div>
     </div>
   </div>
@@ -472,6 +586,45 @@
             $.ajax({
               type : 'get',
               url : '<?php echo base_url().'KadepC/detail_jenis_barang/'?>'+rowid,
+                //data :  'rowid='+ rowid, // $_POST['rowid'] = rowid
+                success : function(data){
+                $('.fetched-data').html(data);//menampilkan data ke dalam modal
+              }
+            });
+          });
+
+      $('#modal_jenis_kegiatan').on('show.bs.modal', function (e) {
+        var rowid = $(e.relatedTarget).data('id');
+            //menggunakan fungsi ajax untuk pengambilan data
+            $.ajax({
+              type : 'get',
+              url : '<?php echo base_url().'KadepC/detail_jenis_kegiatan/'?>'+rowid,
+                //data :  'rowid='+ rowid, // $_POST['rowid'] = rowid
+                success : function(data){
+                $('.fetched-data').html(data);//menampilkan data ke dalam modal
+              }
+            });
+          });
+
+      $('#modal_nama_progress').on('show.bs.modal', function (e) {
+        var rowid = $(e.relatedTarget).data('id');
+            //menggunakan fungsi ajax untuk pengambilan data
+            $.ajax({
+              type : 'get',
+              url : '<?php echo base_url().'KadepC/detail_nama_progress/'?>'+rowid,
+                //data :  'rowid='+ rowid, // $_POST['rowid'] = rowid
+                success : function(data){
+                $('.fetched-data').html(data);//menampilkan data ke dalam modal
+              }
+            });
+          });
+
+      $('#modal_persetujuan_kegiatan').on('show.bs.modal', function (e) {
+        var rowid = $(e.relatedTarget).data('id');
+            //menggunakan fungsi ajax untuk pengambilan data
+            $.ajax({
+              type : 'get',
+              url : '<?php echo base_url().'KadepC/detail_persetujuan_kegiatan/'?>'+rowid,
                 //data :  'rowid='+ rowid, // $_POST['rowid'] = rowid
                 success : function(data){
                 $('.fetched-data').html(data);//menampilkan data ke dalam modal

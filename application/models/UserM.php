@@ -54,6 +54,24 @@
 	}
 
 
+	//jenis kegiatan
+	public function get_jenis_kegiatan(){
+		return $query = $this->db->get('jenis_kegiatan');
+	}
+	public function get_jenis_kegiatan_by_id($id){
+		$this->db->where('kode_jenis_kegiatan', $id);
+		return $query = $this->db->get('jenis_kegiatan');
+	}
+
+	// nama progress
+	public function get_nama_progress(){
+		return $query = $this->db->get('nama_progress');
+	}
+	public function get_nama_progress_by_id($id){
+		$this->db->where('kode_nama_progress', $id);
+		return $query = $this->db->get('nama_progress');
+	}
+
 
 
 	public function update($id, $kode, $db, $data){
@@ -62,6 +80,11 @@
 	}
 	public function insert($db, $data){
 		return $query = $this->db->insert($db, $data);
+	}
+
+	//acc kegiatan (persetujuan  kegiatan)
+	public function get_persetujuan_kegiatan(){
+		$this->db->select('*');
 	}
 
 	
