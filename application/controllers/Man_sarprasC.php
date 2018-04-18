@@ -103,10 +103,10 @@ class Man_sarprasC extends CI_Controller {
 
 	public function ubah_data_barang(){ //update data barang
 		$id 				= $_POST['id'];
-		$kode_barang 		= $_POST['nama_barang'];
+		$nama_barang 		= $_POST['nama_barang'];
 		$kode_jenis_barang  = $_POST['kode_jenis_barang'];
 		$data = array(
-			'nama_barang'       => $kode_barang,
+			'nama_barang'       => $nama_barang,
 			'kode_jenis_barang' => $kode_jenis_barang
 		);
 		$this->UserM->ubah_data_barang($id,$data);
@@ -160,6 +160,29 @@ class Man_sarprasC extends CI_Controller {
 		}
 
 	}	
+
+	public function klasifikasi_barang(){ //halaman kelola barang(man_sarpras)
+		$data['title'] = "Klasifikasi Barang | Manajer Sarana dan Prasarana";
+		$this->data['data_diri'] = $this->UserM->get_data_diri()->result()[0];      //get data diri buat nampilin nama di pjok kanan
+		$this->data['data_klasifikasi'] = $this->Man_sarprasM->get_data_klasifikasi_barang()->result();          //menampilkan data barang yang belum memiliki jenis barang / belum terklasifikasi
+		$data['body'] = $this->load->view('man_sarpras/klasifikasi_barang_content', $this->data, true);
+		$this->load->view('man_sarpras/index_template', $data);
+	}
+
+	public function update_klasifikasi($kode_jenis_barang, $kode_barang){ //edit data diri
+		$kode_barang     	= $kode_barang;
+		$kode_jenis_barang  = $kode_jenis_barang;
+		$status_klasifikasi = 'valid';
+
+		$data = array(
+			'kode_barang'     	=> $kode_barang,
+			'kode_jenis_barang' => $kode_jenis_barang,
+			'status_klasifikasi'=> $status_klasifikasi
+		);
+		$this->Man_sarprasM->update_klasifikasi_barang($kode_barang,$data);
+		$this->session->set_flashdata('sukses','Data anda berhasil disimpan');
+		redirect('Man_sarprasC/klasifikasi_barang');
+	}
 
 	// sebagai pegawai
 
@@ -310,6 +333,31 @@ class Man_sarprasC extends CI_Controller {
 		}
 
 	}	
+
+	public function post_tambah_barang_baru(){ //fungsi untuk tambah barang baru
+		$this->form_validation->set_rules('nama_barang', 'Nama Barang','required');
+		if($this->form_validation->run() == FALSE)
+		{
+			$this->ajukan_barang();
+			//redirect ke halaman ajukan barang
+		}else{
+			$nama_barang 		= $_POST['nama_barang'];
+
+			$status_klasifikasi = "tidak valid";
+			$data_pengguna		= array(
+				'nama_barang'		=> $nama_barang,
+				'status_klasifikasi'=> $status_klasifikasi
+			);
+			if($this->Man_sarprasM->insert_tambah_barang($data_pengguna)){
+				$this->session->set_flashdata('sukses','Data Barang Baru berhasil ditambahkan');
+				redirect('Man_sarprasC/ajukan_barang');
+			}else{
+				$this->session->set_flashdata('error','Data Barang Baru tidak berhasil ditambahkan');
+				redirect('Man_sarprasC/ajukan_barang');
+			}
+		}
+
+	}
 	
 	
 }

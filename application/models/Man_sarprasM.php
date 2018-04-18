@@ -22,23 +22,6 @@ class Man_sarprasM extends CI_Model{
 		}
 	}
 
-	function get_data_pengajuan_by_id($id){
-		$this->db->select('*');
-		$this->db->from('item_pengajuan');
-		$this->db->join('pengguna', 'pengguna.no_identitas = item_pengajuan.no_identitas');
-		$this->db->join('jabatan', 'jabatan.kode_jabatan = pengguna.kode_jabatan');
-		$this->db->join('unit', 'unit.kode_unit = pengguna.kode_unit');
-		$this->db->join('barang', 'barang.kode_barang = item_pengajuan.kode_barang');
-		$this->db->join('jenis_barang', 'jenis_barang.kode_jenis_barang = barang.kode_jenis_barang');
-		$this->db->where('item_pengajuan.kode_item_pengajuan', $id);
-		$query = $this->db->get();
-		if($query){
-			return $query;
-		}else{
-			return null;
-		}
-	}
-
 	public function insert_pengajuan_kegiatan($data){   //post pengguna_jabatan
 		if($this->db->insert('kegiatan', $data)){
 			return $this->db->insert_id(); //return last insert ID
@@ -113,4 +96,21 @@ class Man_sarprasM extends CI_Model{
 		}
 	}
 
+	function get_data_klasifikasi_barang(){ // menampilkan data barang yang belum memiliki jenis barang / belum terklasifikasi
+		$this->db->select('*');
+		$this->db->from('barang');
+		$this->db->where('status_klasifikasi="tidak valid"'); // berdasarkan status_klasifikasi yang tidak valid
+		$query = $this->db->get();
+		if($query){
+			return $query;
+		}else{
+			return null;
+		}
+	}
+
+	public function update_klasifikasi_barang($kode_barang, $data){ //update barang dengan klasifikasi
+		$this->db->where('kode_barang', $kode_barang);
+		$this->db->update('barang', $data);
+		return TRUE;
+	}
 }
