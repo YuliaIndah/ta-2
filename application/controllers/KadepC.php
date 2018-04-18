@@ -125,6 +125,7 @@ class KadepC extends CI_Controller {
 
 	public function konfigurasi_sistem(){
 		$data['title'] = "Konfigurasi Sistem | Kepala Departemen";
+		$this->data['persetujuan_kegiatan']	= $this->UserM->get_persetujuan_kegiatan()->result();
 		$this->data['nama_progress']	= $this->UserM->get_nama_progress()->result();
 		$this->data['jenis_kegiatan']	= $this->UserM->get_jenis_kegiatan()->result();
 		$this->data['jenis_barang']		= $this->UserM->get_jenis_barang()->result();
@@ -454,9 +455,7 @@ class KadepC extends CI_Controller {
 			}
 		}
 	}
-<<<<<<< HEAD
-=======
-
+	
 	public function detail_jenis_kegiatan($id){ //menampilkan modal dengan isi dari detail_jenis_kegiatan.php
 		$data['detail_jenis_kegiatan'] = $this->UserM->get_jenis_kegiatan_by_id($id)->result()[0];
 		$this->load->view('kadep/detail_jenis_kegiatan', $data);

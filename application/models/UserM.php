@@ -82,6 +82,10 @@
 	//acc kegiatan (persetujuan  kegiatan)
 	public function get_persetujuan_kegiatan(){
 		$this->db->select('*');
+		$this->db->from('pengguna');
+		$this->db->where('pengguna.no_identitas == acc_kegiatan.no_identitas');
+		$this->eb->where('acc_kegiatan.kode_jenis_kegiatan == jenis_kegiatan.kode_jenis_kegiatan');
+		return $query = $this->db->get();
 	}
 
 	
