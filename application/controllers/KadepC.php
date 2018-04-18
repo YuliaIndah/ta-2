@@ -126,8 +126,10 @@ class KadepC extends CI_Controller {
 	public function konfigurasi_sistem(){
 		$data['title'] = "Konfigurasi Sistem | Kepala Departemen";
 		$this->data['persetujuan_kegiatan']	= $this->UserM->get_persetujuan_kegiatan()->result();
+		$this->data['nama_pengguna']	= $this->KadepM->get_data_pengguna()->result();
 		$this->data['nama_progress']	= $this->UserM->get_nama_progress()->result();
 		$this->data['jenis_kegiatan']	= $this->UserM->get_jenis_kegiatan()->result();
+		$this->data['jenis_kegiatan_persetujuan']	= $this->UserM->get_jenis_kegiatan()->result();
 		$this->data['jenis_barang']		= $this->UserM->get_jenis_barang()->result();
 		$this->data['jabatan']			= $this->UserM->get_pilihan_jabatan()->result();
 		$this->data['unit']				= $this->UserM->get_pilihan_unit()->result();
@@ -247,12 +249,14 @@ class KadepC extends CI_Controller {
 
 	public function detail_pengajuan($id){ //menampilkan modal dengan isi dari detail_pengajuan.php
 		$data['detail_kegiatan'] = $this->KadepM->get_data_pengajuan_by_id($id)->result()[0];
+		$data['data_diri'] 		= $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
 		$data['nama_progress'] = $this->UserM->get_pilihan_nama_progress()->result();
 		$this->load->view('kadep/detail_pengajuan', $data);
 	}
 
 	public function detail_kegiatan($id){ //menampilkan modal dengan isi dari detail_kegiatan.php
 		$data['detail_kegiatan'] = $this->KadepM->get_data_pengajuan_by_id($id)->result()[0];
+		$data['data_diri'] 		= $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
 		$this->load->view('kadep/detail_kegiatan', $data);
 	}
 
@@ -455,7 +459,7 @@ class KadepC extends CI_Controller {
 			}
 		}
 	}
-	
+
 	public function detail_jenis_kegiatan($id){ //menampilkan modal dengan isi dari detail_jenis_kegiatan.php
 		$data['detail_jenis_kegiatan'] = $this->UserM->get_jenis_kegiatan_by_id($id)->result()[0];
 		$this->load->view('kadep/detail_jenis_kegiatan', $data);
@@ -559,5 +563,29 @@ class KadepC extends CI_Controller {
 			}
 		}
 	}
->>>>>>> upstream/master
+
+	public function tambah_persetujuan_kegiatan(){
+		$this->form_validation->set_rules('no_identitas', ' No Identitas','required');
+		$this->form_validation->set_rules('kode_jenis_kegiatan', ' Kode Jenis Kegiatan','required');
+		if($this->form_validation->run() == FALSE){
+			$this->session->set_flashdata('error','Data anda tidak berhasil disimpan');
+			redirect_back(); //kembali ke halaman sebelumnya -> helper
+		}else{
+			$no_identitas 			= $_POST['no_identitas'];
+			$kode_jenis_kegiatan 	= $_POST['kode_jenis_kegiatan'];
+
+			$data = array(
+				'no_identitas'      		=> $no_identitas,
+				'kode_jenis_kegiatan'      	=> $kode_jenis_kegiatan);
+			$db = "acc_kegiatan";
+
+			if($this->UserM->insert($db, $data)){
+				$this->session->set_flashdata('sukses','Data anda berhasil disimpan');
+				redirect_back(); // redirect kembali ke halaman sebelumnya
+			}else{
+				$this->session->set_flashdata('error','Data anda tidak berhasil disimpan');
+				redirect_back(); //kembali ke halaman sebelumnya -> helper
+			}
+		}
+	}
 }

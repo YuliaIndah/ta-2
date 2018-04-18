@@ -494,28 +494,32 @@
               <th style="width: 50px;">Aksi</th>
             </tr>
           </thead>
+          <tbody>
+            <?php
+            $i=0;
+            foreach ($persetujuan_kegiatan as $persetujuan_kegiatan) {
+              $i++;
+              ?>
+              <tr>
+                <td><?php echo $i;?></td>
+                <td><?php echo $persetujuan_kegiatan->kode_acc_kegiatan;?></td>
+                <td><?php echo $persetujuan_kegiatan->nama;?></td>
+                <td><?php echo $persetujuan_kegiatan->nama_jabatan;?></td>
+                <td><?php echo $persetujuan_kegiatan->nama_jenis_kegiatan;?></td>
+                <td><?php echo "status";?></td>
+                <td class="text-center"> 
+                  <a href="" id="custId" data-toggle="tooltip" data-toggle="tooltip" title="Hapus Persetujuan Kegiatan" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></a>
+                </td>
+              </tr>
+              <?php
+            }
+            ?>
+          </tbody>
         </table>
       </div>
     </div>
   </div>
 </div>
-</div>
-
-<!-- modal edit Persetujuan kegiatan -->
-<div class="modal fade" id="modal_persetujuan_kegiatan" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Edit Persetujuan Kegiatan</h4>
-      </div>
-      <div class="modal-body">
-        <div class="fetched-data"></div>
-      </div>
-      <div class="modal-footer">
-      </div>
-    </div>
-  </div>
 </div>
 
 <!-- modal tambah persetujuan kegiatan -->
@@ -527,11 +531,37 @@
         <h4 class="modal-title">Tambah Persetujuan Kegiatan</h4>
       </div>
       <div class="modal-body">
+        <!-- <?php var_dump($jenis_kegiatan_persetujuan) ?> -->
         <?php echo form_open_multipart('KadepC/tambah_persetujuan_kegiatan');?>
         <form role="form" action="<?php echo base_url(); ?>KadepC/tambah_persetujuan_kegiatan" method="post">
           <div class="form-group">
-            <label>Nama Progress</label>
-            <input class="form-control" placeholder="Nama Progress" type="text" id="persetujuan_kegiatan" name="persetujuan_kegiatan" required>
+            <label>Nama Pengguna</label>
+            <select class="form-control" name="no_identitas" id="no_identitas">
+              <option value="">---- Pilih Pengguna ---- </option>
+              <?php 
+              foreach ($nama_pengguna as $pilihan_pengguna) {
+                ?>
+                <option value="<?php echo $pilihan_pengguna->no_identitas ;?>"> <?php echo $pilihan_pengguna->nama ;?> </option>
+                <?php
+              }
+              ?>
+            </select>
+          </div>
+          <div class="form-group">
+            <label><strong><h4>Menyetujui : </h4></strong></label>
+          </div>
+          <div class="form-group">
+            <label>Jenis Kegiatan</label>
+            <select class="form-control" name="kode_jenis_kegiatan" id="kode_jenis_kegiatan">
+              <option value="">---- Pilih Jenis Kegiatan ---- </option>
+              <?php 
+              foreach ($jenis_kegiatan_persetujuan as $jenis_kegiatan_persetujuan) {
+                ?>
+                <option value="<?php echo $jenis_kegiatan_persetujuan->kode_jenis_kegiatan ;?>"> <?php echo $jenis_kegiatan_persetujuan->nama_jenis_kegiatan ;?> </option>
+                <?php
+              }
+              ?>
+            </select>
           </div>
           <div class="modal-footer">
             <input type="submit" class="btn btn-info col-lg-2"  value="Simpan">
@@ -618,18 +648,4 @@
               }
             });
           });
-
-      $('#modal_persetujuan_kegiatan').on('show.bs.modal', function (e) {
-        var rowid = $(e.relatedTarget).data('id');
-            //menggunakan fungsi ajax untuk pengambilan data
-            $.ajax({
-              type : 'get',
-              url : '<?php echo base_url().'KadepC/detail_persetujuan_kegiatan/'?>'+rowid,
-                //data :  'rowid='+ rowid, // $_POST['rowid'] = rowid
-                success : function(data){
-                $('.fetched-data').html(data);//menampilkan data ke dalam modal
-              }
-            });
-          });
-    });
-  </script>
+        </script>
