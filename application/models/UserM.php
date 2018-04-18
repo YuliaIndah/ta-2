@@ -20,14 +20,51 @@
 		$this->db->where('no_identitas',$data['no_identitas']); 
 		return $this->db->update('pengguna',$data);
 	}  
+
+	// jabatan
 	public function get_pilihan_jabatan(){ //mengambil jabatan dari db jabatan
 		$query = $this->db->get('jabatan');	
 		return $query;
 	}
+	public function get_pilihan_jabatan_by_id($id){ //mengambil jabatan dari db jabatan berdasarkan id
+		$this->db->where('kode_jabatan', $id);
+		$query = $this->db->get('jabatan');	
+		return $query;
+	}
+
+	// Unit
 	public function get_pilihan_unit(){
 		$query = $this->db->get('unit');
 		return $query;
 	}
+	public function get_pilihan_unit_by_id($id){ //mengambil jabatan dari db jabatan berdasarkan id
+		$this->db->where('kode_unit', $id);
+		$query = $this->db->get('unit');	
+		return $query;
+	}
+
+
+	//jenis barang
+	public function get_jenis_barang(){
+		return $query = $this->db->get('jenis_barang');
+	}
+	public function get_jenis_barang_by_id($id){
+		$this->db->where('kode_jenis_barang', $id);
+		return $query = $this->db->get('jenis_barang');
+	}
+
+
+
+
+	public function update($id, $kode, $db, $data){
+		$this->db->where($kode, $id);
+		return $query = $this->db->update($db, $data);
+	}
+	public function insert($db, $data){
+		return $query = $this->db->insert($db, $data);
+	}
+
+	
 
 	function get_data_diri(){ //ambil data diri user berdasarkan session
 		$no_identitas = $this->session->userdata('no_identitas');
