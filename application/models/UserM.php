@@ -53,7 +53,6 @@
 		return $query = $this->db->get('jenis_barang');
 	}
 
-
 	//jenis kegiatan
 	public function get_jenis_kegiatan(){
 		return $query = $this->db->get('jenis_kegiatan');
@@ -71,8 +70,6 @@
 		$this->db->where('kode_nama_progress', $id);
 		return $query = $this->db->get('nama_progress');
 	}
-
-
 
 	public function update($id, $kode, $db, $data){
 		$this->db->where($kode, $id);

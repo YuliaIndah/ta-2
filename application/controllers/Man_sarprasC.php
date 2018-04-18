@@ -94,9 +94,8 @@ class Man_sarprasC extends CI_Controller {
 		$data['ubah_barang']          = $this->UserM->get_barang_by_kode_barang($kode_barang)->result()[0];
 		$data['pilihan_jenis_barang'] = $this->Man_sarprasM->get_pilihan_jenis_barang($kode_barang)->result();
 		echo json_encode($data);
-		// $this->load->view('man_sarpras/detail_ubah_barang', $data);
 	}
-	public function getListAjax()
+	public function getListAjax() 
 	{
 		$data = $this->db->get('jenis_barang')->result();
 		echo json_encode($data);

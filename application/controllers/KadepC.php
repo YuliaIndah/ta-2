@@ -454,6 +454,8 @@ class KadepC extends CI_Controller {
 			}
 		}
 	}
+<<<<<<< HEAD
+=======
 
 	public function detail_jenis_kegiatan($id){ //menampilkan modal dengan isi dari detail_jenis_kegiatan.php
 		$data['detail_jenis_kegiatan'] = $this->UserM->get_jenis_kegiatan_by_id($id)->result()[0];
@@ -558,4 +560,5 @@ class KadepC extends CI_Controller {
 			}
 		}
 	}
+>>>>>>> upstream/master
 }

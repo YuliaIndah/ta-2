@@ -227,7 +227,8 @@
     <div class="col-lg-12">
       <div style="margin-top: 20px;">
         <a class="btn btn-info" data-toggle="modal" data-target="#modal_tambah_jenis_barang"><i class="icon_plus_alt2"> </i> Tambah Jenis Barang </a>
-        <div class="table-responsive">
+<<<<<<< HEAD
+       <div class="table-responsive">
          <table id="jenis_barang" class="table table-striped table-bordered" cellspacing="0" width="100%">
           <thead>
             <tr>
@@ -264,6 +265,105 @@
 </div>
 </div>
 
+<!-- modal jenis barang -->
+<div class="modal fade" id="modal_jenis_barang" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Edit Jenis Barang</h4>
+      </div>
+      <div class="modal-body">
+        <div class="fetched-data"></div>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- modal tambah_jenis_barang -->
+<div aria-hidden="true" aria-labelledby="modal_tambah_jenis_barang" role="dialog" tabindex="-1" id="modal_tambah_jenis_barang" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+        <h4 class="modal-title">Tambah Jenis Barang</h4>
+      </div>
+      <div class="modal-body">
+        <?php echo form_open_multipart('KadepC/tambah_jenis_barang');?>
+        <form role="form" action="<?php echo base_url(); ?>KadepC/tambah_jenis_barang" method="post">
+          <div class="form-group">
+            <label>Nama Jenis Barang</label>
+            <input class="form-control" placeholder="Nama Jenis Barang" type="text" id="nama_jenis_barang" name="nama_jenis_barang" required>
+          </div>
+          <div class="modal-footer">
+            <input type="submit" class="btn btn-info col-lg-2"  value="Simpan">
+          </div> 
+          <?php echo form_close()?>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Data tabel jenis_kegiatan-->
+<div id="4" class="tab-pane" role="tabpanel">
+  <div class="row pt-5">
+    <div class="col-lg-12">
+      <div>
+       <div class="table-responsive">
+         <table id="jenis_kegiatan" class="table table-striped table-bordered" cellspacing="0" width="100%">
+=======
+        <div class="table-responsive">
+         <table id="jenis_barang" class="table table-striped table-bordered" cellspacing="0" width="100%">
+>>>>>>> upstream/master
+          <thead>
+            <tr>
+              <th style="width: 10px;">No</th>
+              <th style="width: 10px;">ID</th>
+<<<<<<< HEAD
+              <th>Nama Jenis Kegiatan</th>
+=======
+              <th>Nama Jenis Barang</th>
+>>>>>>> upstream/master
+              <th>Status</th>
+              <th style="width: 50px;">Aksi</th>
+            </tr>
+          </thead>
+<<<<<<< HEAD
+=======
+          <tbody>
+            <?php
+            $i=0;
+            foreach ($jenis_barang as $jenis_barang) {
+              $i++;
+              ?>
+              <tr>
+                <td><?php echo $i;?></td>
+                <td><?php echo $jenis_barang->kode_jenis_barang;?></td>
+                <td><?php echo $jenis_barang->nama_jenis_barang;?></td>
+                <td><?php echo "status";?></td>
+                <td class="text-center"> 
+                  <a href="#modal_jenis_barang" id="custId" data-toggle="modal" data-id="<?php echo $jenis_barang->kode_jenis_barang;?>" data-toggle="tooltip" title="Edit Jenis Barang" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-edit"></span></a>
+                </td>
+              </tr>
+              <?php
+            }
+            ?>
+          </tbody>
+>>>>>>> upstream/master
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<<<<<<< HEAD
+<!-- modal edit jenis kegiatan -->
+<div class="modal fade" id="jenis_kegiatan" role="dialog">
+=======
 <!-- modal jenis barang -->
 <div class="modal fade" id="modal_jenis_barang" role="dialog">
   <div class="modal-dialog" role="document">
@@ -349,6 +449,7 @@
 
 <!-- modal edit jenis kegiatan -->
 <div class="modal fade" id="modal_jenis_kegiatan" role="dialog">
+>>>>>>> upstream/master
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -364,6 +465,8 @@
   </div>
 </div>
 
+<<<<<<< HEAD
+=======
 <!-- modal tambah_jenis_kegiatan -->
 <div aria-hidden="true" aria-labelledby="modal_tambah_jenis_kegiatan" role="dialog" tabindex="-1" id="modal_tambah_jenis_kegiatan" class="modal fade">
   <div class="modal-dialog">
@@ -389,13 +492,19 @@
   </div>
 </div>
 
+>>>>>>> upstream/master
 <!-- Data tabel nama_progress-->
 <div id="5" class="tab-pane" role="tabpanel">
   <div class="row pt-5">
     <div class="col-lg-12">
+<<<<<<< HEAD
+      <div>
+       <div class="table-responsive">
+=======
       <div style="margin-top: 20px;">
         <a class="btn btn-info" data-toggle="modal" data-target="#tambah_nama_progress"><i class="icon_plus_alt2"> </i> Tambah Nama Progress </a>
         <div class="table-responsive">
+>>>>>>> upstream/master
          <table id="nama_progress" class="table table-striped table-bordered" cellspacing="0" width="100%">
           <thead>
             <tr>
@@ -406,6 +515,8 @@
               <th style="width: 50px;">Aksi</th>
             </tr>
           </thead>
+<<<<<<< HEAD
+=======
           <tbody>
             <?php
             $i=0;
@@ -425,6 +536,7 @@
             }
             ?>
           </tbody>
+>>>>>>> upstream/master
         </table>
       </div>
     </div>
@@ -433,12 +545,20 @@
 </div>
 
 <!-- modal edit nama_progress -->
+<<<<<<< HEAD
+<div class="modal fade" id="nama_progress" role="dialog">
+=======
 <div class="modal fade" id="modal_nama_progress" role="dialog">
+>>>>>>> upstream/master
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
+<<<<<<< HEAD
+        <h4 class="modal-title">Edit Nama Progress/h4>
+=======
         <h4 class="modal-title">Edit Nama Progress</h4>
+>>>>>>> upstream/master
         </div>
         <div class="modal-body">
           <div class="fetched-data"></div>
@@ -449,6 +569,8 @@
     </div>
   </div>
 
+<<<<<<< HEAD
+=======
   <!-- modal tambah nama progress -->
 <div aria-hidden="true" aria-labelledby="tambah_nama_progress" role="dialog" tabindex="-1" id="tambah_nama_progress" class="modal fade">
   <div class="modal-dialog">
@@ -474,13 +596,19 @@
   </div>
 </div>
 
+>>>>>>> upstream/master
   <!-- Data tabel persetujuan_kegiatan-->
   <div id="6" class="tab-pane" role="tabpanel">
     <div class="row pt-5">
       <div class="col-lg-12">
+<<<<<<< HEAD
+        <div>
+         <div class="table-responsive">
+=======
         <div style="margin-top: 20px;">
           <a class="btn btn-info" data-toggle="modal" data-target="#tambah_persetujuan_kegiatan"><i class="icon_plus_alt2"> </i> Tambah Persetujuan </a>
           <div class="table-responsive">
+>>>>>>> upstream/master
            <table id="persetujuan_kegiatan" class="table table-striped table-bordered" cellspacing="0" width="100%">
             <thead>
               <tr>
@@ -501,7 +629,11 @@
 </div>
 
 <!-- modal edit Persetujuan kegiatan -->
+<<<<<<< HEAD
+<div class="modal fade" id="persetujuan_kegiatan" role="dialog">
+=======
 <div class="modal fade" id="modal_persetujuan_kegiatan" role="dialog">
+>>>>>>> upstream/master
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -517,6 +649,8 @@
   </div>
 </div>
 
+<<<<<<< HEAD
+=======
  <!-- modal tambah persetujuan kegiatan -->
 <div aria-hidden="true" aria-labelledby="tambah_persetujuan_kegiatan" role="dialog" tabindex="-1" id="tambah_persetujuan_kegiatan" class="modal fade">
   <div class="modal-dialog">
@@ -542,6 +676,7 @@
   </div>
 </div>
 
+>>>>>>> upstream/master
 </div>
 </div>
 <div class="col-md-2 col-lg-3 col-sm-12">
@@ -579,6 +714,10 @@
               }
             });
           });
+<<<<<<< HEAD
+
+      $('#modal_jenis_barang').on('show.bs.modal', function (e) {
+=======
 
       $('#modal_jenis_barang').on('show.bs.modal', function (e) {
         var rowid = $(e.relatedTarget).data('id');
@@ -620,11 +759,16 @@
           });
 
       $('#modal_persetujuan_kegiatan').on('show.bs.modal', function (e) {
+>>>>>>> upstream/master
         var rowid = $(e.relatedTarget).data('id');
             //menggunakan fungsi ajax untuk pengambilan data
             $.ajax({
               type : 'get',
+<<<<<<< HEAD
+              url : '<?php echo base_url().'KadepC/detail_jenis_barang/'?>'+rowid,
+=======
               url : '<?php echo base_url().'KadepC/detail_persetujuan_kegiatan/'?>'+rowid,
+>>>>>>> upstream/master
                 //data :  'rowid='+ rowid, // $_POST['rowid'] = rowid
                 success : function(data){
                 $('.fetched-data').html(data);//menampilkan data ke dalam modal
