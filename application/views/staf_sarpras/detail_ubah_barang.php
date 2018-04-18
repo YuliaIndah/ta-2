@@ -14,9 +14,10 @@
             <select class="form-control" name="kode_jenis_barang" id="kode_jenis_barang">
                 <!-- <option> ----- pilih nama progress ----- </option> -->
                 <?php 
-                foreach ($pilihan_jenis_barang as $pilihan_jenis_barang) {
+                print_r($pilihan_jenis_barang);exit();
+                foreach ($pilihan_jenis_barang as $value) {
                     ?>
-                    <option value="<?php echo $pilihan_jenis_barang->kode_jenis_barang ;?>"> <?php echo $pilihan_jenis_barang->nama_jenis_barang ;?> </option>
+                    <option value="<?php echo $value->kode_jenis_barang ;?>"> <?php echo $value->nama_jenis_barang ;?> </option>
                     <?php
                 }
                 ?>
@@ -31,3 +32,10 @@
         </div>
     </div>
 </form>
+<script type="text/javascript">
+    // js 
+    $(document).ready(function(){
+       $('#mySelect option[value="<?php echo $pilihan_jenis_barang->nama_jenis_barang ;?>"]').attr('selected', true)
+    });
+
+</script>

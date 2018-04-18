@@ -42,7 +42,7 @@
                           <td><?php echo $barang->nama_barang; ?></td>
                           <td><?php echo $barang->nama_jenis_barang; ?></td>
                           <td>
-                              <a href="#myModal1" id="custId" data-toggle="modal" data-id="<?php echo $barang->kode_barang;?>" data-toggle="tooltip" title="Aksi" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-edit"></span></a>
+                              <a onclick="edit(<?php echo $barang->kode_barang; ?>)" id="custId" data-toggle="modal" data-id="<?php echo $barang->kode_barang;?>" data-toggle="tooltip" title="Aksi" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-edit"></span></a>
                           </td>
                         </tr>
 
@@ -73,9 +73,10 @@
         <div class="modal-content">
           <div class="modal-header">
             <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
-            <h4 class="modal-title">Tambah Barang</h4>
+            <h4 class="modal-title" id="titlemodal">Tambah Barang</h4>
           </div>
-          <form class="form-horizontal" action="<?php echo base_url('Man_sarprasC/post_tambah_barang');?>" method="post" enctype="multipart/form-data" role="form">
+          <form id="formadd" class="form-horizontal" action="<?php echo base_url('Man_sarprasC/post_tambah_barang');?>" method="post" enctype="multipart/form-data" role="form">
+            <input type="text" name="id" id="idbarang" hidden="true">
             <div class="modal-body">
               <div class="form-group">
                 <label class="col-lg-4 col-sm-2 control-label">Nama Barang :</label>
@@ -102,7 +103,7 @@
             </div>
              <div class="modal-footer">
               <button class="btn btn-info" type="submit"> Simpan </button>
-              <button type="button" class="btn btn-warning" data-dismiss="modal"> Batal</button>
+              <button  onclick="batal()"  id="buttonbatal" type="button" class="btn btn-warning" data-dismiss="modal"> Batal</button>
             </div>
           </form>
         </div>
@@ -127,7 +128,7 @@
       </div>
     </div>
   </div>
-
+  
 <script>
 $(document).ready(function() {
       // Untuk sunting
@@ -135,23 +136,73 @@ $(document).ready(function() {
           
         });
     });
+
+function edit(id) {
+  $('#titlemodal').text("Edit Barang");
+  $('#idbarang').val(id);
+  $('#formadd').attr('action', '<?php echo base_url('Man_sarprasC/ubah_data_barang');?>');
+  $.ajax({
+      type : 'get',
+      url : '<?php echo base_url().'Man_sarprasC/ubah_barang/'?>'+id,
+      // data :  'id': id, // $_POST['rowid'] = rowid
+      dataType :'JSON',
+      success : function(data){
+        $('#kode_jenis_barang').empty();
+        $.each(data.pilihan_jenis_barang,function(key, value)
+        {
+            $("#kode_jenis_barang").append('<option value=' + value.kode_jenis_barang + '>' + value.nama_jenis_barang + '</option>');
+        });
+        $('#nama_barang').val(data.ubah_barang.nama_barang);
+        $('#kode_jenis_barang option[value='+data.ubah_barang.kode_jenis_barang+']').attr('selected','selected');
+        // $("#kode_jenis_barang select").val(data.ubah_barang.kode_jenis_barang);
+      }
+    });
+   $('#buttonbatal').removeAttr('data-dismiss');
+  $("#myModal").modal('show');
+ 
+
+}
+
+  function batal() {
+    
+    $('#titlemodal').text("Tambah Barang");
+    $('#formadd').attr('action', '<?php echo base_url('Man_sarprasC/post_tambah_barang');?>');
+    $('#idbarang').val("");
+    $('#nama_barang').val("");
+    $('#buttonbatal').attr('data-dismiss');
+    $.ajax({
+      type : 'get',
+      url : '<?php echo base_url().'Man_sarprasC/getListAjax/'?>',
+      dataType :'JSON',
+      success : function(data){
+        $('#kode_jenis_barang').empty();
+        $("#kode_jenis_barang").append('<option value="">---- Pilih Jenis Barang ----</option>');
+        $.each(data,function(key, value)
+        {
+            $("#kode_jenis_barang").append('<option value=' + value.kode_jenis_barang + '>' + value.nama_jenis_barang + '</option>');
+        });
+      }
+    });
+    $("#myModal").modal('hide');
+
+  }
 </script>
 <script src="<?php echo base_url();?>assets/js/jquery.min.js"></script>
 <script type="text/javascript">
     // js 
-    $(document).ready(function(){
-      $('#myModal1').on('show.bs.modal', function (e) {
-        var rowid = $(e.relatedTarget).data('id');
-            //menggunakan fungsi ajax untuk pengambilan data
-            $.ajax({
-              type : 'get',
-              url : '<?php echo base_url().'Man_sarprasC/ubah_barang/'?>'+rowid,
-                //data :  'rowid='+ rowid, // $_POST['rowid'] = rowid
-                success : function(data){
-                $('.fetched-data').html(data);//menampilkan data ke dalam modal
-              }
-            });
-          });
-    });
+    // $(document).ready(function(){
+    //   $('#myModal1').on('show.bs.modal', function (e) {
+    //     var rowid = $(e.relatedTarget).data('id');
+    //         //menggunakan fungsi ajax untuk pengambilan data
+    //         $.ajax({
+    //           type : 'get',
+    //           url : '<?php //echo base_url().'Man_sarprasC/ubah_barang/'?>'+rowid,
+    //             //data :  'rowid='+ rowid, // $_POST['rowid'] = rowid
+    //             success : function(data){
+    //             $('.fetched-data').html(data);//menampilkan data ke dalam modal
+    //           }
+    //         });
+    //       });
+    // });
 
   </script>
