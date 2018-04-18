@@ -504,11 +504,11 @@
                 <td><?php echo $i;?></td>
                 <td><?php echo $persetujuan_kegiatan->kode_acc_kegiatan;?></td>
                 <td><?php echo $persetujuan_kegiatan->nama;?></td>
-                <td><?php echo $persetujuan_kegiatan->nama_jabatan;?></td>
+                <td><?php echo $persetujuan_kegiatan->nama_jabatan." ".$persetujuan_kegiatan->nama_unit;?></td>
                 <td><?php echo $persetujuan_kegiatan->nama_jenis_kegiatan;?></td>
                 <td><?php echo "status";?></td>
                 <td class="text-center"> 
-                  <a href="" id="custId" data-toggle="tooltip" data-toggle="tooltip" title="Hapus Persetujuan Kegiatan" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></a>
+                  <a href="<?php echo base_url('KadepC/hapus/'.$persetujuan_kegiatan->kode_acc_kegiatan);?>"  onClick="return confirm('Anda yakin akan menghapus data ini?')" id="custId" data-toggle="tooltip" data-toggle="tooltip" title="Hapus Persetujuan Kegiatan" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></a>
                 </td>
               </tr>
               <?php

@@ -51,6 +51,7 @@ class KadepC extends CI_Controller {
 		$this->data['array_data_status'] = $array_data_status;
 
 		$this->data['data_diri'] = $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
+
 		$data['body'] = $this->load->view('kadep/persetujuan_kegiatan_mahasiswa_content', $this->data, true) ;
 		$this->load->view('kadep/index_template', $data);
 	}
@@ -586,6 +587,13 @@ class KadepC extends CI_Controller {
 				$this->session->set_flashdata('error','Data anda tidak berhasil disimpan');
 				redirect_back(); //kembali ke halaman sebelumnya -> helper
 			}
+		}
+	}
+
+	public function hapus($id){//hapus persetujuan kegiatan
+		if($this->KadepM->hapus($id)){
+			$this->session->set_flashdata('sukses','Data anda berhasil dihapus');
+			redirect_back();
 		}
 	}
 }

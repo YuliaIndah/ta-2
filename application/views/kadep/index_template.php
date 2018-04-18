@@ -38,7 +38,7 @@
           <li class="dropdown">
             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
               <span class="profile-ava">
-                <!-- <img alt="" src="https://scontent-sit4-1.xx.fbcdn.net/v/t1.0-9/14713754_1299932453374328_2078707598612152427_n.jpg?oh=9d0b1568abe4454dd39499ae6931978e&oe=5B32A923" style="height: 35px;"> -->
+                <img alt="" src="https://scontent-sit4-1.xx.fbcdn.net/v/t1.0-9/14713754_1299932453374328_2078707598612152427_n.jpg?oh=9d0b1568abe4454dd39499ae6931978e&oe=5B32A923" style="height: 35px;">
               </span>
               <span class="username"><?php echo $data_diri->nama;?></span>
               <b class="caret"></b>
@@ -91,21 +91,21 @@
             </a>
           </li>
           <li>
-            <a href="<?php echo site_url('KadepC/konfigurasi_sistem')?>">
-              <i class="icon_cog"></i>
-              <span>Konfigurasi Sistem</span>
-            </a>
-          </li>
-          <li>
             <a href="<?php echo site_url('KadepC/pengguna')?>">
               <i class="icon_profile"></i>
               <span>Daftar Pengguna</span>
             </a>
           </li>
           <li>
-            <a href="<?php echo site_url('KadepC/jabatan')?>">
-              <i class="icon_ol"></i>
-              <span>Daftar Jabatan</span>
+            <a href="<?php echo site_url('KadepC/konfigurasi_sistem')?>">
+              <i class="icon_cog"></i>
+              <span>Konfigurasi Sistem</span>
+            </a>
+          </li>
+          <li>
+            <a href="<?php echo site_url('KadepC/Prosedur')?>">
+              <i class="glyphicon glyphicon-list-alt"></i>
+              <span>Prosedur</span>
             </a>
           </li>
         </ul>

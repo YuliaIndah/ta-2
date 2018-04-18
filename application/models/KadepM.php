@@ -79,8 +79,14 @@ class KadepM extends CI_Model{
 		return;
 	}
 
+	public function hapus($id){//hapus persetujuan kegiatan
+		$this->db->where('kode_acc_kegiatan', $id);
+		$this->db->delete('acc_kegiatan');
+		return "berhasil";
+	}
 
-
-	// konfigurasi siste
+	public function get_data_status(){
+		$this->db->select('*');
+	}
 	
 }
