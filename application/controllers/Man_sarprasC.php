@@ -245,8 +245,8 @@ class Man_sarprasC extends CI_Controller {
 			$this->session->set_flashdata('error','Data Pengajuan Kegiatan anda tidak berhasil ditambahkan');
 			redirect('Man_sarprasC/pengajuan_kegiatan_pegawai');
 		}
-		}
 	}
+}
 
 	public function edit_data_diri($no_identitas){ //edit data diri
 		$jen_kel    = $_POST['jen_kel'];
@@ -269,8 +269,10 @@ class Man_sarprasC extends CI_Controller {
 
 	public function ajukan_barang(){ //halaman pengajuan barang
 		$data['title'] = "Daftar Pengajuan Barang | Kepala Departemen";
+		$kode_unit = $this->session->userdata('kode_unit');
 		$this->data['data_diri'] = $this->UserM->get_data_diri()->result()[0]; //get data diri buat nampilin nama di pojok kanan
 		$this->data['data_ajukan_barang'] = $this->UserM->get_ajukan_barang()->result();	//menampilkan pengajuan barag yang diajukan user sebagai pegwai
+		$this->data['data_pimpinan'] = $this->UserM->get_id_pimpinan($kode_unit)->result()[0]->no_identitas;	//menampilkan pengajuan barag yang diajukan user sebagai pegwai
 		$this->data['pilihan_barang'] = $this->UserM->get_pilihan_barang()->result();
 		$data['body'] = $this->load->view('man_sarpras/ajukan_barang_content', $this->data, true);
 		$this->load->view('man_sarpras/index_template', $data);
@@ -285,7 +287,7 @@ class Man_sarprasC extends CI_Controller {
 		$this->form_validation->set_rules('harga_satuan', 'Harga Satuan','required');
 		$this->form_validation->set_rules('merk', 'Merk','required');
 		$this->form_validation->set_rules('jumlah', 'Jumlah Barang','required');
-		// $this->form_validation->set_rules('pimpinan', 'Pimpinan','required');
+		
 		if($this->form_validation->run() == FALSE)
 		{
 			$this->session->set_flashdata('error','Data Pengajuan Kegiatan anda tidak berhasil ditambahkan 1');
@@ -301,8 +303,7 @@ class Man_sarprasC extends CI_Controller {
 			$harga_satuan 		= $_POST['harga_satuan'];
 			$merk 				= $_POST['merk'];
 			$jumlah 			= $_POST['jumlah'];
-			// $file_gambar 		= $_POST['file_gambar'];
-			// $pimpinan			= $_POST['pimpinan'];
+			$pimpinan			= $_POST['pimpinan'];
 
 			$baru = "baru"; //buat status pengajuan berstatus baru ketika baru dibuat
 
@@ -316,13 +317,40 @@ class Man_sarprasC extends CI_Controller {
 				'harga_satuan'			=> $harga_satuan,
 				'merk'					=> $merk,
 				'jumlah'				=> $jumlah,
-				'file_gambar' 			=> $upload['file']['file_name']
-				// 'pimpinan'				=> $pimpinan
+				'file_gambar' 			=> $upload['file']['file_name'],
+				'pimpinan'				=> $pimpinan
 
 			);
 			if($upload['result'] == "success"){ // Jika proses upload sukses
-				$this->Man_sarprasM->insert_pengajuan_barang($data_pengguna);  // untuk memasukkan data ke tabel item_pengajuan
-				$this->session->set_flashdata('sukses','Data Barang berhasil ditambahkan');
+				$insert_id = $this->Man_sarprasM->insert_pengajuan_barang($data_pengguna);  // untuk memasukkan data ke tabel item_pengajuan
+
+				if($insert_id){ // Jika proses insert ke item barang sukses
+
+					$format_tgl 	= "%Y-%m-%d";
+					$tgl_progress 	= mdate($format_tgl);
+					$format_waktu 	= "%H:%i:%s";
+					$waktu_progress	= mdate($format_waktu);
+					$kode_nama_progress	= "1";
+					$komentar			= "insert otomatis";
+					$jenis_progress		= "barang";
+
+					$data = array(
+						'no_identitas' 			=> $no_identitas,
+						'kode_fk'				=> $insert_id,
+						'kode_nama_progress' 	=> $kode_nama_progress,
+						'komentar'				=> $komentar,
+						'jenis_progress'		=> $jenis_progress,
+						'tgl_progress'			=> $tgl_progress,
+						'waktu_progress'		=> $waktu_progress
+
+					);
+				$this->UserM->insert_progress($data); //insert progress langsung ketika mengajukan kegiatan untuk manajer, kepala, dan pimpinan yang lain
+				}else{ 
+					$this->session->set_flashdata('error','Data Pengajuan Pengajuan Barang anda tidak berhasil ditambahkan');
+					redirect('Man_sarprasC/ajukan_barang');
+				}
+			
+			$this->session->set_flashdata('sukses','Data Barang berhasil ditambahkan');
 				redirect('Man_sarprasC/ajukan_barang');//redirect ke halaman pengajuan barang
 			}else{ // Jika proses upload gagal
 				$data['message'] = $upload['error']; // Ambil pesan error uploadnya untuk dikirim ke file form dan ditampilkan

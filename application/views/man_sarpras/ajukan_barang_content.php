@@ -114,6 +114,7 @@
                 </div>
               </div>
               <input type="hidden" class="form-control" placeholder id="tgl_item_pengajuan" name="tgl_item_pengajuan" required value="<?php echo date('Y-m-d');?>">
+              <input type="hidden" class="form-control" placeholder id="pimpinan" name="pimpinan" required value="<?php echo $data_pimpinan;?>">
             <div class="form-group">
               <label class="col-lg-4 col-sm-2 control-label">url :</label>
               <div class="col-lg-8">

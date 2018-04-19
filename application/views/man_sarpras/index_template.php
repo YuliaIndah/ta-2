@@ -81,7 +81,7 @@
           </li>
           <li>
             <a href="<?php echo site_url('Man_sarprasC/klasifikasi_barang')?>">
-              <i class="icon_pencil-edit"></i>
+              <i class="icon_tags_alt"></i>
               <span>Klasifikasi Barang</span>
             </a>
           </li>
