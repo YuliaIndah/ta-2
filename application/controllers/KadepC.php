@@ -159,7 +159,6 @@ class KadepC extends CI_Controller {
 			$dana_diajukan 			= $_POST['dana_diajukan'];
 			$tgl_pengajuan 			= $_POST['tgl_pengajuan'];
 			$dana_disetujui			= $_POST['dana_disetujui'];
-			$pimpinan				= $_POST['pimpinan'];
 
 			$data_pengajuan_kegiatan = array(
 				'no_identitas' 			=> $no_identitas,
@@ -168,7 +167,7 @@ class KadepC extends CI_Controller {
 				'tgl_kegiatan'			=> $tgl_kegiatan,
 				'dana_diajukan' 		=> $dana_diajukan,
 				'tgl_pengajuan'			=> $tgl_pengajuan,
-				'pimpinan'				=> $pimpinan,
+				'pimpinan'				=> $no_identitas,
 				'dana_disetujui'		=> $dana_disetujui);
 
 			

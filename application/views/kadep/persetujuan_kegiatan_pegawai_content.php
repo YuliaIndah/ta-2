@@ -59,14 +59,13 @@
                         <?php 
                         $tgl_pengajuan = $kegiatan->tgl_pengajuan;
                         $new_tgl_pengajuan = date('d-m-Y',strtotime($tgl_pengajuan));
-                        ?>
-                        <td><?php echo $new_tgl_pengajuan;?></td>
-
-                        <?php
                         $tgl_kegiatan = $kegiatan->tgl_kegiatan;
                         $new_tgl_kegiatan = date('d-m-Y', strtotime($tgl_kegiatan));
+                        $tgl_selesai = $kegiatan->tgl_selesai_kegiatan;
+                        $new_tgl_selesai = date('d-m-Y', strtotime($tgl_selesai));
                         ?>
-                        <td><?php echo $new_tgl_kegiatan;?></td>
+                        <td><?php echo $new_tgl_pengajuan; ?></td>
+                        <td><?php echo $new_tgl_kegiatan." - ".$new_tgl_selesai; ?></td>
                         <td><?php echo $kegiatan->dana_diajukan;?></td>
                         <td><?php echo $kegiatan->dana_disetujui;?></td>
                         <?php $link = base_url()."assets/file_upload/".$kegiatan->nama_file;?>

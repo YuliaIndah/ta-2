@@ -69,9 +69,11 @@
                           $new_tgl_pengajuan = date('d-m-Y',strtotime($tgl_pengajuan));
                           $tgl_kegiatan = $kegiatan->tgl_kegiatan;
                           $new_tgl_kegiatan = date('d-m-Y', strtotime($tgl_kegiatan));
+                          $tgl_selesai = $detail_kegiatan->tgl_selesai_kegiatan;
+                          $new_tgl_selesai = date('d-m-Y', strtotime($tgl_selesai));
                           ?>
                           <td><?php echo $new_tgl_pengajuan; ?></td>
-                          <td><?php echo $new_tgl_kegiatan; ?></td>
+                          <td><?php echo $new_tgl_kegiatan." - ".$new_tgl_selesai; ?></td>
                           <td><?php echo $kegiatan->dana_diajukan; ?></td>
                           <td><?php echo $kegiatan->dana_disetujui; ?></td>
                           <td><?php echo 'status'?></td>
@@ -125,7 +127,6 @@
                   <!-- <label>ID Pengguna Jabatan</label> -->
 
                   <input class="form-control" type="hidden" id="no_identitas" name="no_identitas" value="<?php echo $data_diri->no_identitas;?>" required> <!-- ambil id_pengguna_jabatan berdasarkan user yang login-->
-                  <input class="form-control" type="hidden" id="pimpinan" name="pimpinan" value="<?php echo $data_diri->no_identitas;?>" required> <!-- ambil id_pengguna_jabatan berdasarkan user yang login-->
                 </div>
                 <div class="form-group">
                   <!-- <label>Kode Jenis Kegiatan</label> -->

@@ -48,8 +48,12 @@
             <td>: &nbsp;<?php echo $data_diri->tmp_lahir;?></td>
           </tr>
           <tr>
+            <?php
+              $tgl_lahir = $data_diri->tgl_lahir;
+              $new_tgl_lahir = date('d-m-Y', strtotime($tgl_lahir));
+            ?>
             <td class="info" width="23%" style="padding-left: 30px;">Tanggal Lahir</td>
-            <td>: &nbsp;<?php echo $data_diri->tgl_lahir;?></td>
+            <td>: &nbsp;<?php echo $new_tgl_lahir;?></td>
           </tr>
           <tr>
             <td class="active" width="23%" style="padding-left: 30px;">Alamat</td>

@@ -69,9 +69,11 @@
                           $new_tgl_pengajuan = date('d-m-Y',strtotime($tgl_pengajuan));
                           $tgl_kegiatan = $kegiatan->tgl_kegiatan;
                           $new_tgl_kegiatan = date('d-m-Y', strtotime($tgl_kegiatan));
+                          $tgl_selesai = $kegiatan->tgl_selesai_kegiatan;
+                          $new_tgl_selesai = date('d-m-Y', strtotime($tgl_selesai));
                           ?>
                           <td><?php echo $new_tgl_pengajuan; ?></td>
-                          <td><?php echo $new_tgl_kegiatan; ?></td>
+                          <td><?php echo $new_tgl_kegiatan." - ".$new_tgl_selesai; ?></td>
                           <td><?php echo $kegiatan->dana_diajukan; ?></td>
                           <td><?php echo $kegiatan->dana_disetujui; ?></td>
                           <td><?php echo 'status'?></td>

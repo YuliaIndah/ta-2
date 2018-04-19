@@ -14,23 +14,23 @@
     <div class="row">
       <div class="col-lg-12">
         <!-- Alert -->
-       <?php 
-       $data=$this->session->flashdata('sukses');
-       if($data!=""){ ?>
-       <div class="alert alert-success"><strong>Sukses! </strong> <?=$data;?></div>
-       <?php } ?>
-       <?php 
-       $data2=$this->session->flashdata('error');
-       if($data2!=""){ ?>
-       <div class="alert alert-danger"><strong> Error! </strong> <?=$data2;?></div>
-       <?php } ?>
+        <?php 
+        $data=$this->session->flashdata('sukses');
+        if($data!=""){ ?>
+        <div class="alert alert-success"><strong>Sukses! </strong> <?=$data;?></div>
+        <?php } ?>
+        <?php 
+        $data2=$this->session->flashdata('error');
+        if($data2!=""){ ?>
+        <div class="alert alert-danger"><strong> Error! </strong> <?=$data2;?></div>
+        <?php } ?>
 
-       <div class="card mb-3">
-        <div class="card-header">
-          <div class="card-body">
-            <!-- <a href="<?php echo site_url('Man_keuanganC/pengajuan_kegiatan_pegawai')?>" class="btn btn-info"><i class="icon_plus_alt2"> </i> Ajukan Kegiatan</a> -->
-            <a class="btn btn-info" data-toggle="modal" data-target="#myModal"><i class="icon_plus_alt2"> </i> Ajukan Kegiatan </a>
-            <div class="table-responsive">
+        <div class="card mb-3">
+          <div class="card-header">
+            <div class="card-body">
+              <!-- <a href="<?php echo site_url('Man_keuanganC/pengajuan_kegiatan_pegawai')?>" class="btn btn-info"><i class="icon_plus_alt2"> </i> Ajukan Kegiatan</a> -->
+              <a class="btn btn-info" data-toggle="modal" data-target="#myModal"><i class="icon_plus_alt2"> </i> Ajukan Kegiatan </a>
+              <div class="table-responsive">
                <!-- <?php
                   var_dump($data_kegiatan);
                   ?> -->
@@ -69,9 +69,11 @@
                           $new_tgl_pengajuan = date('d-m-Y',strtotime($tgl_pengajuan));
                           $tgl_kegiatan = $kegiatan->tgl_kegiatan;
                           $new_tgl_kegiatan = date('d-m-Y', strtotime($tgl_kegiatan));
+                          $tgl_selesai = $kegiatan->tgl_selesai_kegiatan;
+                          $new_tgl_selesai = date('d-m-Y', strtotime($tgl_selesai));
                           ?>
                           <td><?php echo $new_tgl_pengajuan; ?></td>
-                          <td><?php echo $new_tgl_kegiatan; ?></td>
+                          <td><?php echo $new_tgl_kegiatan." - ".$new_tgl_selesai; ?></td>
                           <td><?php echo $kegiatan->dana_diajukan; ?></td>
                           <td><?php echo $kegiatan->dana_disetujui; ?></td>
                           <td><?php echo 'status'?></td>
