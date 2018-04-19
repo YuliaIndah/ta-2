@@ -86,7 +86,7 @@
             </a>
           </li>
           <li>
-            <a href="<?php echo site_url('Man_sarprasC/pengajuan_barang')?>">
+            <a href="<?php echo site_url('Man_sarprasC/persetujuan_barang')?>">
               <i class=" icon_box-checked"></i>
               <span>Persetujuan Barang</span>
             </a>

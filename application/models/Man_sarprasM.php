@@ -6,7 +6,7 @@ class Man_sarprasM extends CI_Model{
 	}
 
 	// Ambil Data Pengajuan Barang 
-	function get_data_pengajuan(){
+	function get_data_item_pengajuan(){
 		$this->db->select('*');
 		$this->db->from('item_pengajuan');
 		$this->db->join('pengguna', 'pengguna.no_identitas = item_pengajuan.no_identitas');

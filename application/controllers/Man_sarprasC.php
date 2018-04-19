@@ -28,12 +28,12 @@ class Man_sarprasC extends CI_Controller {
 		$this->load->view('man_sarpras/index_template', $data);
 	}
 
-	public function pengajuan_barang(){ //halaman persetujuan barang (man_sarpras)
-		$data['title'] = "Pengajuan Barang | Manajer Sarana dan Prasarana";
+	public function persetujuan_barang(){ //halaman persetujuan barang (man_sarpras)
+		$data['title'] = "Persetujuan Barang | Manajer Sarana dan Prasarana";
 		$this->data['data_diri'] = $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
 
-		$this->data['data_pengajuan_barang'] = $this->Man_sarprasM->get_data_pengajuan()->result();
-		$data['body'] = $this->load->view('man_sarpras/pengajuan_barang_content', $this->data, true) ;
+		$this->data['data_persetujuan_barang'] = $this->Man_sarprasM->get_data_item_pengajuan()->result();
+		$data['body'] = $this->load->view('man_sarpras/persetujuan_barang_content', $this->data, true) ;
 		$this->load->view('man_sarpras/index_template', $data);
 	}
 
@@ -122,7 +122,7 @@ class Man_sarprasC extends CI_Controller {
 		if($this->form_validation->run() == FALSE)
 		{
 			$this->session->set_flashdata('error','Data Persetujuan anda tidak berhasil ditambahkan1 ');
-			redirect('Man_sarprasC/pengajuan_barang') ;
+			redirect('Man_sarprasC/persetujuan_barang') ;
 			//redirect ke halaman pengajuan barang
 		}else{
 			
@@ -151,10 +151,10 @@ class Man_sarprasC extends CI_Controller {
 			);
 			if($this->UserM->insert_progress($data_progress)){
 				$this->session->set_flashdata('sukses','Data Barang berhasil ditambahkan');
-				redirect('Man_sarprasC/pengajuan_barang');
+				redirect('Man_sarprasC/persetujuan_barang');
 			}else{
 				$this->session->set_flashdata('error','Data Barang tidak berhasil ditambahkan2');
-				redirect('Man_sarprasC/pengajuan_barang');
+				redirect('Man_sarprasC/persetujuan_barang');
 			}
 
 		}

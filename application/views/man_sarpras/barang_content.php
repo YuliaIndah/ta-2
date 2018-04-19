@@ -127,7 +127,6 @@ function edit(id) {
   $.ajax({
       type : 'get',
       url : '<?php echo base_url().'Man_sarprasC/ubah_barang/'?>'+id,
-      // data :  'id': id, // $_POST['rowid'] = rowid
       dataType :'JSON',
       success : function(data){
         $('#kode_jenis_barang').empty();
