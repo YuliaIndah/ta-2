@@ -157,7 +157,7 @@
                 </div>
                 <div class="form-group">
                   <label>Dana yang diajukan</label>
-                  <input class="form-control" placeholder="Dana yang diajukan" type="text" id="dana_diajukan" name="dana_diajukan" required>
+                  <input class="form-control" placeholder="Dana yang diajukan" type="text" onkeypress="return hanyaAngka(event)" id="dana_diajukan" name="dana_diajukan" required>
                   <span class="text-danger" style="color: red;"><?php echo form_error('dana_diajukan'); ?></span>  
                 </div>
                 <div class="form-group">

@@ -541,7 +541,7 @@
               <?php 
               foreach ($nama_pengguna as $pilihan_pengguna) {
                 ?>
-                <option value="<?php echo $pilihan_pengguna->no_identitas ;?>"> <?php echo $pilihan_pengguna->nama ;?> </option>
+                <option value="<?php echo $pilihan_pengguna->no_identitas ;?>"> <?php echo $pilihan_pengguna->nama." - ".$pilihan_pengguna->nama_jabatan." ".$pilihan_pengguna->nama_unit;?> </option>
                 <?php
               }
               ?>

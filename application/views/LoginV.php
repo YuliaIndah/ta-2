@@ -67,12 +67,12 @@
 
               <div class="form-group">
                 <label class="sr-only" for="form-email">Email</label>
-                <input type="text" name="email" class="form-email form-control" placeholder="email" autofocus required oninvalid="this.setCustomValidity('email tidak boleh kosong')" oninput="setCustomValidity('')">
+                <input type="email" name="email" class="form-email form-control" placeholder="Masukkan Email" autofocus required oninvalid="this.setCustomValidity('email tidak boleh kosong')" oninput="setCustomValidity('')">
               </div>
 
               <div class="form-group">
                 <label class="sr-only" for="form-password">Sandi</label>
-                <input type="password" name="password" class="form-password form-control" placeholder="Password" required oninvalid="this.setCustomValidity('Password tidak boleh kosong')" oninput="setCustomValidity('')">
+                <input type="password" name="password" class="form-password form-control" placeholder="Masukkan Password" required oninvalid="this.setCustomValidity('Password tidak boleh kosong')" oninput="setCustomValidity('')">
               </div>
 
               <div class="form-group">

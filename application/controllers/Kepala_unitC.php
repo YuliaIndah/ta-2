@@ -211,4 +211,3 @@ class Kepala_unitC extends CI_Controller {
 		}
 	}
 }
-}

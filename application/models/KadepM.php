@@ -87,6 +87,7 @@ class KadepM extends CI_Model{
 
 	public function get_data_status(){
 		$this->db->select('*');
+		
 	}
 	
 }

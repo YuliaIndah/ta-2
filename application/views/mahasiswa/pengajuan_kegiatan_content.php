@@ -14,23 +14,23 @@
     <div class="row">
       <div class="col-lg-12">
         <!-- Alert -->
-       <?php 
-       $data=$this->session->flashdata('sukses');
-       if($data!=""){ ?>
-       <div class="alert alert-success"><strong>Sukses! </strong> <?=$data;?></div>
-       <?php } ?>
-       <?php 
-       $data2=$this->session->flashdata('error');
-       if($data2!=""){ ?>
-       <div class="alert alert-danger"><strong> Error! </strong> <?=$data2;?></div>
-       <?php } ?>
+        <?php 
+        $data=$this->session->flashdata('sukses');
+        if($data!=""){ ?>
+        <div class="alert alert-success"><strong>Sukses! </strong> <?=$data;?></div>
+        <?php } ?>
+        <?php 
+        $data2=$this->session->flashdata('error');
+        if($data2!=""){ ?>
+        <div class="alert alert-danger"><strong> Error! </strong> <?=$data2;?></div>
+        <?php } ?>
 
-       <div class="card mb-3">
-        <div class="card-header">
-          <div class="card-body">
-            <!-- <a href="<?php echo site_url('MahasiswaC/pengajuan_kegiatan_pegawai')?>" class="btn btn-info"><i class="icon_plus_alt2"> </i> Ajukan Kegiatan</a> -->
-            <a class="btn btn-info" data-toggle="modal" data-target="#myModal"><i class="icon_plus_alt2"> </i> Ajukan Kegiatan </a>
-            <div class="table-responsive">
+        <div class="card mb-3">
+          <div class="card-header">
+            <div class="card-body">
+              <!-- <a href="<?php echo site_url('MahasiswaC/pengajuan_kegiatan_pegawai')?>" class="btn btn-info"><i class="icon_plus_alt2"> </i> Ajukan Kegiatan</a> -->
+              <a class="btn btn-info" data-toggle="modal" data-target="#myModal"><i class="icon_plus_alt2"> </i> Ajukan Kegiatan </a>
+              <div class="table-responsive">
                <!-- <?php
                   var_dump($data_kegiatan);
                   ?> -->
@@ -155,7 +155,7 @@
                 </div>
                 <div class="form-group">
                   <label>Dana yang diajukan</label>
-                  <input class="form-control" placeholder="Dana yang diajukan" type="text" id="dana_diajukan" name="dana_diajukan" required>
+                  <input class="form-control" placeholder="Dana yang diajukan" type="text" onkeypress="return hanyaAngka(event)" id="dana_diajukan" name="dana_diajukan" required>
                   <span class="text-danger" style="color: red;"><?php echo form_error('dana_diajukan'); ?></span>  
                 </div>
                 <div class="form-group">
@@ -180,3 +180,13 @@
       </div>
     </div>
   </div>
+
+  <script type="text/javascript">
+   function hanyaAngka(evt) {
+    var charCode = (evt.which) ? evt.which : event.keyCode
+    if (charCode > 31 && (charCode < 48 || charCode > 57))
+
+      return false;
+    return true;
+  }
+</script>

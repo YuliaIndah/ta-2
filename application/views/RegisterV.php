@@ -40,7 +40,7 @@
           <div class="form-group">  
             <!-- <label class="control-label" for="no_identitas">Nomor Identitas : </label>   -->
             <div>  
-              <input type="text" class="form-control" id="no_identitas" name="no_identitas" placeholder="Nomor Identitas" required>  
+              <input type="text" onkeypress="return hanyaAngka(event)" class="form-control" id="no_identitas" name="no_identitas" placeholder="Nomor Identitas" required>  
               <span class="text-danger" style="color: red;"><?php echo form_error('no_identitas'); ?></span>  
             </div>  
           </div>  
@@ -88,32 +88,32 @@
 </div>
 <div class="form-group">
   <!-- <label for="bidang"> Bidang yang akan di lamar :</label> -->
-  <select class="form-control" name="kode_unit" id="kode_unit">
+  <select class="form-control" name="kode_unit" id="kode_unit" required>
 
-  <option value="">---- Pilih Unit ---- </option>
-  <?php 
-  foreach ($unit->result() as $pilihan_unit) {
+    <option value="">---- Pilih Unit ---- </option>
+    <?php 
+    foreach ($unit->result() as $pilihan_unit) {
+      ?>
+      <option value="<?php echo $pilihan_unit->kode_unit ;?>"> <?php echo $pilihan_unit->nama_unit ;?> </option>
+      <?php
+    }
     ?>
-    <option value="<?php echo $pilihan_unit->kode_unit ;?>"> <?php echo $pilihan_unit->nama_unit ;?> </option>
-    <?php
-  }
-  ?>
-</select>
-<span class="text-danger" style="color: red;"><?php echo form_error('kode_jabatan'); ?></span>  
+  </select>
+  <span class="text-danger" style="color: red;"><?php echo form_error('kode_jabatan'); ?></span>  
 </div>
 <div class="form-group">
   <!-- <label for="bidang"> Bidang yang akan di lamar :</label> -->
-  <select class="form-control" name="kode_jabatan" id="kode_jabatan">
-  <option value="">---- Pilih Jabatan ---- </option>
-  <?php 
-  foreach ($jabatan->result() as $pilihan_jabatan) {
+  <select class="form-control" name="kode_jabatan" id="kode_jabatan" required>
+    <option value="">---- Pilih Jabatan ---- </option>
+    <?php 
+    foreach ($jabatan->result() as $pilihan_jabatan) {
+      ?>
+      <option value="<?php echo $pilihan_jabatan->kode_jabatan ;?>"> <?php echo $pilihan_jabatan->nama_jabatan ;?> </option>
+      <?php
+    }
     ?>
-    <option value="<?php echo $pilihan_jabatan->kode_jabatan ;?>"> <?php echo $pilihan_jabatan->nama_jabatan ;?> </option>
-    <?php
-  }
-  ?>
-</select>
-<span class="text-danger" style="color: red;"><?php echo form_error('kode_jabatan'); ?></span>  
+  </select>
+  <span class="text-danger" style="color: red;"><?php echo form_error('kode_jabatan'); ?></span>  
 </div>
 <div class="form-group">
   <!-- <label>Alamat</label> -->
@@ -121,7 +121,7 @@
 </div>
 <div class="form-group">
   <!-- <label>Nomor Handphone</label> -->
-  <input type="text" class="form-control" name="no_hp" placeholder="Nomor Handphone" required>
+  <input type="text" onkeypress="return hanyaAngka(event)" class="form-control" name="no_hp" placeholder="Nomor Handphone" required>
 </div>
 <!-- <div class="panel-heading text-center">  
  <h4>Data Akun : </h4>  
@@ -181,7 +181,17 @@
 </div>  
 </div>  
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->  
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>  
+</script>  
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> 
+<script type="text/javascript">
+  function hanyaAngka(evt) {
+    var charCode = (evt.which) ? evt.which : event.keyCode
+    if (charCode > 31 && (charCode < 48 || charCode > 57))
+
+      return false;
+    return true;
+  }
+</script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>    
 </body>  
 </html>  
