@@ -145,17 +145,20 @@ class KadepC extends CI_Controller {
 		$this->form_validation->set_rules('no_identitas', 'No Identitas','required');
 		$this->form_validation->set_rules('kode_jenis_kegiatan', 'Kode Jenis Kegiatan','required');
 		$this->form_validation->set_rules('nama_kegiatan', 'Nama Kegiatan','required');
-		$this->form_validation->set_rules('tgl_kegiatan', 'Tanggal Kegiatan','required');
+		$this->form_validation->set_rules('from', 'Tanggal Kegiatan','required');
+		$this->form_validation->set_rules('to', 'Tanggal Selesai Kegiatan','required');
 		$this->form_validation->set_rules('dana_diajukan', 'Dana Diajukan','required');
 		$this->form_validation->set_rules('tgl_pengajuan', 'Tanggal Pengajuan','required');
 		$this->form_validation->set_rules('dana_disetujui', 'Dana Disetujui');
 		if($this->form_validation->run() == FALSE){
+			$this->session->set_flashdata('error','Data Pengajuan Kegiatan anda tidak berhasil ditambahkan');
 			redirect('KadepC/pengajuan_kegiatan');
 		}else{
 			$no_identitas 	       	= $_POST['no_identitas'];
 			$kode_jenis_kegiatan 	= $_POST['kode_jenis_kegiatan'];
 			$nama_kegiatan 			= $_POST['nama_kegiatan'];
-			$tgl_kegiatan 			= $_POST['tgl_kegiatan'];
+			$tgl_kegiatan 			= $_POST['from'];
+			$tgl_selesai_kegiatan 	= $_POST['to'];
 			$dana_diajukan 			= $_POST['dana_diajukan'];
 			$tgl_pengajuan 			= $_POST['tgl_pengajuan'];
 			$dana_disetujui			= $_POST['dana_disetujui'];
@@ -165,6 +168,7 @@ class KadepC extends CI_Controller {
 				'kode_jenis_kegiatan' 	=> $kode_jenis_kegiatan,
 				'nama_kegiatan' 		=> $nama_kegiatan,
 				'tgl_kegiatan'			=> $tgl_kegiatan,
+				'tgl_selesai_kegiatan'	=> $tgl_selesai_kegiatan,
 				'dana_diajukan' 		=> $dana_diajukan,
 				'tgl_pengajuan'			=> $tgl_pengajuan,
 				'pimpinan'				=> $no_identitas,
@@ -220,8 +224,8 @@ class KadepC extends CI_Controller {
 		$this->form_validation->set_rules('alamat', 'Alamat','required');
 		$this->form_validation->set_rules('no_hp', 'no_hp','required');
 		if($this->form_validation->run() == FALSE){
-			redirect('KadepC/pengajuan_kegiatan');
 			$this->session->set_flashdata('error','Data anda tidak berhasil disimpan');
+			redirect('KadepC/pengajuan_kegiatan');
 		}else{
 			$jen_kel    = $_POST['jen_kel'];
 			$tmp_lahir  = $_POST['tmp_lahir'];

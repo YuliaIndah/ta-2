@@ -153,6 +153,19 @@
           return false;
         return true;
       }
+
+      $(function() {
+        $("#from").datepicker({
+          defaultDate: new Date(),
+          minDate: new Date(),
+          onSelect: function(dateStr) 
+          {         
+            $("#to").datepicker("destroy");
+            $("#to").val(dateStr);
+            $("#to").datepicker({ minDate: new Date(dateStr)})
+          }
+        });
+      });
     </script>
 
   </body>

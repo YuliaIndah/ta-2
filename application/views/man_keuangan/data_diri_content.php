@@ -10,73 +10,77 @@
       <div class="container">
        <div class="panel panel-default">
        <!--  <div class="panel-heading">
-        </div> -->
-        <div class="panel-body">
-          <div>
-            <!-- Alert -->
-            <?php 
-            $data=$this->session->flashdata('sukses');
-            if($data!=""){ ?>
-            <div class="alert alert-success"><strong>Sukses! </strong> <?=$data;?></div>
-            <?php } ?>
-            <?php 
-            $data2=$this->session->flashdata('error');
-            if($data2!=""){ ?>
-            <div class="alert alert-danger"><strong> Error! </strong> <?=$data2;?></div>
-            <?php } ?>
-            <!-- sampai sini -->
-          </div>
-          <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
-            <img src="https://scontent-sit4-1.xx.fbcdn.net/v/t1.0-9/14713754_1299932453374328_2078707598612152427_n.jpg?oh=9d0b1568abe4454dd39499ae6931978e&oe=5B32A923" class="img-thumbnail img-responsive" style="height: 150px;" alt="Cinque Terre">
-          </div>
-          <div class="col-lg-6 col-md-4 col-sm-6 col-xs-12">
-            <ul>
-              <li><h2><?php echo $data_diri->nama;?></h2></li>
-              <li><h4><?php echo $data_diri->no_identitas;?></h4></li>
-              <li><h4><?php echo $data_diri->nama_jabatan." ". $data_diri->nama_unit;?></h4></li>
-              <br>
-            </ul>
-          </div>  
+       </div> -->
+       <div class="panel-body">
+        <div>
+          <!-- Alert -->
+          <?php 
+          $data=$this->session->flashdata('sukses');
+          if($data!=""){ ?>
+          <div class="alert alert-success"><strong>Sukses! </strong> <?=$data;?></div>
+          <?php } ?>
+          <?php 
+          $data2=$this->session->flashdata('error');
+          if($data2!=""){ ?>
+          <div class="alert alert-danger"><strong> Error! </strong> <?=$data2;?></div>
+          <?php } ?>
+          <!-- sampai sini -->
         </div>
-        <table class="table table-striped  table-hover table-condensed">
-          <tr>
-            <td class="info" width="23%" style="padding-left: 30px;">Jenis Kelamin</td>
-            <td>: &nbsp;<?php echo $data_diri->jen_kel;?></td>
-          </tr>
-          <tr>
-            <td class="active" width="23%" style="padding-left: 30px;">Tempat Lahir</td>
-            <td>: &nbsp;<?php echo $data_diri->tmp_lahir;?></td>
-          </tr>
-          <tr>
-            <td class="info" width="23%" style="padding-left: 30px;">Tanggal Lahir</td>
-            <td>: &nbsp;<?php echo $data_diri->tgl_lahir;?></td>
-          </tr>
-          <tr>
-            <td class="active" width="23%" style="padding-left: 30px;">Alamat</td>
-            <td>: &nbsp;<?php echo $data_diri->alamat;?></td>
-          </tr>
-          <tr>
-            <td class="info" width="23%" style="padding-left: 30px;">No. Handphone</td>
-            <td>: &nbsp;<?php echo $data_diri->no_hp;?></td>
-          </tr>
-          <tr>
-            <!-- <td colspan="2" style="padding-left: 30px;"><button class="btn btn-info active" style="width: 75px;">Ubah</button></td> -->
-            <td colspan="2" style="padding-left: 30px;"><a class="btn btn-info" style="width: 75px;"
-              href="javascript:;"
-              data-jen_kel="<?php echo $data_diri->jen_kel;?>"
-              data-tmp_lahir="<?php echo $data_diri->tmp_lahir;?>"
-              data-tgl_lahir="<?php echo $data_diri->tgl_lahir;?>"
-              data-alamat="<?php echo $data_diri->alamat;?>"
-              data-no_hp="<?php echo $data_diri->no_hp?>"
-              data-toggle="modal" data-target="#edit-data">
-              Ubah
-            </a>
-          </tr>
-        </table>
-        <div class="panel-footer"></div>
+        <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
+          <img src="https://scontent-sit4-1.xx.fbcdn.net/v/t1.0-9/14713754_1299932453374328_2078707598612152427_n.jpg?oh=9d0b1568abe4454dd39499ae6931978e&oe=5B32A923" class="img-thumbnail img-responsive" style="height: 150px;" alt="Cinque Terre">
+        </div>
+        <div class="col-lg-6 col-md-4 col-sm-6 col-xs-12">
+          <ul>
+            <li><h2><?php echo $data_diri->nama;?></h2></li>
+            <li><h4><?php echo $data_diri->no_identitas;?></h4></li>
+            <li><h4><?php echo $data_diri->nama_jabatan." ". $data_diri->nama_unit;?></h4></li>
+            <br>
+          </ul>
+        </div>  
       </div>
+      <table class="table table-striped  table-hover table-condensed">
+        <tr>
+          <td class="info" width="23%" style="padding-left: 30px;">Jenis Kelamin</td>
+          <td>: &nbsp;<?php echo $data_diri->jen_kel;?></td>
+        </tr>
+        <tr>
+          <td class="active" width="23%" style="padding-left: 30px;">Tempat Lahir</td>
+          <td>: &nbsp;<?php echo $data_diri->tmp_lahir;?></td>
+        </tr>
+        <tr>
+          <?php
+          $tgl_lahir = $data_diri->tgl_lahir;
+          $new_tgl_lahir = date('d-m-Y', strtotime($tgl_lahir));
+          ?>
+          <td class="info" width="23%" style="padding-left: 30px;">Tanggal Lahir</td>
+          <td>: &nbsp;<?php echo $new_tgl_lahir;?></td>
+        </tr>
+        <tr>
+          <td class="active" width="23%" style="padding-left: 30px;">Alamat</td>
+          <td>: &nbsp;<?php echo $data_diri->alamat;?></td>
+        </tr>
+        <tr>
+          <td class="info" width="23%" style="padding-left: 30px;">No. Handphone</td>
+          <td>: &nbsp;<?php echo $data_diri->no_hp;?></td>
+        </tr>
+        <tr>
+          <!-- <td colspan="2" style="padding-left: 30px;"><button class="btn btn-info active" style="width: 75px;">Ubah</button></td> -->
+          <td colspan="2" style="padding-left: 30px;"><a class="btn btn-info" style="width: 75px;"
+            href="javascript:;"
+            data-jen_kel="<?php echo $data_diri->jen_kel;?>"
+            data-tmp_lahir="<?php echo $data_diri->tmp_lahir;?>"
+            data-tgl_lahir="<?php echo $data_diri->tgl_lahir;?>"
+            data-alamat="<?php echo $data_diri->alamat;?>"
+            data-no_hp="<?php echo $data_diri->no_hp?>"
+            data-toggle="modal" data-target="#edit-data">
+            Ubah
+          </a>
+        </tr>
+      </table>
+      <div class="panel-footer"></div>
     </div>
   </div>
+</div>
 </section>
 <div class="text-center">
  <div class="credits">

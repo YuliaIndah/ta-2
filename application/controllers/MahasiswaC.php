@@ -34,8 +34,8 @@ class MahasiswaC extends CI_Controller {
 		$this->form_validation->set_rules('alamat', 'Alamat','required');
 		$this->form_validation->set_rules('no_hp', 'no_hp','required');
 		if($this->form_validation->run() == FALSE){
-			redirect('MahasiswaC/pengajuan_kegiatan');
 			$this->session->set_flashdata('error','Data anda tidak berhasil disimpan');
+			redirect('MahasiswaC/pengajuan_kegiatan');
 		}else{
 			$jen_kel    = $_POST['jen_kel'];
 			$tmp_lahir  = $_POST['tmp_lahir'];
@@ -76,11 +76,12 @@ class MahasiswaC extends CI_Controller {
 		$this->load->view('mahasiswa/index_template', $data);
 	}
 
-	public function post_pengajuan_kegiatan_pegawai(){ //fungsi post pengajuan kegiatan pegawai
+	public function post_pengajuan_kegiatan_mahasiswa(){ //fungsi post pengajuan kegiatan mahasiswa
 		$this->form_validation->set_rules('no_identitas', 'No Identitas','required');
 		$this->form_validation->set_rules('kode_jenis_kegiatan', 'Kode Jenis Kegiatan','required');
 		$this->form_validation->set_rules('nama_kegiatan', 'Nama Kegiatan','required');
 		$this->form_validation->set_rules('tgl_kegiatan', 'Tanggal Kegiatan','required');
+		$this->form_validation->set_rules('tgl_selesai_kegiatan', 'Tanggal Selesai Kegiatan','required');
 		$this->form_validation->set_rules('dana_diajukan', 'Dana Diajukan','required');
 		$this->form_validation->set_rules('tgl_pengajuan', 'Tanggal Pengajuan','required');
 		$this->form_validation->set_rules('dana_disetujui', 'Dana Disetujui');
@@ -92,6 +93,7 @@ class MahasiswaC extends CI_Controller {
 			$kode_jenis_kegiatan 	= $_POST['kode_jenis_kegiatan'];
 			$nama_kegiatan 			= $_POST['nama_kegiatan'];
 			$tgl_kegiatan 			= $_POST['tgl_kegiatan'];
+			$tgl_selesai_kegiatan 	= $_POST['tgl_selesai_kegiatan'];
 			$dana_diajukan 			= $_POST['dana_diajukan'];
 			$tgl_pengajuan 			= $_POST['tgl_pengajuan'];
 			$dana_disetujui			= $_POST['dana_disetujui'];
@@ -101,6 +103,7 @@ class MahasiswaC extends CI_Controller {
 				'kode_jenis_kegiatan' 	=> $kode_jenis_kegiatan,
 				'nama_kegiatan' 		=> $nama_kegiatan,
 				'tgl_kegiatan'			=> $tgl_kegiatan,
+				'tgl_selesai_kegiatan'	=> $tgl_selesai_kegiatan,
 				'dana_diajukan' 		=> $dana_diajukan,
 				'tgl_pengajuan'			=> $tgl_pengajuan,
 				'dana_disetujui'		=> $dana_disetujui);

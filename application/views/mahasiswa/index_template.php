@@ -111,7 +111,7 @@
   <script src="<?php echo base_url();?>assets/js/jquery.slimscroll.min.js"></script>
   <script src="<?php echo base_url();?>assets/datatables/jquery.dataTables.min.js"></script>
   <script src="<?php echo base_url();?>assets/datatables/dataTables.bootstrap.min.js"></script>
-  <script>
+  <script type="javascript">
 
       // CSS data DataTable
 
@@ -135,6 +135,19 @@
           } );
         } );
       } );
+
+      $(function() {
+        $("#from").datepicker({
+          defaultDate: new Date(),
+          minDate: new Date(),
+          onSelect: function(dateStr) 
+          {         
+            $("#to").datepicker("destroy");
+            $("#to").val(dateStr);
+            $("#to").datepicker({ minDate: new Date(dateStr)})
+          }
+        });
+      });
     </script>
 
   </body>
