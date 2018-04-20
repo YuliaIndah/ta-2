@@ -14,6 +14,25 @@ class Man_sarprasM extends CI_Model{
 		$this->db->join('unit', 'unit.kode_unit = pengguna.kode_unit');
 		$this->db->join('barang', 'barang.kode_barang = item_pengajuan.kode_barang');
 		$this->db->join('jenis_barang', 'jenis_barang.kode_jenis_barang = barang.kode_jenis_barang');
+		$this->db->join('progress', 'progress.kode_fk = item_pengajuan.kode_item_pengajuan');
+		$this->db->where('progress.jenis_progress ="barang"');
+		$query = $this->db->get();
+		if($query){
+			return $query;
+		}else{
+			return null;
+		}
+	}
+
+	function get_data_item_pengajuan_by_id($id){ // menampilkan detail item pengajuan berdasarkan id
+		$this->db->select('*');
+		$this->db->from('item_pengajuan');
+		$this->db->join('pengguna', 'pengguna.no_identitas = item_pengajuan.no_identitas');
+		$this->db->join('jabatan', 'jabatan.kode_jabatan = pengguna.kode_jabatan');
+		$this->db->join('unit', 'unit.kode_unit = pengguna.kode_unit');
+		$this->db->join('barang', 'barang.kode_barang = item_pengajuan.kode_barang');
+		$this->db->join('jenis_barang', 'jenis_barang.kode_jenis_barang = barang.kode_jenis_barang');
+		$this->db->where('kode_item_pengajuan', $id);
 		$query = $this->db->get();
 		if($query){
 			return $query;
@@ -83,7 +102,7 @@ class Man_sarprasM extends CI_Model{
 		$config['max_size']	= '2048';					 // maksimal ukuran file yang diunggah
 		$config['remove_space'] = TRUE;					 // menghilangkan spasi pada nama file
 		$config['encrypt_name'] = TRUE;					 // mengenkripsi nama file yang diunggah
-	
+
 		$this->load->library('upload', $config); // Load konfigurasi uploadnya
 		if($this->upload->do_upload('file_gambar')){ // Lakukan upload dan Cek jika proses upload berhasil
 			// Jika berhasil :
