@@ -269,4 +269,44 @@
 		return $query;
 	}
 
+	function get_data_kegiatan_selesai($kode_jenis_kegiatan){ //select kode progress yang sudah mendapat inputan oleh asesor kegiatan mahasiswa terakhir yaitu kadep
+		$this->db->select('progress.kode_fk');
+		$this->db->from('progress');
+		$this->db->join('kegiatan', 'progress.kode_fk = kegiatan.kode_kegiatan');
+		$this->db->join('jenis_kegiatan', 'kegiatan.kode_jenis_kegiatan = jenis_kegiatan.kode_jenis_kegiatan');
+		$this->db->join('pengguna', 'progress.no_identitas = pengguna.no_identitas');
+		$this->db->join('jabatan', 'jabatan.kode_jabatan = pengguna.kode_jabatan');
+		$this->db->join('unit', 'unit.kode_unit = pengguna.kode_unit');
+		$this->db->where('progress.jenis_progress = "kegiatan"');
+		$this->db->where('pengguna.kode_jabatan = "1"');
+		$this->db->where('pengguna.kode_unit = "1"');
+		$this->db->where('jenis_kegiatan.kode_jenis_kegiatan', $kode_jenis_kegiatan); //jenis kegiatan Mahasiswa/pegawai
+
+		$query = $this->db->get();
+		if($query){
+			return $query;
+		}else{
+			return null;
+		}
+	}
+
+	function get_data_kegiatan_proses($kode_jenis_kegiatan){ //select kode progress yang sudah mendapat inputan oleh asesor kegiatan mahasiswa terakhir yaitu kadep
+		$this->db->select('progress.kode_fk');
+		$this->db->from('progress');
+		$this->db->join('kegiatan', 'progress.kode_fk = kegiatan.kode_kegiatan');
+		$this->db->join('jenis_kegiatan', 'kegiatan.kode_jenis_kegiatan = jenis_kegiatan.kode_jenis_kegiatan');
+		$this->db->join('pengguna', 'progress.no_identitas = pengguna.no_identitas');
+		$this->db->join('jabatan', 'jabatan.kode_jabatan = pengguna.kode_jabatan');
+		$this->db->join('unit', 'unit.kode_unit = pengguna.kode_unit');
+		$this->db->where('progress.jenis_progress = "kegiatan"');
+		$this->db->where('pengguna.kode_jabatan != "1" AND pengguna.kode_unit != "1"');
+		$this->db->where('jenis_kegiatan.kode_jenis_kegiatan', $kode_jenis_kegiatan); //jenis kegiatan Mahasiswa/pegawai
+
+		$query = $this->db->get();
+		if($query){
+			return $query;
+		}else{
+			return null;
+		}
+	}
 }  

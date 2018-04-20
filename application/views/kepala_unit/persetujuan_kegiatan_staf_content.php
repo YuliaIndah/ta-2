@@ -77,8 +77,17 @@
                         <!-- <td><?php echo $kegiatan->nama_jabatan." ".$kegiatan->nama_unit;?></td> -->
                         <td><?php echo $kegiatan->nama_jenis_kegiatan;?></td>
                         <td>Status</td>
-                        <td>
-                          <a href="#myModal" id="custId" title="klik untuk memberikan keputusan" data-toggle="modal" data-id="<?php echo $kegiatan->kode_kegiatan;?>" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-edit"></span></a>
+                        <td class="text-center">
+                          <?php
+                          if(in_array($kegiatan->kode_kegiatan, $array_data_status)){
+                            echo '<span class="glyphicon glyphicon-ok"></span> Selesai';  
+                          }
+                          else{
+                            ?>
+                            <a href="#myModal" id="custId" data-toggle="modal" data-id="<?php echo $kegiatan->kode_kegiatan;?>" data-toggle="tooltip" title="Masukkan Persetujuan" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-edit"></span></a>
+                            <?php
+                          }
+                          ?>
                         </td>
                       </tr>
                       <?php

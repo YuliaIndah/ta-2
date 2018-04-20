@@ -37,7 +37,7 @@
       $nama           = $_POST['nama'];  
       $jen_kel        = $_POST['jen_kel'];  
       $tmp_lahir      = $_POST['tmp_lahir'];  
-      $tgl_lahir      = $_POST['tgl_lahir'];  
+      $tgl_lahir      = date('Y-m-d',strtotime($_POST['tgl_lahir']));      
       $kode_jabatan   = $_POST['kode_jabatan'];  
       $kode_unit      = $_POST['kode_unit'];  
       $alamat         = $_POST['alamat'];  
@@ -67,9 +67,9 @@
 
       if($this->UserM->insert_pengguna($data_pengguna)){  //jika berhasil register
           $this->sendemail($email, $email_encryption); //kirim email
-      }
+        }
+      }  
     }  
-  }  
 
   function sendemail($email,$email_encryption){   //kirim email konfirmasi
     $url        = base_url()."UserC/confirmation/".$email_encryption;  
@@ -78,8 +78,8 @@
 
     $subject    = 'Verifikasi Pedaftaran Akun';
     $data       = array(
-                    'email'=> $email_encryption
-                    );
+      'email'=> $email_encryption
+    );
     $message    = $this->load->view('email.php',$data,TRUE);
     // '<h1>'.$url.'</h1><span style="color: red;"> Departemen Teknik Elektro dan Informatika </span>';
 

@@ -30,7 +30,7 @@ tgl_selesai_kegiatan<section id="main-content">
             <div class="card-body">
               <a class="btn btn-info" data-toggle="modal" data-target="#myModal"><i class="icon_plus_alt2"> </i> Ajukan Kegiatan </a>
               <div class="table-responsive">
-                  <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                  <table id="example1" class="table table-striped table-bordered" cellspacing="0" width="100%">
                     <thead>
                       <tr>
                         <!-- <th>No. Identitas</th> -->
@@ -115,7 +115,7 @@ tgl_selesai_kegiatan<section id="main-content">
                   <li>Data yang sudah mendapat persetujuan <b>tidak dapat diubah</b>.</li>
                 </ol>
               </div>
-              <?php echo form_open_multipart('MahasiswaC/post_pengajuan_kegiatan_pegawai');?>
+              <?php echo form_open_multipart('MahasiswaC/post_pengajuan_kegiatan_mahasiswa');?>
               <form role="form" action="<?php echo base_url(); ?>MahasiswaC/post_pengajuan_kegiatan_mahasiswa" method="post">
                 <!-- Alert -->
                 <!-- sampai sini -->
@@ -147,11 +147,11 @@ tgl_selesai_kegiatan<section id="main-content">
                   <label>Tanggal Pelaksanaan Kegiatan</label>
                   <div class="row">
                    <div class="col-md-5">
-                    <input type="date" class="form-control" placeholder id="from" name="tgl_kegiatan" required>
+                    <input type="text" class="form-control" placeholder="hh/bb/ttt" id="from" name="tgl_kegiatan" required>
                   </div>
                   <div class="col-md-2 text-center">Sampai</div>
                   <div class="col-md-5">
-                    <input type="date" class="form-control" placeholder id="to" name="tgl_selesai_kegiatan" required>
+                    <input type="text" class="form-control" placeholder="hh/bb/ttt" id="to" name="tgl_selesai_kegiatan" required>
                   </div>
                 </div>
                 <span class="text-danger" style="color: red;"><?php echo form_error('tgl_kegiatan'); ?></span>  

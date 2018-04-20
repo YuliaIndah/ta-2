@@ -153,11 +153,11 @@
                   <label>Tanggal Pelaksanaan Kegiatan</label>
                   <div class="row">
                    <div class="col-md-5">
-                    <input type="date" class="form-control" placeholder id="from" name="tgl_kegiatan" required>
+                    <input type="text" class="form-control" placeholder="hh/bb/ttt" id="from" name="tgl_kegiatan" required>
                   </div>
                   <div class="col-md-2 text-center">Sampai</div>
                   <div class="col-md-5">
-                    <input type="date" class="form-control" placeholder id="to" name="tgl_selesai_kegiatan" required>
+                    <input type="text" class="form-control" placeholder="hh/bb/ttt" id="to" name="tgl_selesai_kegiatan" required>
                   </div>
                 </div>
                 <span class="text-danger" style="color: red;"><?php echo form_error('tgl_kegiatan'); ?></span>  

@@ -12,6 +12,7 @@
     </div>
     <div class="row">
       <div class="col-lg-12">
+        <?php print_r($data_proses); ?>
         <!-- Alert -->
         <?php 
         $data=$this->session->flashdata('sukses');
@@ -71,73 +72,90 @@
                         <?php $link = base_url()."assets/file_upload/".$kegiatan->nama_file;?>
                         <td class="text-center"><a target="_blank" href="<?php echo $link?>"><span><img src="<?php echo base_url()?>assets/image/logo/pdf.svg" style="height: 30px;"></span></a></td>
                         <td><?php echo $kegiatan->nama_jenis_kegiatan;?></td>
-                        <td>Status</td>
-                        <td class="text-center">
-                          <?php
-                          if(in_array($kegiatan->kode_kegiatan, $array_data_status)){
-                            echo '<span class="glyphicon glyphicon-ok"></span> Selesai';  
-                          }
-                          else{
-                            ?>
-                            <a href="#myModal" id="custId" data-toggle="modal" data-id="<?php echo $kegiatan->kode_kegiatan;?>" data-toggle="tooltip" title="Masukkan Persetujuan" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-edit"></span></a>
-                            <?php
-                          }
+                        <td>
+                         <?php 
+                         if(in_array($kegiatan->kode_kegiatan, $data_proses)){
                           ?>
-                        </td>
-                      </tr>
-                      <?php
-                    }
-                    ?>
-                  </tbody>
-                </table>
-              </div>
+                          <a href="#">Proses</a>
+                          <?php
+                        }
+                        if(in_array($kegiatan->kode_kegiatan, $data_selesai)){
+                          ?>
+                          <a href="#">Selesai</a>
+                          <?php
+                        }else{
+                          ?>
+                          <a href="#">Baru</a>
+                          <?php
+                        }
+                        ?>
+                      </td>
+                      <td class="text-center">
+                        <?php
+                        if(in_array($kegiatan->kode_kegiatan, $array_data_status)){
+                          echo '<span class="glyphicon glyphicon-ok"></span> Selesai';  
+                        }
+                        else{
+                          ?>
+                          <a href="#myModal" id="custId" data-toggle="modal" data-id="<?php echo $kegiatan->kode_kegiatan;?>" data-toggle="tooltip" title="Masukkan Persetujuan" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-edit"></span></a>
+                          <?php
+                        }
+                        ?>
+                      </td>
+                    </tr>
+                    <?php
+                  }
+                  ?>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
       </div>
-    </section>
-    <div class="text-center">
-      <div class="credits">
-        <a href="https://bootstrapmade.com/free-business-bootstrap-themes-website-templates/">Business Bootstrap Themes</a> by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-      </div>
     </div>
   </section>
-  <!-- modal detail pengajuan -->
-  <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Persetujuan Kegiatan</h4>
-        </div>
-        <div class="modal-body">
-          <div class="fetched-data"></div>
-        </div>
-        <div class="modal-footer">
-        </div>
+  <div class="text-center">
+    <div class="credits">
+      <a href="https://bootstrapmade.com/free-business-bootstrap-themes-website-templates/">Business Bootstrap Themes</a> by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+    </div>
+  </div>
+</section>
+<!-- modal detail pengajuan -->
+<div class="modal fade" id="myModal" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Persetujuan Kegiatan</h4>
+      </div>
+      <div class="modal-body">
+        <div class="fetched-data"></div>
+      </div>
+      <div class="modal-footer">
       </div>
     </div>
   </div>
+</div>
 
-  <!-- modal detail kegiatan -->
-  <div class="modal fade" id="myModal1" role="dialog">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Detail Kegiatan</h4>
-        </div>
-        <div class="modal-body">
-          <div class="fetched-data"></div>
-        </div>
-        <div class="modal-footer">
-        </div>
+<!-- modal detail kegiatan -->
+<div class="modal fade" id="myModal1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Detail Kegiatan</h4>
+      </div>
+      <div class="modal-body">
+        <div class="fetched-data"></div>
+      </div>
+      <div class="modal-footer">
       </div>
     </div>
   </div>
+</div>
 
-  <script src="<?php echo base_url();?>assets/js/jquery.min.js"></script>
-  <script type="text/javascript">
+<script src="<?php echo base_url();?>assets/js/jquery.min.js"></script>
+<script type="text/javascript">
     // js detail pengajuan
     $(document).ready(function(){
       $('#myModal').on('show.bs.modal', function (e) {

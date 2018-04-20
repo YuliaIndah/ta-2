@@ -54,12 +54,6 @@
         </div>
     </div>
     <div class="form-group">
-        <label class="control-label col-sm-5" for="dana_disetujui"  style="text-align: left;">Dana Yang Disetujui</label>
-        <div class="col-sm-5">
-            <input name="dana_disetujui" id="dana_disetujui" class="form-control" id="focusedInput" type="text">
-        </div>
-    </div>
-    <div class="form-group">
         <label class="control-label col-sm-5" for="komentar" style="text-align: left;">Komentar</label>
         <div class="col-sm-5">
             <textarea name="komentar" id="komentar" class="form-control" id="focusedInput"> </textarea>

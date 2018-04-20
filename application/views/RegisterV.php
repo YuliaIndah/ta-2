@@ -7,6 +7,7 @@
  <meta name="viewport" content="width=device-width, initial-scale=1">  
  <!-- Latest compiled and minified CSS -->  
  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >  
+  <link href="<?php echo base_url();?>assets/css/jquery-ui-1.10.4.min.css" rel="stylesheet">
  <style type="text/css">  
  .form-box{  
    max-width: 500px;  
@@ -80,8 +81,8 @@
   <div class="col-sm-4">
    <div class="form-group">  
     <!-- <label class="control-label" for="tmp_lahir">Tanggal Lahir</label>   -->
-    <div class="input-group date" id="tgl_lahir">
-      <input type="date" class="form-control" name="tgl_lahir" value="<?php echo set_value('tgl_lahir');?>" placeholder="dd-mm-yyy" required>
+    <div class="input-group date">
+      <input type="text" class="form-control" id="tgl_lahir" name="tgl_lahir" value="<?php echo set_value('tgl_lahir');?>" placeholder="dd-mm-yyy" required>
     </div>           
   </div>  
 </div>
@@ -144,7 +145,7 @@
 </div>
 <div class="col-md-6">
  <div class="form-group">  
-  <div class="input-group" id="tgl_lahir">
+  <div class="input-group">
    <input type="password" class="form-control" id="cn-pswd" name="confirmpswd" placeholder="Confirm Password" required>  
    <span class="text-danger"><?php echo form_error('confirmpswd'); ?></span>
  </div>           
@@ -182,7 +183,10 @@
 </div>  
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->  
 </script>  
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="<?php echo base_url();?>assets/js/jquery-ui-1.10.4.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>   
+
 <script type="text/javascript">
   function hanyaAngka(evt) {
     var charCode = (evt.which) ? evt.which : event.keyCode
@@ -191,7 +195,20 @@
       return false;
     return true;
   }
+
+  // $(function() {
+  //   $( "#tgl_lahir" ).datepicker({ 
+  //     minDate: $minDate, 
+  //     maxDate: new Date()
+  //   });
+  // });
+  $(function() {
+    $("#tgl_lahir").datepicker({
+      maxDate : "-20y"
+    });
+  });
 </script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>    
+
+
 </body>  
 </html>  

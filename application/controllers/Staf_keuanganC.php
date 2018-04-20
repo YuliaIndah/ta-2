@@ -89,8 +89,8 @@ class Staf_keuanganC extends CI_Controller {
 			$no_identitas 			= $_POST['no_identitas'];
 			$kode_jenis_kegiatan 	= $_POST['kode_jenis_kegiatan'];
 			$nama_kegiatan 			= $_POST['nama_kegiatan'];
-			$tgl_kegiatan 			= $_POST['tgl_kegiatan'];
-			$tgl_selesai_kegiatan 	= $_POST['tgl_selesai_kegiatan'];
+			$tgl_kegiatan 			= date('Y-m-d',strtotime($_POST['tgl_kegiatan']));
+			$tgl_selesai_kegiatan 	= date('Y-m-d',strtotime($_POST['tgl_selesai_kegiatan']));
 			$dana_diajukan 			= $_POST['dana_diajukan'];
 			$tgl_pengajuan 			= $_POST['tgl_pengajuan'];
 			$dana_disetujui			= $_POST['dana_disetujui'];

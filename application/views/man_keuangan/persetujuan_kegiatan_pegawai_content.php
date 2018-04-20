@@ -41,11 +41,8 @@
                     <th class="text-center">Dana Diajukan</th>
                     <th class="text-center">Dana Disetujui</th>
                     <th class="text-center">File</th>
-                    <!-- <th class="text-center">Nama Pengaju</th> -->
-                    <!-- <th class="text-center">Jabatan Pengaju</th> -->
                     <th class="text-center">Jenis Kegiatan</th>
                     <th class="text-center">Status</th>
-                    <th class="text-center">Aksi</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -73,13 +70,8 @@
                       <td><?php echo $kegiatan->dana_disetujui;?></td>
                       <?php $link = base_url()."assets/file_upload/".$kegiatan->nama_file;?>
                       <td class="text-center"><a target="_blank" href="<?php echo $link?>"><span><img src="<?php echo base_url()?>assets/image/logo/pdf.svg" style="height: 30px;"></span></a></td>
-                      <!-- <td><?php echo $kegiatan->nama;?></td> -->
-                      <!-- <td><?php echo $kegiatan->nama_jabatan." ".$kegiatan->nama_unit;?></td> -->
                       <td><?php echo $kegiatan->nama_jenis_kegiatan;?></td>
                       <td>Status</td>
-                      <td>
-                        <a href="#myModal" id="custId" title="klik untuk memberikan keputusan" data-toggle="modal" data-id="<?php echo $kegiatan->kode_kegiatan;?>" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-edit"></span></a>
-                      </td>
                     </tr>
                     <?php
                   }

@@ -34,18 +34,14 @@
               <table id="example" class="table table-striped table-bordered table-condensed" cellspacing="0" width="100%">
                 <thead>
                   <tr class="text-center">
-                    <!-- <th>No. Identitas</th> -->
                     <th class="text-center">Nama Kegiatan</th>
                     <th class="text-center">Tgl Pengajuan</th>
                     <th class="text-center">Tgl Kegiatan</th>
                     <th class="text-center">Dana Diajukan</th>
                     <th class="text-center">Dana Disetujui</th>
                     <th class="text-center">File</th>
-                    <!-- <th class="text-center">Nama Pengaju</th> -->
-                    <!-- <th class="text-center">Jabatan Pengaju</th> -->
                     <th class="text-center">Jenis Kegiatan</th>
                     <th class="text-center">Status</th>
-                    <th class="text-center">Aksi</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -77,9 +73,6 @@
                       <!-- <td><?php echo $kegiatan->nama_jabatan." ".$kegiatan->nama_unit;?></td> -->
                       <td><?php echo $kegiatan->nama_jenis_kegiatan;?></td>
                       <td>Status</td>
-                      <td>
-                        <a href="#myModal" id="custId" title="klik untuk memberikan keputusan" data-toggle="modal" data-id="<?php echo $kegiatan->kode_kegiatan;?>" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-edit"></span></a>
-                      </td>
                     </tr>
                     <?php
                   }
@@ -132,23 +125,6 @@
 
 <script src="<?php echo base_url();?>assets/js/jquery.min.js"></script>
 <script type="text/javascript">
-    // js persetujuan kegiatan
-     // js detail pengajuan
-     $(document).ready(function(){
-      $('#myModal').on('show.bs.modal', function (e) {
-        var rowid = $(e.relatedTarget).data('id');
-            //menggunakan fungsi ajax untuk pengambilan data
-            $.ajax({
-              type : 'get',
-              url : '<?php echo base_url().'Man_keuanganC/detail_pengajuan/'?>'+rowid,
-                //data :  'rowid='+ rowid, // $_POST['rowid'] = rowid
-                success : function(data){
-                $('.fetched-data').html(data);//menampilkan data ke dalam modal
-              }
-            });
-          });
-    });
-
     // js detail_kegiatan
     $(document).ready(function(){
       $('#myModal1').on('show.bs.modal', function (e) {

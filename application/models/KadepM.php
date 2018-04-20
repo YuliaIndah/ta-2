@@ -35,6 +35,8 @@ class KadepM extends CI_Model{
 			$this->db->join('jabatan', 'jabatan.kode_jabatan = pengguna.kode_jabatan');
 			$this->db->join('unit', 'unit.kode_unit = pengguna.kode_unit');
 			$this->db->where('kegiatan.pimpinan = progress.no_identitas');
+			$this->db->where('progress.kode_nama_progress = "1"'); //kegiatan yang diterima
+			
 		}
 		$query = $this->db->get();
 		if($query){
@@ -85,7 +87,7 @@ class KadepM extends CI_Model{
 		return "berhasil";
 	}
 
-	public function get_data_status(){
+	public function get_status(){
 		$this->db->select('*');
 		
 	}

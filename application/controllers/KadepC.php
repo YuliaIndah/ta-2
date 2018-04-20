@@ -31,8 +31,8 @@ class KadepC extends CI_Controller {
 		// menampilkan kegiatan mahasiswa yang telah di beri porgress oleh manajer Keuangan
 		$no_identitas = $this->session->userdata('no_identitas');
 		$kode_jenis_kegiatan = 2; //kegiatan mahasiswa
-		$kode_unit = 3; // unit Keuangan
-		$kode_jabatan = 3; // jabatan manajer
+		$kode_unit = 1; // unit Keuangan
+		$kode_jabatan = 2; // jabatan manajer
 		$data['title'] = "Persetujuan Kegiatan Mahasiswa | Kepala Departemen";
 		$this->data['data_pengajuan_kegiatan_mahasiswa'] = $this->KadepM->get_data_pengajuan($kode_jenis_kegiatan, $kode_unit, $kode_jabatan)->result();
 
@@ -50,8 +50,25 @@ class KadepC extends CI_Controller {
 		}
 		$this->data['array_data_status'] = $array_data_status;
 
-		$this->data['data_diri'] = $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
 
+		//cek apakah sudah selesai pengajuannya
+		$kode_jenis_kegiatan = "2";
+		$this->data['selesai'] = $this->UserM->get_data_kegiatan_selesai($kode_jenis_kegiatan)->result();
+		$array_data_selesai = array();
+		foreach ($this->data['selesai'] as $selesai) {
+			array_push($array_data_selesai, $selesai->kode_fk);
+		}
+		$this->data['data_selesai'] = $array_data_selesai;
+
+		//data mendapatkan progress dari bukan kadep
+		$this->data['proses'] = $this->UserM->get_data_kegiatan_proses($kode_jenis_kegiatan)->result();
+		$array_data_proses = array();
+		foreach ($this->data['proses'] as $proses) {
+			array_push($array_data_proses, $proses->kode_fk);
+		}
+		$this->data['data_proses'] = $array_data_proses;
+
+		$this->data['data_diri'] = $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
 		$data['body'] = $this->load->view('kadep/persetujuan_kegiatan_mahasiswa_content', $this->data, true) ;
 		$this->load->view('kadep/index_template', $data);
 	}
@@ -76,6 +93,26 @@ class KadepC extends CI_Controller {
 			array_push($array_data_status, $status->kode_fk);
 		}
 		$this->data['array_data_status'] = $array_data_status;
+
+
+			//cek apakah sudah selesai pengajuannya
+		$kode_jenis_kegiatan = "1";
+		$this->data['selesai'] = $this->UserM->get_data_kegiatan_selesai($kode_jenis_kegiatan)->result();
+		$array_data_selesai = array();
+		foreach ($this->data['selesai'] as $selesai) {
+			array_push($array_data_selesai, $selesai->kode_fk);
+		}
+		$this->data['data_selesai'] = $array_data_selesai;
+
+		//data mendapatkan progress dari bukan kadep
+		$this->data['proses'] = $this->UserM->get_data_kegiatan_proses($kode_jenis_kegiatan)->result();
+		$array_data_proses = array();
+		foreach ($this->data['proses'] as $proses) {
+			array_push($array_data_proses, $proses->kode_fk);
+		}
+		$this->data['data_proses'] = $array_data_proses;
+
+
 		$this->data['data_diri'] = $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
 		$data['body'] = $this->load->view('kadep/persetujuan_kegiatan_pegawai_content', $this->data, true) ;
 		$this->load->view('kadep/index_template', $data);
@@ -145,8 +182,8 @@ class KadepC extends CI_Controller {
 		$this->form_validation->set_rules('no_identitas', 'No Identitas','required');
 		$this->form_validation->set_rules('kode_jenis_kegiatan', 'Kode Jenis Kegiatan','required');
 		$this->form_validation->set_rules('nama_kegiatan', 'Nama Kegiatan','required');
-		$this->form_validation->set_rules('from', 'Tanggal Kegiatan','required');
-		$this->form_validation->set_rules('to', 'Tanggal Selesai Kegiatan','required');
+		$this->form_validation->set_rules('tgl_kegiatan', 'Tanggal Kegiatan','required');
+		$this->form_validation->set_rules('tgl_selesai_kegiatan', 'Tanggal Selesai Kegiatan','required');
 		$this->form_validation->set_rules('dana_diajukan', 'Dana Diajukan','required');
 		$this->form_validation->set_rules('tgl_pengajuan', 'Tanggal Pengajuan','required');
 		$this->form_validation->set_rules('dana_disetujui', 'Dana Disetujui');
@@ -157,8 +194,8 @@ class KadepC extends CI_Controller {
 			$no_identitas 	       	= $_POST['no_identitas'];
 			$kode_jenis_kegiatan 	= $_POST['kode_jenis_kegiatan'];
 			$nama_kegiatan 			= $_POST['nama_kegiatan'];
-			$tgl_kegiatan 			= $_POST['from'];
-			$tgl_selesai_kegiatan 	= $_POST['to'];
+			$tgl_kegiatan 			= date('Y-m-d',strtotime($_POST['tgl_kegiatan']));
+			$tgl_selesai_kegiatan 	= date('Y-m-d',strtotime($_POST['tgl_selesai_kegiatan']));
 			$dana_diajukan 			= $_POST['dana_diajukan'];
 			$tgl_pengajuan 			= $_POST['tgl_pengajuan'];
 			$dana_disetujui			= $_POST['dana_disetujui'];

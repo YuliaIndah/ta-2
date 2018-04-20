@@ -37,27 +37,37 @@ class Man_keuanganC extends CI_Controller {
 
 	public function persetujuan_kegiatan_pegawai(){ //halaman persetujuan kegiatan pegawai (manajer keuangan)
 		$kode_jenis_kegiatan = 1; //kegiatan pegawai
-		$kode_unit = ""; 
-		$kode_jabatan = "";
 		$data['title'] = "Persetujuan Kegiatan Pegawai | Manajer Keuangan";
-		$this->data['data_pengajuan_kegiatan'] = $this->Man_keuanganM->get_data_pengajuan($kode_jenis_kegiatan, $kode_unit, $kode_jabatan)->result();
+		$this->data['data_pengajuan_kegiatan'] = $this->Man_keuanganM->get_data_pengajuan($kode_jenis_kegiatan)->result();
 		$this->data['data_diri'] = $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
 		$data['body'] = $this->load->view('man_keuangan/persetujuan_kegiatan_pegawai_content', $this->data, true) ;
 		$this->load->view('man_keuangan/index_template', $data);
 	}
 	public function persetujuan_kegiatan_mahasiswa(){ //halaman persetujuan kegiatan pegawai mahasiswa (manajer keuangan)
 		$kode_jenis_kegiatan = 2; //kegiatan mahasiswa
-		$kode_unit = 1; // departemen
-		$kode_jabatan = 2; //sekretaris
 		$data['title'] = "Persetujuan Kegiatan Mahasiswa  | Manajer Keuangan";
-		$this->data['data_pengajuan_kegiatan'] = $this->Man_keuanganM->get_data_pengajuan($kode_jenis_kegiatan, $kode_unit, $kode_jabatan)->result();
+		$this->data['data_pengajuan_kegiatan'] = $this->Man_keuanganM->get_data_pengajuan($kode_jenis_kegiatan)->result();
 		$this->data['data_diri'] = $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
 		$data['body'] = $this->load->view('man_keuangan/persetujuan_kegiatan_mahasiswa_content', $this->data, true) ;
 		$this->load->view('man_keuangan/index_template', $data);
 	}
 	public function persetujuan_kegiatan_staf(){ //halaman persetujuan kegiatan staf (manajer keuangan)
+		$no_identitas = $this->session->userdata('no_identitas');
 		$data['title'] = "Persetujuan Kegiatan Staf | Manajer Keuangan";
 		$this->data['data_pengajuan_kegiatan'] = $this->Man_keuanganM->get_data_pengajuan_staf()->result();
+
+		$array_data_pengajuan = array();
+		foreach ($this->data['data_pengajuan_kegiatan'] as $pengajuan) {
+			array_push($array_data_pengajuan, $pengajuan->kode_kegiatan);
+		}
+		$this->data['data_status'] = $this->UserM->get_data_status_kegiatan($array_data_pengajuan, $no_identitas)->result();
+
+		$array_data_status = array();
+		foreach ($this->data['data_status'] as $status) {
+			array_push($array_data_status, $status->kode_fk);
+		}
+
+		$this->data['array_data_status'] = $array_data_status;
 		$this->data['data_diri'] = $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
 		$data['body'] = $this->load->view('man_keuangan/persetujuan_kegiatan_staf_content', $this->data, true) ;
 		$this->load->view('man_keuangan/index_template', $data);
@@ -79,13 +89,6 @@ class Man_keuanganC extends CI_Controller {
 		$data['body'] = $this->load->view('man_keuangan/pengajuan_kegiatan_pegawai_content', $this->data, true);
 		$this->load->view('man_keuangan/index_template', $data);
 	}
-
-	// public function detail_pengajuan($id){ //menampilkan modal dengan isi dari detail_pengajuan.php
-	// 	$data['detail_kegiatan'] = $this->KadepM->get_data_pengajuan_by_id($id)->result()[0];
-	// 	$data['nama_progress'] = $this->KadepM->get_pilihan_nama_progress()->result();
-	// 	$this->load->view('man_keuangan/detail_pengajuan', $data);
-	// }
-
 	public function detail_pengajuan($id){ //menampilkan modal dengan isi dari detail_pengajuan.php
 		$data['detail_kegiatan'] = $this->Man_keuanganM->get_data_pengajuan_by_id($id)->result()[0];
 		$data['data_diri'] = $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
@@ -151,8 +154,8 @@ class Man_keuanganC extends CI_Controller {
 			$no_identitas 			= $_POST['no_identitas'];
 			$kode_jenis_kegiatan 	= $_POST['kode_jenis_kegiatan'];
 			$nama_kegiatan 			= $_POST['nama_kegiatan'];
-			$tgl_kegiatan 			= $_POST['tgl_kegiatan'];
-			$tgl_selesai_kegiatan 	= $_POST['tgl_selesai_kegiatan'];
+			$tgl_kegiatan 			= date('Y-m-d',strtotime($_POST['tgl_kegiatan']));
+			$tgl_selesai_kegiatan 	= date('Y-m-d',strtotime($_POST['tgl_selesai_kegiatan']));
 			$dana_diajukan 			= $_POST['dana_diajukan'];
 			$tgl_pengajuan 			= $_POST['tgl_pengajuan'];
 			$dana_disetujui			= $_POST['dana_disetujui'];
@@ -210,13 +213,12 @@ class Man_keuanganC extends CI_Controller {
 		}
 	}
 
-	public function post_progress(){ //posting progress dan update kegiatan (dana disetujui)
+	public function post_progress(){ //posting progress dan update kegiatan (dana disetujuin)
 		$this->form_validation->set_rules('no_identitas', 'No Identitas','required');
 		$this->form_validation->set_rules('kode_fk', 'Kode Kegiatan','required');
 		$this->form_validation->set_rules('kode_nama_progress', 'Nama Progress','required'); //diterima/ditolak
 		$this->form_validation->set_rules('komentar', 'Komentar','required');
 		$this->form_validation->set_rules('jenis_progress', 'Jenis Progress','required'); //kegiatan/barang
-		$this->form_validation->set_rules('dana_disetujui', 'Dana Disetujui'); //kegiatan/barang
 		if($this->form_validation->run() == FALSE){
 			$this->session->set_flashdata('error','Data anda tidak berhasil disimpan');
 			redirect_back(); //kembali ke halaman sebelumnya -> helper
@@ -226,11 +228,13 @@ class Man_keuanganC extends CI_Controller {
 			$kode_nama_progress	= $_POST['kode_nama_progress'];
 			$komentar			= $_POST['komentar'];
 			$jenis_progress		= $_POST['jenis_progress'];
-			$dana_disetujui		= $_POST['dana_disetujui'];
+
+
 			$format_tgl 	= "%Y-%m-%d";
 			$tgl_progress 	= mdate($format_tgl);
 			$format_waktu 	= "%H:%i";
 			$waktu_progress	= mdate($format_waktu);
+
 			$data = array(
 				'no_identitas' 			=> $no_identitas,
 				'kode_fk'				=> $kode_fk,
@@ -239,15 +243,16 @@ class Man_keuanganC extends CI_Controller {
 				'jenis_progress'		=> $jenis_progress,
 				'tgl_progress'			=> $tgl_progress,
 				'waktu_progress'		=> $waktu_progress
+
 			);
-				$data_kegiatan = array('dana_disetujui' => $dana_disetujui, );
-			if($this->Man_keuanganM->update_kegiatan($kode_fk, $data_kegiatan)){ //update dana disetujui
-				if($this->UserM->insert_progress($data)){
-					redirect_back(); // redirect kembali ke halaman sebelumnya
-				}else{
-					$this->Man_keuanganM->gajadi_update($kode_fk); //reset dana disetujui ke 0 ketika gagal insert
-				}
-			}		
+
+			if($this->UserM->insert_progress($data)){ //insert progress
+				$this->session->set_flashdata('sukses','Data anda berhasil disimpan');
+				redirect_back(); // redirect kembali ke halaman sebelumnya
+			}else{
+				$this->session->set_flashdata('error','Data anda tidak berhasil disimpan');
+				redirect_back(); //kembali ke halaman sebelumnya -> helper
+			}
 		}
 	}
 

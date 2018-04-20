@@ -36,8 +36,22 @@ class SekdepC extends CI_Controller {
 	}
 
 	public function persetujuan_kegiatan_mahasiswa(){ //halaman pengajuan kegiatan (Sekretaris Departemen)
+		$no_identitas = $this->session->userdata('no_identitas');
 		$data['title'] = "Persetujuan Kegiatan Mahasiswa | Sekretaris Departemen";
 		$this->data['data_pengajuan_kegiatan'] = $this->SekdepM->get_kegiatan_diajukan()->result();
+
+		$array_data_pengajuan = array();
+		foreach ($this->data['data_pengajuan_kegiatan'] as $pengajuan) {
+			array_push($array_data_pengajuan, $pengajuan->kode_kegiatan);
+		}
+		$this->data['data_status'] = $this->UserM->get_data_status_kegiatan($array_data_pengajuan, $no_identitas)->result();
+
+		$array_data_status = array();
+		foreach ($this->data['data_status'] as $status) {
+			array_push($array_data_status, $status->kode_fk);
+		}
+		$this->data['array_data_status'] = $array_data_status;
+
 		$this->data['data_diri'] = $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
 		$data['body'] = $this->load->view('sekdep/persetujuan_kegiatan_mahasiswa_content', $this->data, true) ;
 		$this->load->view('sekdep/index_template', $data);
@@ -116,10 +130,11 @@ class SekdepC extends CI_Controller {
 			$kode_jenis_kegiatan 	= $_POST['kode_jenis_kegiatan'];
 			$nama_kegiatan 			= $_POST['nama_kegiatan'];
 			$tgl_kegiatan 			= $_POST['tgl_kegiatan'];
-			$tgl_selesai_kegiatan 	= $_POST['tgl_selesai_kegiatan'];
-			$dana_diajukan 			= $_POST['dana_diajukan'];
+			$tgl_kegiatan 			= date('Y-m-d',strtotime($_POST['tgl_kegiatan']));
+			$tgl_selesai_kegiatan 	= date('Y-m-d',strtotime($_POST['tgl_selesai_kegiatan']));
 			$tgl_pengajuan 			= $_POST['tgl_pengajuan'];
 			$dana_disetujui			= $_POST['dana_disetujui'];
+			$dana_diajukan			= $_POST['dana_diajukan'];
 
 			$data_pengajuan_kegiatan = array(
 				'no_identitas' 			=> $no_identitas,
