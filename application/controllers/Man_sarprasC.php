@@ -31,20 +31,19 @@ class Man_sarprasC extends CI_Controller {
 	public function persetujuan_barang(){ //halaman persetujuan barang (man_sarpras)
 		$data['title'] = "Persetujuan Barang | Manajer Sarana dan Prasarana";
 		$this->data['data_diri'] = $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
-
 		$this->data['data_persetujuan_barang'] = $this->Man_sarprasM->get_data_item_pengajuan()->result();
 		$data['body'] = $this->load->view('man_sarpras/persetujuan_barang_content', $this->data, true) ;
 		$this->load->view('man_sarpras/index_template', $data);
 	}
 
 	public function detail_persetujuan_terima($id){ //menampilkan modal dengan isi dari detail_pengajuan.php
-		$data['detail_barang'] = $this->Man_sarprasM->get_data_pengajuan_by_id($id)->result()[0];
+		$data['detail_barang'] = $this->Man_sarprasM->get_data_item_pengajuan_by_id($id)->result()[0];
 		$data['data_diri'] = $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
 		$this->load->view('man_sarpras/detail_persetujuan_terima', $data);
 	}
 
 	public function detail_persetujuan_tolak($id){ //menampilkan modal dengan isi dari detail_pengajuan.php
-		$data['detail_barang'] = $this->Man_sarprasM->get_data_pengajuan_by_id($id)->result()[0];
+		$data['detail_barang'] = $this->Man_sarprasM->get_data_item_pengajuan_by_id($id)->result()[0];
 		$data['data_diri'] = $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
 		$this->load->view('man_sarpras/detail_persetujuan_tolak', $data);
 	}
@@ -95,6 +94,12 @@ class Man_sarprasC extends CI_Controller {
 		$data['pilihan_jenis_barang'] = $this->Man_sarprasM->get_pilihan_jenis_barang($kode_barang)->result();
 		echo json_encode($data);
 	}
+
+	public function detail_barang($id){ //menampilkan modal dengan isi dari ubah_barang.php
+		$data['detail_barang']          = $this->Man_sarprasM->get_data_item_pengajuan_by_id($id)->result();
+		echo json_encode($data);
+	}
+
 	public function getListAjax() 
 	{
 		$data = $this->db->get('jenis_barang')->result();

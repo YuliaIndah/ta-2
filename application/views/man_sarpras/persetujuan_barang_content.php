@@ -44,39 +44,40 @@
                     ?>
                     <tr>
                       <td> 
-                        <a onclick="detail(<?php echo $barang->kode_item_pengajuan; ?>)" id="custID" data-toggle="modal" data-id="<?php echo $barang->kode_item_pengajuan;?>" title="klik untuk melihat detail pengajuan barang"><?php echo $barang->nama_barang;?></a>
-                      </td>
-                      <td><center><img style="height: 60px;" src="<?php echo base_url();?>assets/file_gambar/<?php echo $barang->file_gambar;?>"></center></td>
-                      <td><?php echo $barang->tgl_item_pengajuan;?></td>
-                      <td><?php echo $barang->jumlah;?></td>
-                      <?php 
-                      $jumlah = $barang->jumlah;
-                      $harga = $barang->harga_satuan;
-                      $total = $jumlah*$harga;
-                      ?>
-                      <td><?php echo $total;?></td>
-                      <td><?php echo $barang->status_pengajuan;?></td>
-                      <td><center>
-                        <a href="#myModal1" id="custId" data-toggle="modal" data-id="<?php echo $barang->kode_item_pengajuan;?>" data-toggle="tooltip" title="Aksi" class="btn btn-success btn-sm"><span class="icon_check"></span></a>
-                        <a href="#myModal2" id="custId" data-toggle="modal" data-id="<?php echo $barang->kode_item_pengajuan;?>" data-toggle="tooltip" title="Aksi" class="btn btn-danger btn-sm"><span class="  icon_close"></span></a>
-                      </center></td>
-                    </tr>
-                    <?php
-                  }
-                  ?>
-                </tbody>
-              </table>
-            </div>
+                       <a href="#" onclick="detail(<?php echo $barang->kode_item_pengajuan; ?>)" id="custID" data-toggle="modal" data-id="<?php echo $barang->kode_item_pengajuan;?>" title="klik untuk melihat detail pengajuan barang"><?php echo $barang->nama_item_pengajuan;?></a> 
+                     </td>
+                     <td><center><img style="height: 60px;" src="<?php echo base_url();?>assets/file_gambar/<?php echo $barang->file_gambar;?>"></center></td>
+                     <td><?php echo $barang->tgl_item_pengajuan;?></td>
+                     <td><?php echo $barang->jumlah;?></td>
+                     <?php 
+                     $jumlah = $barang->jumlah;
+                     $harga = $barang->harga_satuan;
+                     $total = $jumlah*$harga;
+                     ?>
+                     <td><?php echo $total;?></td>
+                     <td><?php echo $barang->status_pengajuan;?></td>
+                     <td><center>
+                      <a href="#myModal1" id="custId" data-toggle="modal" data-id="<?php echo $barang->kode_item_pengajuan;?>" data-toggle="tooltip" title="Aksi" class="btn btn-success btn-sm"><span class="icon_check"></span></a>
+                      <a href="#myModal2" id="custId" data-toggle="modal" data-id="<?php echo $barang->kode_item_pengajuan;?>" data-toggle="tooltip" title="Aksi" class="btn btn-danger btn-sm"><span class="  icon_close"></span></a>
+                      <a href="<?php echo base_url('Man_sarprasC/update_klasifikasi/'."2/".$barang->kode_barang);?>" id="custId" data-toggle="tooltip" data-toggle="tooltip" title="Aksi" class="btn btn-info btn-sm">Tersedia</span></a>
+                    </center></td>
+                  </tr>
+                  <?php
+                }
+                ?>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
     </div>
-  </section>
-  <div class="text-center">
-    <div class="credits">
-      <a href="https://bootstrapmade.com/free-business-bootstrap-themes-website-templates/">Business Bootstrap Themes</a> by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-    </div>
   </div>
+</section>
+<div class="text-center">
+  <div class="credits">
+    <a href="https://bootstrapmade.com/free-business-bootstrap-themes-website-templates/">Business Bootstrap Themes</a> by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+  </div>
+</div>
 </section>
 
 <!-- Modal Detail  Item Pengajuan -->
@@ -90,6 +91,8 @@
       <form id="formadd" class="form-horizontal" role="form">
         <div class="modal-body">
           <div class="form-group">
+            <input type="text" name="id" id="idbarang" hidden="true">
+
             <label class="control-label col-sm-5" style="text-align: left;">Nama Barang</label>
             <div class="col-sm-5">
               <p class="form-control-static"> <?php echo ": ".$barang->nama_barang; ?> </p>
@@ -197,13 +200,13 @@
           });
     });
 
-    // buat nampilin detail item pengajuan
+    //buat nampilin detail item pengajuan
     function detail(id) {
       $('#idbarang').val(id);
-      $('#formadd');
+      $('#formadd').attr('action', '<?php echo base_url('Man_sarprasC/detail_barang');?>');
       $.ajax({
         type : 'get',
-        url : '<?php echo base_url().'Man_sarprasC/ubah_barang/'?>'+id,
+        url : '<?php echo base_url().'Man_sarprasC/detail_barang/'?>'+id,
         dataType :'JSON',
         success : function(data){
         }
