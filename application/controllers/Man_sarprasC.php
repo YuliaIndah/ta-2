@@ -36,18 +36,6 @@ class Man_sarprasC extends CI_Controller {
 		$this->load->view('man_sarpras/index_template', $data);
 	}
 
-	public function detail_persetujuan_terima($id){ //menampilkan modal dengan isi dari detail_pengajuan.php
-		$data['detail_barang'] = $this->Man_sarprasM->get_data_item_pengajuan_by_id($id)->result()[0];
-		$data['data_diri'] = $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
-		$this->load->view('man_sarpras/detail_persetujuan_terima', $data);
-	}
-
-	public function detail_persetujuan_tolak($id){ //menampilkan modal dengan isi dari detail_pengajuan.php
-		$data['detail_barang'] = $this->Man_sarprasM->get_data_item_pengajuan_by_id($id)->result()[0];
-		$data['data_diri'] = $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
-		$this->load->view('man_sarpras/detail_persetujuan_tolak', $data);
-	}
-
 	public function kelola_barang(){ //halaman kelola barang(man_sarpras)
 		$data['title'] = "Kelola Barang | Manajer Sarana dan Prasarana";
 		$this->data['data_diri'] = $this->UserM->get_data_diri()->result()[0];      //get data diri buat nampilin nama di pjok kanan
@@ -350,10 +338,10 @@ class Man_sarprasC extends CI_Controller {
 
 					);
 				$this->UserM->insert_progress($data); //insert progress langsung ketika mengajukan kegiatan untuk manajer, kepala, dan pimpinan yang lain
-				}else{ 
-					$this->session->set_flashdata('error','Data Pengajuan Pengajuan Barang anda tidak berhasil ditambahkan');
-					redirect('Man_sarprasC/ajukan_barang');
-				}
+			}else{ 
+				$this->session->set_flashdata('error','Data Pengajuan Pengajuan Barang anda tidak berhasil ditambahkan');
+				redirect('Man_sarprasC/ajukan_barang');
+			}
 			
 			$this->session->set_flashdata('sukses','Data Barang berhasil ditambahkan');
 				redirect('Man_sarprasC/ajukan_barang');//redirect ke halaman pengajuan barang
