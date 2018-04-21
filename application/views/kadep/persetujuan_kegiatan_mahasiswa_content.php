@@ -70,78 +70,122 @@
                         <?php $link = base_url()."assets/file_upload/".$kegiatan->nama_file;?>
                         <td class="text-center"><a target="_blank" href="<?php echo $link?>"><span><img src="<?php echo base_url()?>assets/image/logo/pdf.svg" style="height: 30px;"></span></a></td>
                         <td><?php echo $kegiatan->nama_jenis_kegiatan;?></td>
-                        <td>
-                         <?php $lala = $UserM->get_progress($kegiatan->kode_kegiatan);
-                         if($lala == 1){
-                          echo "Proses";
-                        }elseif ($lala > 1) {
-                          echo "Selesai";
-                        }else{
-                          echo "Baru";
+                        <td class="text-center">
+                          <?php 
+                          $progress       = $UserM->get_progress($kegiatan->kode_kegiatan);
+                          $progress_tolak = $UserM->get_progress_tolak($kegiatan->kode_kegiatan);
+                          // echo $progress;
+                          // echo $progress_tolak;
+                          if($progress_tolak == 1){
+                            ?>
+                            <a class="label label-danger" href="#modal_progress" id="custID" data-toggle="modal" data-id="<?php echo $kegiatan->kode_kegiatan;?>" title="klik untuk melihat detail progress"><b>Selesai</b></a>
+                            <?php
+                          }else{
+                           if($progress == 1){
+                            ?>
+                            <a class="label label-default" href="#modal_progress" id="custID" data-toggle="modal" data-id="<?php echo $kegiatan->kode_kegiatan;?>" title="klik untuk melihat detail progress">Proses</a>
+                            <?php
+                          }elseif ($progress > 1) {
+                            ?>
+                            <a class="label label-success" href="#modal_progress" id="custID" data-toggle="modal" data-id="<?php echo $kegiatan->kode_kegiatan;?>" title="klik untuk melihat detail progress">Selesai</a>
+                            <?php
+                          }elseif ($progress == 0) {
+                            ?>
+                            <a class="label label-info" href="#modal_progress" id="custID" data-toggle="modal" data-id="<?php echo $kegiatan->kode_kegiatan;?>" title="klik untuk melihat detail progress">Baru</a>
+                            <?php
+                          }
                         }
                         ?>
                       </td>
                       <td class="text-center">
                         <?php 
-                        $own = $UserM->get_own_progress($kegiatan->$kode_kegiatan, $kegiatan->$no_identitas);
-                        print_r($own);
-                        ?>
-                        <a href="#myModal" id="custId" data-toggle="modal" data-id="<?php echo $kegiatan->kode_kegiatan;?>" data-toggle="tooltip" title="Masukkan Persetujuan" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-edit"></span></a>
-                      </td>
-                    </tr>
-                    <?php
-                  }
-                  ?>
-                </tbody>
-              </table>
+                        $kode = $kegiatan->kode_kegiatan;
+                        $id   = $data_diri->no_identitas;
+                        $own  = $UserM->get_own_progress($kode, $id);
+                        // print_r($own);
+                        if($own > 0){
+                          ?>
+                          <a href="#" disabled title="Sudah"><span class="glyphicon glyphicon-ok"></a>
+                            <?php
+                          }elseif ($own == 0) {
+                            ?>
+                            <a href="#myModal" id="custId" data-toggle="modal" data-id="<?php echo $kegiatan->kode_kegiatan;?>" data-toggle="tooltip" title="Masukkan Persetujuan" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-edit"></span></a>
+                            <?php
+                          }
+                          ?>
+
+                        </td>
+                      </tr>
+                      <?php
+                    }
+                    ?>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
       </div>
+    </section>
+    <div class="text-center">
+      <div class="credits">
+        <a href="https://bootstrapmade.com/free-business-bootstrap-themes-website-templates/">Business Bootstrap Themes</a> by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+      </div>
     </div>
   </section>
-  <div class="text-center">
-    <div class="credits">
-      <a href="https://bootstrapmade.com/free-business-bootstrap-themes-website-templates/">Business Bootstrap Themes</a> by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-    </div>
-  </div>
-</section>
-<!-- modal detail pengajuan -->
-<div class="modal fade" id="myModal" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Persetujuan Kegiatan</h4>
-      </div>
-      <div class="modal-body">
-        <div class="fetched-data"></div>
-      </div>
-      <div class="modal-footer">
+  <!-- modal detail pengajuan -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Persetujuan Kegiatan</h4>
+        </div>
+        <div class="modal-body">
+          <div class="fetched-data"></div>
+        </div>
+        <div class="modal-footer">
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<!-- modal detail kegiatan -->
-<div class="modal fade" id="myModal1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Detail Kegiatan</h4>
-      </div>
-      <div class="modal-body">
-        <div class="fetched-data"></div>
-      </div>
-      <div class="modal-footer">
+  <!-- modal detail kegiatan -->
+  <div class="modal fade" id="myModal1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Detail Kegiatan</h4>
+        </div>
+        <div class="modal-body">
+          <div class="fetched-data"></div>
+        </div>
+        <div class="modal-footer">
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<script src="<?php echo base_url();?>assets/js/jquery.min.js"></script>
-<script type="text/javascript">
+    <!-- modal detail Progress -->
+  <div class="modal fade" id="modal_progress" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Detail Progress</h4>
+        </div>
+        <div class="modal-body">
+          <div class="fetched-data"></div>
+        </div>
+        <div class="modal-footer">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="<?php echo base_url();?>assets/js/jquery.min.js"></script>
+  <script type="text/javascript">
     // js detail pengajuan
     $(document).ready(function(){
       $('#myModal').on('show.bs.modal', function (e) {
@@ -175,17 +219,20 @@ $(document).ready(function(){
           });
 });
 
-// function progress(kode_kegiatan) {
-//         $.ajax({
-//                 url : "<?php echo base_url('KadepC/get_progress')?>/"+kode_kegiatan,
-//                 type: "GET",
-//                 dataType: "php",
-//                 success: function(data)
-//                 {             
-//                     return data;
-//             }
-//         });
-//     }
-
+// js detail_progress
+$(document).ready(function(){
+  $('#modal_progress').on('show.bs.modal', function (e) {
+    var rowid = $(e.relatedTarget).data('id');
+            //menggunakan fungsi ajax untuk pengambilan data
+            $.ajax({
+              type : 'get',
+              url : '<?php echo base_url().'KadepC/detail_progress/'?>'+rowid,
+                //data :  'rowid='+ rowid, // $_POST['rowid'] = rowid
+                success : function(data){
+                $('.fetched-data').html(data);//menampilkan data ke dalam modal
+              }
+            });
+          });
+});
 </script>
 

@@ -226,16 +226,21 @@ class KadepC extends CI_Controller {
 	}
 
 	public function detail_pengajuan($id){ //menampilkan modal dengan isi dari detail_pengajuan.php
-		$data['detail_kegiatan'] = $this->KadepM->get_data_pengajuan_by_id($id)->result()[0];
-		$data['data_diri'] 		= $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
-		$data['nama_progress'] = $this->UserM->get_pilihan_nama_progress()->result();
+		$data['detail_kegiatan'] 	= $this->KadepM->get_data_pengajuan_by_id($id)->result()[0];
+		$data['data_diri'] 			= $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
+		$data['nama_progress'] 		= $this->UserM->get_pilihan_nama_progress()->result();
 		$this->load->view('kadep/detail_pengajuan', $data);
 	}
 
 	public function detail_kegiatan($id){ //menampilkan modal dengan isi dari detail_kegiatan.php
-		$data['detail_kegiatan'] = $this->KadepM->get_data_pengajuan_by_id($id)->result()[0];
-		$data['data_diri'] 		= $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
+		$data['detail_kegiatan'] 	= $this->KadepM->get_data_pengajuan_by_id($id)->result()[0];
+		$data['data_diri'] 			= $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
 		$this->load->view('kadep/detail_kegiatan', $data);
+	}
+
+	public function detail_progress($id){ //menampilkan modal dengan isi dari detail_kegiatan.php
+		$data['detail_progress']	= $this->UserM->get_detail_progress($id)->result();
+		$this->load->view('kadep/detail_progress', $data);
 	}
 
 	public function post_progress(){ //posting progress dan update kegiatan (dana disetujuin)

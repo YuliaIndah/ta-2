@@ -71,24 +71,50 @@
                       <?php $link = base_url()."assets/file_upload/".$kegiatan->nama_file;?>
                       <td class="text-center"><a target="_blank" href="<?php echo $link?>"><span><img src="<?php echo base_url()?>assets/image/logo/pdf.svg" style="height: 30px;"></span></a></td>
                       <td><?php echo $kegiatan->nama_jenis_kegiatan;?></td>
-                      <td>Status</td>
-                    </tr>
-                    <?php
-                  }
-                  ?>
-                </tbody>
-              </table>
-            </div>
+                      <td>
+                        <?php 
+                        $progress       = $UserM->get_progress($kegiatan->kode_kegiatan);
+                        $progress_tolak = $UserM->get_progress_tolak($kegiatan->kode_kegiatan);
+                          // echo $progress;
+                          // echo $progress_tolak;
+                        if($progress_tolak == 1){
+                          ?>
+                          <a href="#">Selesai</a>
+                          <?php
+                        }else{
+                         if($progress == 1){
+                          ?>
+                          <a href="#">Proses</a>
+                          <?php
+                        }elseif ($progress > 1) {
+                          ?>
+                          <a href="#">Selesai</a>
+                          <?php
+                        }elseif ($progress == 0) {
+                          ?>
+                          <a href="#">Baru</a>
+                          <?php
+                        }
+                      }
+                      ?>
+                    </td>
+                  </tr>
+                  <?php
+                }
+                ?>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
     </div>
-  </section>
-  <div class="text-center">
-    <div class="credits">
-      <a href="https://bootstrapmade.com/free-business-bootstrap-themes-website-templates/">Business Bootstrap Themes</a> by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-    </div>
   </div>
+</section>
+<div class="text-center">
+  <div class="credits">
+    <a href="https://bootstrapmade.com/free-business-bootstrap-themes-website-templates/">Business Bootstrap Themes</a> by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+  </div>
+</div>
 </section>
 
 

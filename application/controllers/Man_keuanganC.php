@@ -39,6 +39,7 @@ class Man_keuanganC extends CI_Controller {
 		$kode_jenis_kegiatan = 1; //kegiatan pegawai
 		$data['title'] = "Persetujuan Kegiatan Pegawai | Manajer Keuangan";
 		$this->data['data_pengajuan_kegiatan'] = $this->Man_keuanganM->get_data_pengajuan($kode_jenis_kegiatan)->result();
+		$this->data['UserM'] = $this->UserM ;	
 		$this->data['data_diri'] = $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
 		$data['body'] = $this->load->view('man_keuangan/persetujuan_kegiatan_pegawai_content', $this->data, true) ;
 		$this->load->view('man_keuangan/index_template', $data);
@@ -47,6 +48,7 @@ class Man_keuanganC extends CI_Controller {
 		$kode_jenis_kegiatan = 2; //kegiatan mahasiswa
 		$data['title'] = "Persetujuan Kegiatan Mahasiswa  | Manajer Keuangan";
 		$this->data['data_pengajuan_kegiatan'] = $this->Man_keuanganM->get_data_pengajuan($kode_jenis_kegiatan)->result();
+		$this->data['UserM'] = $this->UserM ;	
 		$this->data['data_diri'] = $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
 		$data['body'] = $this->load->view('man_keuangan/persetujuan_kegiatan_mahasiswa_content', $this->data, true) ;
 		$this->load->view('man_keuangan/index_template', $data);
@@ -55,6 +57,7 @@ class Man_keuanganC extends CI_Controller {
 		$no_identitas = $this->session->userdata('no_identitas');
 		$data['title'] = "Persetujuan Kegiatan Staf | Manajer Keuangan";
 		$this->data['data_pengajuan_kegiatan'] = $this->Man_keuanganM->get_data_pengajuan_staf()->result();
+		$this->data['UserM'] = $this->UserM ;	
 		$this->data['data_diri'] = $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
 		$data['body'] = $this->load->view('man_keuangan/persetujuan_kegiatan_staf_content', $this->data, true) ;
 		$this->load->view('man_keuangan/index_template', $data);

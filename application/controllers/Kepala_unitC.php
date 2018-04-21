@@ -153,6 +153,7 @@ class Kepala_unitC extends CI_Controller {
 		$no_identitas = $this->session->userdata('no_identitas');
 		$data['title'] = "Persetujuan Kegiatan Staf | Kepla Unit";
 		$this->data['data_pengajuan_kegiatan'] = $this->Kepala_unitM->get_data_pengajuan_staf()->result();
+		$this->data['UserM'] = $this->UserM;
 		$this->data['data_diri'] = $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
 		$data['body'] = $this->load->view('kepala_unit/persetujuan_kegiatan_staf_content', $this->data, true);
 		$this->load->view('kepala_unit/index_template', $data);

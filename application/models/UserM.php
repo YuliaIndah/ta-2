@@ -260,6 +260,29 @@
 		$this->db->from('progress');
 		$this->db->where('progress.kode_fk', $id);
 		$this->db->where('progress.jenis_progress = "kegiatan"');
+		$this->db->where('progress.kode_nama_progress = "1"');//diterima
+		$query = $this->db->get();
+		return $query->num_rows();
+	}
+
+	public function get_detail_progress($id){
+		$this->db->select('*');
+		$this->db->from('progress');
+		$this->db->join('pengguna', 'progress.no_identitas = pengguna.no_identitas');
+		$this->db->join('jabatan', 'pengguna.kode_jabatan = jabatan.kode_jabatan');
+		$this->db->join('unit', 'pengguna.kode_unit = unit.kode_unit');
+		$this->db->where('progress.kode_fk', $id);
+		$this->db->where('progress.jenis_progress = "kegiatan"'); //kegiatan bukan barang
+		$query = $this->db->get();
+		return $query;
+	}
+
+	public function get_progress_tolak($id){
+		$this->db->select('*');
+		$this->db->from('progress');
+		$this->db->where('progress.kode_fk', $id);
+		$this->db->where('progress.jenis_progress = "kegiatan"');
+		$this->db->where('progress.kode_nama_progress = "2"');//ditolak
 		$query = $this->db->get();
 		return $query->num_rows();
 	}

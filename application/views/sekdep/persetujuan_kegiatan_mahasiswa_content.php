@@ -76,18 +76,50 @@
                         <!-- <td><?php echo $kegiatan->nama;?></td> -->
                         <!-- <td><?php echo $kegiatan->nama_jabatan." ".$kegiatan->nama_unit;?></td> -->
                         <td><?php echo $kegiatan->nama_jenis_kegiatan;?></td>
-                        <td>Status</td>
-                        <td class="text-center">
-                          <?php
-                          if(in_array($kegiatan->kode_kegiatan, $array_data_status)){
-                            echo '<span class="glyphicon glyphicon-ok"></span> Selesai';  
+                        <td>
+                          <?php 
+                          $progress       = $UserM->get_progress($kegiatan->kode_kegiatan);
+                          $progress_tolak = $UserM->get_progress_tolak($kegiatan->kode_kegiatan);
+                          // echo $progress;
+                          // echo $progress_tolak;
+                          if($progress_tolak == 1){
+                            ?>
+                            <a href="#">Selesai</a>
+                            <?php
+                          }else{
+                           if($progress == 1){
+                            ?>
+                            <a href="#">Proses</a>
+                            <?php
+                          }elseif ($progress > 1) {
+                            ?>
+                            <a href="#">Selesai</a>
+                            <?php
+                          }elseif ($progress == 0) {
+                            ?>
+                            <a href="#">Baru</a>
+                            <?php
                           }
-                          else{
+                        }
+                        ?>
+                      </td>
+                      <td class="text-center">
+                        <?php 
+                        $kode = $kegiatan->kode_kegiatan;
+                        $id   = $data_diri->no_identitas;
+                        $own  = $UserM->get_own_progress($kode, $id);
+                        // print_r($own);
+                        if($own > 0){
+                          ?>
+                          <a href="#" title="Sudah"><span class="glyphicon glyphicon-ok"></a>
+                            <?php
+                          }elseif ($own == 0) {
                             ?>
                             <a href="#myModal" id="custId" data-toggle="modal" data-id="<?php echo $kegiatan->kode_kegiatan;?>" data-toggle="tooltip" title="Masukkan Persetujuan" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-edit"></span></a>
                             <?php
                           }
                           ?>
+
                         </td>
                       </tr>
                       <?php
