@@ -137,11 +137,7 @@
   <script src="<?php echo base_url();?>assets/datatables/dataTables.bootstrap.min.js"></script>
   <script>
 
-      // CSS data DataTable
-
-      // $(document).ready(function() {
-      //   $('#example').DataTable();
-      // } );
+    
       $(document).ready(function() {
         var table = $('#example').DataTable();
         

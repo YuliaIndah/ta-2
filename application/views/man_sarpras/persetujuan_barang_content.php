@@ -3,6 +3,7 @@
     <!--overview start-->
     <div class="row">
       <div class="col-lg-12">
+
        <!-- Alert -->
        <?php 
        $data=$this->session->flashdata('sukses');
@@ -80,7 +81,7 @@
                             <!-- // -->
                             <label class="control-label col-sm-5" style="text-align: left;">Nama Pengaju</label>
                             <p class="form-control-static"> <?php echo ": ".$barang->nama; ?> </p>
-                             <label class="control-label col-sm-5" style="text-align: left;">Jabatan</label>
+                            <label class="control-label col-sm-5" style="text-align: left;">Jabatan</label>
                             <p class="form-control-static"> <?php echo ": ".$barang->nama_jabatan." ".$barang->nama_unit; ?> </p>
                             <!-- // -->
                             <label class="control-label col-sm-5" style="text-align: left;">Status Persediaan</label>
@@ -112,12 +113,14 @@
                       <form class="form-horizontal" action="<?php echo base_url('Man_sarprasC/post_persetujuan_barang');?>" method="post">
                         <div class="modal-body">
                           <div class="form-group">
-                            <input class="form-control" type="hidden" id="no_identitas" name="no_identitas" value="<?php echo $data_diri->no_identitas;?>" required> <!-- ambil id_pengguna_jabatan berdasarkan user yang login-->
+                            <!-- ambil id_pengguna_jabatan berdasarkan user yang login-->
+                            <input class="form-control" type="hidden" id="no_identitas" name="no_identitas" value="<?php echo $data_diri->no_identitas;?>" required> 
+                            <!-- kirim kode_fk berdasarkan kode_item_pengajuan dari barang yang terpilih -->
                             <input class="form-control" type="hidden" id="kode_fk" name="kode_fk" value="<?php echo $barang->kode_item_pengajuan;?>" required>
+                            <!-- kirim kode_nama_progress = 1 untuk terima -->
+                            <input type="hidden" class="form-control" placeholder id="kode_nama_progress" name="kode_nama_progress" required value="1">
                             <label class="col-lg-4 col-sm-2 control-label">Komentar Persetujuan:</label>
                             <div class="modal-body">
-                             <input type="hidden" class="form-control" placeholder id="kode_nama_progress" name="kode_nama_progress" required value="1">
-                             <input class="form-control" type="hidden" id="jenis_progress" name="jenis_progress" value="barang" required>
                              <textarea name="komentar" value="" class="form-control" placeholder="Komentar" rows="3" required></textarea>
                            </div>
                          </div>
@@ -143,35 +146,38 @@
                     <form class="form-horizontal" action="<?php echo base_url('Man_sarprasC/post_persetujuan_barang');?>" method="post">
                       <div class="modal-body">
                         <div class="form-group">
-                          <input class="form-control" type="hidden" id="no_identitas" name="no_identitas" value="<?php echo $data_diri->no_identitas;?>" required> <!-- ambil id_pengguna_jabatan berdasarkan user yang login-->
+                          <!-- ambil id_pengguna_jabatan berdasarkan user yang login-->
+                          <input class="form-control" type="hidden" id="no_identitas" name="no_identitas" value="<?php echo $data_diri->no_identitas;?>" required> 
+                          <!-- kirim kode_fk berdasarkan kode_item_pengajuan dari barang yang terpilih -->
                           <input class="form-control" type="hidden" id="kode_fk" name="kode_fk" value="<?php echo $barang->kode_item_pengajuan;?>" required>
+                          <!-- kirim kode_nama_progress = 1 untuk terima -->
+                          <input type="hidden" class="form-control" placeholder id="kode_nama_progress" name="kode_nama_progress" required value="2">
                           <label class="col-lg-4 col-sm-2 control-label">Komentar Penolakan:</label>
                           <div class="modal-body">
-                           <input type="hidden" class="form-control" placeholder id="kode_nama_progress" name="kode_nama_progress" required value="2">
-                           <input class="form-control" type="hidden" id="jenis_progress" name="jenis_progress" value="barang" required>
-                           <textarea name="komentar" value="" class="form-control" placeholder="Komentar" rows="3" required></textarea>
-                         </div>
-                       </div>
-                     </div>
-                     <div class="modal-footer">
-                      <button class="btn btn-info" type="submit"> Simpan </button>
-                      <button type="button" class="btn btn-warning" data-dismiss="modal"> Batal</button>
-                    </div>
-                  </form>
+                            <input class="form-control" type="hidden" id="jenis_progress" name="jenis_progress" value="barang" required>
+                            <textarea name="komentar" value="" class="form-control" placeholder="Komentar" rows="3" required></textarea>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button class="btn btn-info" type="submit"> Simpan </button>
+                        <button type="button" class="btn btn-warning" data-dismiss="modal"> Batal</button>
+                      </div>
+                    </form>
 
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <!-- END Modal Tolak Item Pengajuan-->
+            <!-- END Modal Tolak Item Pengajuan-->
 
-          <?php
-        }
-        ?>
-      </tbody>
-    </table>
+            <?php
+          }
+          ?>
+        </tbody>
+      </table>
+    </div>
   </div>
-</div>
 </div>
 </div>
 </div>

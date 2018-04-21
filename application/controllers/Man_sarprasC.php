@@ -83,11 +83,6 @@ class Man_sarprasC extends CI_Controller {
 		echo json_encode($data);
 	}
 
-	public function detail_barang($id){ //menampilkan modal dengan isi dari ubah_barang.php
-		$data['detail_barang']          = $this->Man_sarprasM->get_data_item_pengajuan_by_id($id)->result();
-		echo json_encode($data);
-	}
-
 	public function getListAjax() 
 	{
 		$data = $this->db->get('jenis_barang')->result();
@@ -123,7 +118,8 @@ class Man_sarprasC extends CI_Controller {
 			$kode_fk 		    = $_POST['kode_fk'];
 			$kode_nama_progress = $_POST['kode_nama_progress'];
 			$komentar           = $_POST['komentar'];
-			$jenis_progress 	= $_POST['jenis_progress'];
+			// $jenis_progress 	= $_POST['jenis_progress'];
+			$jenis_progress 	= "barang";
 
 			$format_waktu 		= "%H:%i";
 			$waktu_progress 	= mdate($format_waktu);
@@ -142,7 +138,13 @@ class Man_sarprasC extends CI_Controller {
 				'waktu_progress'	=> $waktu_progress
 
 			);
+
+			$persetujuan = 'proses';
+			$data = array(
+				'status_pengajuan' => $persetujuan
+			);
 			if($this->UserM->insert_progress($data_progress)){
+				$this->Man_sarprasM->update_persetujuan($data,$kode_fk);
 				$this->session->set_flashdata('sukses','Data Barang berhasil ditambahkan');
 				redirect('Man_sarprasC/persetujuan_barang');
 			}else{
