@@ -16,14 +16,11 @@
        <div class="alert alert-danger"><strong> Error! </strong> <?=$data2;?></div>
        <?php } ?>
        <!-- sampai sini -->
-       <h3 class="page-header" style="margin-top: 0;"><i class="fa fa-pencil"></i>Barang Diajukan</h3>
+       <h3 class="page-header" style="margin-top: 0;"><i class="fa fa-pencil"></i>Pengajuan RAB</h3>
      </div>
    </div>
    <div class="row">
     <div class="col-lg-12">
-    <!--  <?php print_r($tersedia); 
-      echo $tersedia->file_gambar;
-     ?> -->
       <div class="card mb-3">
         <div class="card-header">
           <div class="card-body">
@@ -62,7 +59,7 @@
                      <td><center>
                       <a href="#" data-toggle="modal" data-target="#mymodal1-<?php echo $barang->kode_item_pengajuan; ?>" title="Terima" class="btn btn-success btn-sm"><span class="icon_check"></span></a>
                       <a href="#" data-toggle="modal" data-target="#mymodal2-<?php echo $barang->kode_item_pengajuan; ?>" title="Tolak" class="btn btn-danger btn-sm"><span class="  icon_close"></span></a>
-                      <a href="<?php echo base_url('Man_sarprasC/post_persetujuan_tersedia/'.$barang->kode_item_pengajuan);?>" id="custId" data-toggle="tooltip" data-toggle="tooltip" title="Aksi" class="btn btn-info btn-sm">Tersedia</span></a>
+                      <a href="<?php echo base_url('Man_sarprasC/update_persediaan/'."'tersedia'/".$barang->kode_barang);?>" id="custId" data-toggle="tooltip" data-toggle="tooltip" title="Aksi" class="btn btn-info btn-sm">Tersedia</span></a>
                     </center></td>
                   </tr>
 
