@@ -16,6 +16,7 @@ class Man_sarprasM extends CI_Model{
 		$this->db->join('jenis_barang', 'jenis_barang.kode_jenis_barang = barang.kode_jenis_barang');
 		$this->db->join('progress', 'progress.kode_fk = item_pengajuan.kode_item_pengajuan');
 		$this->db->where('progress.jenis_progress ="barang"');
+		$this->db->group_by('item_pengajuan.kode_item_pengajuan');
 		$query = $this->db->get();
 		if($query){
 			return $query;
@@ -130,6 +131,12 @@ class Man_sarprasM extends CI_Model{
 	public function update_klasifikasi_barang($kode_barang, $data){ //update barang dengan klasifikasi
 		$this->db->where('kode_barang', $kode_barang);
 		$this->db->update('barang', $data);
+		return TRUE;
+	}
+
+	public function update_persetujuan($data, $kode_fk){
+		$this->db->where('item_pengajuan.kode_item_pengajuan', $kode_fk);
+		$this->db->update('item_pengajuan', $data);
 		return TRUE;
 	}
 }
