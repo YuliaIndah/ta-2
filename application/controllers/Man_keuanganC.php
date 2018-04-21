@@ -55,19 +55,6 @@ class Man_keuanganC extends CI_Controller {
 		$no_identitas = $this->session->userdata('no_identitas');
 		$data['title'] = "Persetujuan Kegiatan Staf | Manajer Keuangan";
 		$this->data['data_pengajuan_kegiatan'] = $this->Man_keuanganM->get_data_pengajuan_staf()->result();
-
-		$array_data_pengajuan = array();
-		foreach ($this->data['data_pengajuan_kegiatan'] as $pengajuan) {
-			array_push($array_data_pengajuan, $pengajuan->kode_kegiatan);
-		}
-		$this->data['data_status'] = $this->UserM->get_data_status_kegiatan($array_data_pengajuan, $no_identitas)->result();
-
-		$array_data_status = array();
-		foreach ($this->data['data_status'] as $status) {
-			array_push($array_data_status, $status->kode_fk);
-		}
-
-		$this->data['array_data_status'] = $array_data_status;
 		$this->data['data_diri'] = $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
 		$data['body'] = $this->load->view('man_keuangan/persetujuan_kegiatan_staf_content', $this->data, true) ;
 		$this->load->view('man_keuangan/index_template', $data);

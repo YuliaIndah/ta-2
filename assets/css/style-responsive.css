@@ -232,7 +232,7 @@
 
 @media (max-width: 480px) {
 
-    .notification-row,.task_notificatoin_bar, .search-row,.knob-charts, .dont-show , .inbox-head .sr-input, .inbox-head .sr-btn{
+    .task_notificatoin_bar, .search-row,.knob-charts, .dont-show , .inbox-head .sr-input, .inbox-head .sr-btn{
         display: none;
     }
 

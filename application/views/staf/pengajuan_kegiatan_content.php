@@ -15,7 +15,7 @@
       <div class="col-lg-12">
         <!-- Alert -->
         <?php 
-       //var_dump($id_pimpinan);
+       // var_dump($id_pimpinan);
         $data=$this->session->flashdata('sukses');
         if($data!=""){ ?>
         <div class="alert alert-success"><strong>Sukses! </strong> <?=$data;?></div>
@@ -128,7 +128,7 @@
                   <!-- <label>ID Pengguna Jabatan</label> -->
 
                   <input class="form-control" type="hidden" id="no_identitas" name="no_identitas" value="<?php echo $data_diri->no_identitas;?>" required> <!-- ambil id_pengguna_jabatan berdasarkan user yang login-->
-                  <input class="form-control" type="hidden" id="id_pimpinan" name="id_pimpinan" value="<?php echo $id_pimpinan;?>" required> <!-- ambil pimpinan-->
+                  <input class="form-control" type="text" id="id_pimpinan" name="id_pimpinan" value="<?php echo $id_pimpinan;?>" required> <!-- ambil pimpinan-->
                 </div>
                 <div class="form-group">
                   <!-- <label>Kode Jenis Kegiatan</label> -->

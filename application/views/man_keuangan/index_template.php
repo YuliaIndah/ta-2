@@ -19,8 +19,9 @@
   <link rel="manifest" href="<?php echo base_url();?>assets/icon/manifest.json">
   <meta name="msapplication-TileColor" content="#ffffff">
   <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#ffffff">
-
+  
   <title><?php echo $title; ?></title>
 
   <link href="<?php echo base_url();?>assets/css/elegant-icons-style.css" rel="stylesheet" />

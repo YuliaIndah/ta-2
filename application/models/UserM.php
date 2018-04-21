@@ -187,25 +187,11 @@
 		$this->db->where('unit.kode_unit', $kode_unit);
 		$this->db->where('jabatan.kode_jabatan != "4"');
 
-		return $query = $this->db->get();
-	}
-
-	//buat select progress yang sesuai data persetujuan mahasiswa KADEP
-	//cek progress sudah input belom
-	function get_data_status_kegiatan($array_data_pengajuan, $no_identitas){
-		$this->db->select('progress.kode_fk');
-		$this->db->from('progress');
-		$this->db->join('pengguna', 'progress.no_identitas = pengguna.no_identitas');
-		$this->db->join('jabatan', 'jabatan.kode_jabatan = pengguna.kode_jabatan');
-		$this->db->join('unit', 'unit.kode_unit = pengguna.kode_unit');
-		$this->db->where('progress.no_identitas', $no_identitas);
-		$this->db->where_in('progress.kode_fk', $array_data_pengajuan);
-		$this->db->where('progress.jenis_progress = "kegiatan"');
 		$query = $this->db->get();
 		if($query){
 			return $query;
 		}else{
-			return null;
+			echo "kasiyan deh ga punya pimpinan";
 		}
 	}
 
@@ -269,44 +255,22 @@
 		return $query;
 	}
 
-	function get_data_kegiatan_selesai($kode_jenis_kegiatan){ //select kode progress yang sudah mendapat inputan oleh asesor kegiatan mahasiswa terakhir yaitu kadep
-		$this->db->select('progress.kode_fk');
+	public function get_progress($id){
+		$this->db->select('*');
 		$this->db->from('progress');
-		$this->db->join('kegiatan', 'progress.kode_fk = kegiatan.kode_kegiatan');
-		$this->db->join('jenis_kegiatan', 'kegiatan.kode_jenis_kegiatan = jenis_kegiatan.kode_jenis_kegiatan');
-		$this->db->join('pengguna', 'progress.no_identitas = pengguna.no_identitas');
-		$this->db->join('jabatan', 'jabatan.kode_jabatan = pengguna.kode_jabatan');
-		$this->db->join('unit', 'unit.kode_unit = pengguna.kode_unit');
+		$this->db->where('progress.kode_fk', $id);
 		$this->db->where('progress.jenis_progress = "kegiatan"');
-		$this->db->where('pengguna.kode_jabatan = "1"');
-		$this->db->where('pengguna.kode_unit = "1"');
-		$this->db->where('jenis_kegiatan.kode_jenis_kegiatan', $kode_jenis_kegiatan); //jenis kegiatan Mahasiswa/pegawai
-
 		$query = $this->db->get();
-		if($query){
-			return $query;
-		}else{
-			return null;
-		}
+		return $query->num_rows();
 	}
 
-	function get_data_kegiatan_proses($kode_jenis_kegiatan){ //select kode progress yang sudah mendapat inputan oleh asesor kegiatan mahasiswa terakhir yaitu kadep
-		$this->db->select('progress.kode_fk');
+	public function get_own_progress($id, $no_identitas){
+		$this->db->select('*');
 		$this->db->from('progress');
-		$this->db->join('kegiatan', 'progress.kode_fk = kegiatan.kode_kegiatan');
-		$this->db->join('jenis_kegiatan', 'kegiatan.kode_jenis_kegiatan = jenis_kegiatan.kode_jenis_kegiatan');
-		$this->db->join('pengguna', 'progress.no_identitas = pengguna.no_identitas');
-		$this->db->join('jabatan', 'jabatan.kode_jabatan = pengguna.kode_jabatan');
-		$this->db->join('unit', 'unit.kode_unit = pengguna.kode_unit');
+		$this->db->where('progress.kode_fk', $id);
 		$this->db->where('progress.jenis_progress = "kegiatan"');
-		$this->db->where('pengguna.kode_jabatan != "1" AND pengguna.kode_unit != "1"');
-		$this->db->where('jenis_kegiatan.kode_jenis_kegiatan', $kode_jenis_kegiatan); //jenis kegiatan Mahasiswa/pegawai
-
+		$this->db->where('progress.no_identitas', $no_identitas);
 		$query = $this->db->get();
-		if($query){
-			return $query;
-		}else{
-			return null;
-		}
+		return $query->num_rows();
 	}
 }  

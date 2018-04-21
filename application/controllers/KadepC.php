@@ -35,39 +35,8 @@ class KadepC extends CI_Controller {
 		$kode_jabatan = 2; // jabatan manajer
 		$data['title'] = "Persetujuan Kegiatan Mahasiswa | Kepala Departemen";
 		$this->data['data_pengajuan_kegiatan_mahasiswa'] = $this->KadepM->get_data_pengajuan($kode_jenis_kegiatan, $kode_unit, $kode_jabatan)->result();
-
-		//mengumpulkan kode kegiatan (kode_fk) yang tampil di persetujuan mahasiswa
-		$array_data_pengajuan = array();
-		foreach ($this->data['data_pengajuan_kegiatan_mahasiswa'] as $pengajuan) {
-			array_push($array_data_pengajuan, $pengajuan->kode_kegiatan);
-		}
-		$this->data['data_status'] = $this->UserM->get_data_status_kegiatan($array_data_pengajuan, $no_identitas)->result(); //select kode_fk(progress) yang kode fk nya ada di array_data_pengajuan 
 		
-		//mengumpulkan kode kegiatan (kode_fk) yang ada progress nya dijadikan array
-		$array_data_status = array();
-		foreach ($this->data['data_status'] as $status) {
-			array_push($array_data_status, $status->kode_fk);
-		}
-		$this->data['array_data_status'] = $array_data_status;
-
-
-		//cek apakah sudah selesai pengajuannya
-		$kode_jenis_kegiatan = "2";
-		$this->data['selesai'] = $this->UserM->get_data_kegiatan_selesai($kode_jenis_kegiatan)->result();
-		$array_data_selesai = array();
-		foreach ($this->data['selesai'] as $selesai) {
-			array_push($array_data_selesai, $selesai->kode_fk);
-		}
-		$this->data['data_selesai'] = $array_data_selesai;
-
-		//data mendapatkan progress dari bukan kadep
-		$this->data['proses'] = $this->UserM->get_data_kegiatan_proses($kode_jenis_kegiatan)->result();
-		$array_data_proses = array();
-		foreach ($this->data['proses'] as $proses) {
-			array_push($array_data_proses, $proses->kode_fk);
-		}
-		$this->data['data_proses'] = $array_data_proses;
-
+		$this->data['UserM'] = $this->UserM ;	
 		$this->data['data_diri'] = $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
 		$data['body'] = $this->load->view('kadep/persetujuan_kegiatan_mahasiswa_content', $this->data, true) ;
 		$this->load->view('kadep/index_template', $data);
@@ -80,39 +49,7 @@ class KadepC extends CI_Controller {
 		$kode_jabatan = "";	
 		$data['title'] = "Persetujuan Kegiatan Pegawai | Kepala Departemen";
 		$this->data['data_pengajuan_kegiatan_pegawai'] = $this->KadepM->get_data_pengajuan($kode_jenis_kegiatan, $kode_unit, $kode_jabatan)->result();
-
-		$array_data_pengajuan = array();
-		foreach ($this->data['data_pengajuan_kegiatan_pegawai'] as $pengajuan) {
-			array_push($array_data_pengajuan, $pengajuan->kode_kegiatan);
-		}
-		$this->data['data_status'] = $this->UserM->get_data_status_kegiatan($array_data_pengajuan, $no_identitas)->result(); //select kode_fk(progress) yang kode fk nya ada di array_data_pengajuan 
-		
-		//mengumpulkan kode kegiatan (kode_fk) yang ada progress nya dijadikan array
-		$array_data_status = array();
-		foreach ($this->data['data_status'] as $status) {
-			array_push($array_data_status, $status->kode_fk);
-		}
-		$this->data['array_data_status'] = $array_data_status;
-
-
-			//cek apakah sudah selesai pengajuannya
-		$kode_jenis_kegiatan = "1";
-		$this->data['selesai'] = $this->UserM->get_data_kegiatan_selesai($kode_jenis_kegiatan)->result();
-		$array_data_selesai = array();
-		foreach ($this->data['selesai'] as $selesai) {
-			array_push($array_data_selesai, $selesai->kode_fk);
-		}
-		$this->data['data_selesai'] = $array_data_selesai;
-
-		//data mendapatkan progress dari bukan kadep
-		$this->data['proses'] = $this->UserM->get_data_kegiatan_proses($kode_jenis_kegiatan)->result();
-		$array_data_proses = array();
-		foreach ($this->data['proses'] as $proses) {
-			array_push($array_data_proses, $proses->kode_fk);
-		}
-		$this->data['data_proses'] = $array_data_proses;
-
-
+		$this->data['UserM'] = $this->UserM ;	
 		$this->data['data_diri'] = $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
 		$data['body'] = $this->load->view('kadep/persetujuan_kegiatan_pegawai_content', $this->data, true) ;
 		$this->load->view('kadep/index_template', $data);

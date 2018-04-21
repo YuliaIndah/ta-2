@@ -12,7 +12,7 @@
     </div>
     <div class="row">
       <div class="col-lg-12">
-        <?php print_r($data_selesai); ?>
+
         <!-- Alert -->
         <?php 
         $data=$this->session->flashdata('sukses');
@@ -71,34 +71,22 @@
                         <td class="text-center"><a target="_blank" href="<?php echo $link?>"><span><img src="<?php echo base_url()?>assets/image/logo/pdf.svg" style="height: 30px;"></span></a></td>
                         <td><?php echo $kegiatan->nama_jenis_kegiatan;?></td>
                         <td>
-                          <?php 
-                          if(in_array($kegiatan->kode_kegiatan, $data_selesai)){
-                            if(in_array($kegiatan->kode_kegiatan, $data_proses)){
-                             ?>
-                             <a href="#">Proses</a>
-                             <?php
-                           }
-                           ?>
-                           <a href="#">Selesai</a>
-                           <?php
-                         }else{
-                          ?>
-                          <a href="#">Baru</a>
-                          <?php
+                         <?php $lala = $UserM->get_progress($kegiatan->kode_kegiatan);
+                         if($lala == 1){
+                          echo "Proses";
+                        }elseif ($lala > 1) {
+                          echo "Selesai";
+                        }else{
+                          echo "Baru";
                         }
                         ?>
                       </td>
                       <td class="text-center">
-                        <?php
-                        if(in_array($kegiatan->kode_kegiatan, $array_data_status)){
-                          echo '<span class="glyphicon glyphicon-ok"></span> Selesai';  
-                        }
-                        else{
-                          ?>
-                          <a href="#myModal" id="custId" data-toggle="modal" data-id="<?php echo $kegiatan->kode_kegiatan;?>" data-toggle="tooltip" title="Masukkan Persetujuan" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-edit"></span></a>
-                          <?php
-                        }
+                        <?php 
+                        $own = $UserM->get_own_progress($kegiatan->$kode_kegiatan, $kegiatan->$no_identitas);
+                        print_r($own);
                         ?>
+                        <a href="#myModal" id="custId" data-toggle="modal" data-id="<?php echo $kegiatan->kode_kegiatan;?>" data-toggle="tooltip" title="Masukkan Persetujuan" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-edit"></span></a>
                       </td>
                     </tr>
                     <?php
@@ -172,6 +160,7 @@
 
 // js detail kegiatan
 $(document).ready(function(){
+  // progress($id);
   $('#myModal1').on('show.bs.modal', function (e) {
     var rowid = $(e.relatedTarget).data('id');
             //menggunakan fungsi ajax untuk pengambilan data
@@ -186,12 +175,17 @@ $(document).ready(function(){
           });
 });
 
+// function progress(kode_kegiatan) {
+//         $.ajax({
+//                 url : "<?php echo base_url('KadepC/get_progress')?>/"+kode_kegiatan,
+//                 type: "GET",
+//                 dataType: "php",
+//                 success: function(data)
+//                 {             
+//                     return data;
+//             }
+//         });
+//     }
+
 </script>
 
-<!-- <script type="text/javascript">
-  $(document).ready(function () {
-    var site_url = "<?php echo base_url('/controller'); ?>";
-    $("#season").load(site_url);
-  });
-</script>
-<div id="season"> </div> -->
