@@ -103,6 +103,12 @@
               <span>Pengajuan Barang</span>
             </a>
           </li>
+           <li>
+            <a href="<?php echo site_url('Man_sarprasC/ajukan_RAB')?>">
+              <i class="icon_bag_alt"></i>
+              <span>Pengajuan RAB</span>
+            </a>
+          </li>
         </ul>
         <!-- sidebar menu end-->
       </div>

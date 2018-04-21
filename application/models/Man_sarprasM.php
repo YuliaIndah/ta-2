@@ -16,6 +16,7 @@ class Man_sarprasM extends CI_Model{
 		$this->db->join('jenis_barang', 'jenis_barang.kode_jenis_barang = barang.kode_jenis_barang');
 		$this->db->join('progress', 'progress.kode_fk = item_pengajuan.kode_item_pengajuan');
 		$this->db->where('progress.jenis_progress ="barang"');
+		$this->db->where('progress.kode_nama_progress ="1"');
 		$this->db->group_by('item_pengajuan.kode_item_pengajuan');
 		$query = $this->db->get();
 		if($query){
@@ -134,8 +135,14 @@ class Man_sarprasM extends CI_Model{
 		return TRUE;
 	}
 
-	public function update_persetujuan($data, $kode_fk){
+	public function update_persetujuan($data, $kode_fk){ //update persetujuan progres jadi proses
 		$this->db->where('item_pengajuan.kode_item_pengajuan', $kode_fk);
+		$this->db->update('item_pengajuan', $data);
+		return TRUE;
+	}
+
+	public function update_persetujuan_tersedia($data, $kode_item_pengajuan){ //update persetujuan status persediaan sama progres
+		$this->db->where('item_pengajuan.kode_item_pengajuan', $kode_item_pengajuan);
 		$this->db->update('item_pengajuan', $data);
 		return TRUE;
 	}
