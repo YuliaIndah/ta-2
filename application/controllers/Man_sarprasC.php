@@ -156,6 +156,50 @@ class Man_sarprasC extends CI_Controller {
 
 	}	
 
+	public function post_persetujuan_tersedia($kode_item_pengajuan){ // untuk mengubah status persediaan dan pengajuan jd selese serta tambah progres
+		$data_diri = $this->UserM->get_data_diri()->result()[0];
+
+		
+
+		$data = array(
+			'status_pengajuan' => 'selesai',
+			'status_persediaan' => 'tersedia'
+		);
+
+		if($this->Man_sarprasM->update_persetujuan_tersedia($data, $kode_item_pengajuan)){
+			$no_identitas 		= $data_diri->no_identitas;
+			$kode_fk 		    = $kode_item_pengajuan;
+			$kode_nama_progress = "1";
+			$komentar           = "barang tersedia";
+			$jenis_progress 	= "barang";
+
+			$format_waktu 		= "%H:%i";
+			$waktu_progress 	= mdate($format_waktu);
+
+			$format_tgl 		= "%Y-%m-%d";
+			$tgl_progress 		= mdate($format_tgl);
+
+
+			$data_progress		= array(
+				'no_identitas'		=> $no_identitas,
+				'kode_fk'			=> $kode_fk,
+				'kode_nama_progress'=> $kode_nama_progress,
+				'komentar'			=> $komentar,
+				'jenis_progress'	=> $jenis_progress,
+				'tgl_progress'		=> $tgl_progress,
+				'waktu_progress'	=> $waktu_progress
+
+			);
+			$this->UserM->insert_progress($data_progress);
+			$this->session->set_flashdata('sukses','Sukses Menyetujui Barang');
+			redirect('Man_sarprasC/persetujuan_barang');
+		}else{
+			$this->session->set_flashdata('error','Data Barang tidak berhasil ditambahkan2');
+			redirect('Man_sarprasC/persetujuan_barang');
+		}
+
+	}
+
 	public function klasifikasi_barang(){ //halaman kelola barang(man_sarpras)
 		$data['title'] = "Klasifikasi Barang | Manajer Sarana dan Prasarana";
 		$this->data['data_diri'] = $this->UserM->get_data_diri()->result()[0];      //get data diri buat nampilin nama di pjok kanan
@@ -179,7 +223,15 @@ class Man_sarprasC extends CI_Controller {
 		redirect('Man_sarprasC/klasifikasi_barang');
 	}
 
-	// sebagai pegawai
+	public function ajukan_RAB(){ //halaman kelola barang(man_sarpras)
+		$data['title'] = "Pengajuan RAB | Manajer Sarana dan Prasarana";
+		$this->data['data_diri'] = $this->UserM->get_data_diri()->result()[0];      //get data diri buat nampilin nama di pjok kanan
+		$this->data['data_barang_setuju'] = $this->UserM->get_barang_setuju()->result();          //menampilkan data item pengajuan barang 
+		$data['body'] = $this->load->view('man_sarpras/ajukan_RAB_content', $this->data, true);
+		$this->load->view('man_sarpras/index_template', $data);
+	}
+
+	// sebagai pegawai =============================================================================================================
 
 	public function pengajuan_kegiatan_pegawai(){ //halaman pengajuan kegiatan (pegawai)
 		$data['title'] = "Pengajuan Kegiatan Pegawai | Manajer Sarana dan Prasarana";
