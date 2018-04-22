@@ -103,10 +103,16 @@
               <span>Pengajuan Barang</span>
             </a>
           </li>
-           <li>
+          <li>
             <a href="<?php echo site_url('Man_sarprasC/ajukan_RAB')?>">
-              <i class="icon_bag_alt"></i>
+              <i class="icon_wallet"></i>
               <span>Pengajuan RAB</span>
+            </a>
+          </li>
+           <li>
+            <a href="<?php echo site_url('Man_sarprasC/persetujuan_barang')?>">
+              <i class=" icon_datareport"></i>
+              <span>RAB</span>
             </a>
           </li>
         </ul>

@@ -31,6 +31,7 @@ class Man_sarprasC extends CI_Controller {
 	public function persetujuan_barang(){ //halaman persetujuan barang (man_sarpras)
 		$data['title'] = "Persetujuan Barang | Manajer Sarana dan Prasarana";
 		$this->data['data_diri'] = $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
+		$this->data['Man_sarprasM'] = $this->Man_sarprasM;
 		$this->data['data_persetujuan_barang'] = $this->Man_sarprasM->get_data_item_pengajuan()->result();
 		$data['body'] = $this->load->view('man_sarpras/persetujuan_barang_content', $this->data, true) ;
 		$this->load->view('man_sarpras/index_template', $data);
@@ -211,12 +212,10 @@ class Man_sarprasC extends CI_Controller {
 	public function update_klasifikasi($kode_jenis_barang, $kode_barang){ //edit data diri
 		$kode_barang     	= $kode_barang;
 		$kode_jenis_barang  = $kode_jenis_barang;
-		$status_klasifikasi = 'valid';
 
 		$data = array(
 			'kode_barang'     	=> $kode_barang,
-			'kode_jenis_barang' => $kode_jenis_barang,
-			'status_klasifikasi'=> $status_klasifikasi
+			'kode_jenis_barang' => $kode_jenis_barang
 		);
 		$this->Man_sarprasM->update_klasifikasi_barang($kode_barang,$data);
 		$this->session->set_flashdata('sukses','Data anda berhasil disimpan');
@@ -417,11 +416,10 @@ class Man_sarprasC extends CI_Controller {
 			//redirect ke halaman ajukan barang
 		}else{
 			$nama_barang 		= $_POST['nama_barang'];
-
-			$status_klasifikasi = "tidak valid";
+			$kode_jenis_barang  = "3";
 			$data_pengguna		= array(
 				'nama_barang'		=> $nama_barang,
-				'status_klasifikasi'=> $status_klasifikasi
+				'kode_jenis_barang' => $kode_jenis_barang
 			);
 			if($this->Man_sarprasM->insert_tambah_barang($data_pengguna)){
 				$this->session->set_flashdata('sukses','Data Barang Baru berhasil ditambahkan');

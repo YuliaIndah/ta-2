@@ -32,6 +32,7 @@
                   <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
                     <thead>
                       <tr>
+                        <center>
                         <th>Nama Item Pengajuan</th>
                         <th>File</th>
                         <th>Barang</th>
@@ -40,6 +41,7 @@
                         <th>Jumlah Barang</th>
                         <th>Status</th>
                         <th>Aksi</th>
+                        </center>
                       </tr>
                     </thead>
                     <tbody>
@@ -48,7 +50,7 @@
                         ?>
                         <tr>
                           <td><?php echo $barang->nama_item_pengajuan; ?></td>
-                          <td><img style="height: 50px;" src="<?php echo base_url();?>assets/file_gambar/<?php echo $barang->file_gambar;?>"></td>
+                          <td><center><img style="height: 50px;" src="<?php echo base_url();?>assets/file_gambar/<?php echo $barang->file_gambar;?>"></center></td>
                           <td><?php echo $barang->nama_barang; ?></td>
                           <td><?php echo $barang->nama_jenis_barang; ?></td>
                           <td><?php echo $barang->harga_satuan; ?></td>

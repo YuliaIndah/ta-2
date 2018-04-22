@@ -120,7 +120,8 @@ class Man_sarprasM extends CI_Model{
 	function get_data_klasifikasi_barang(){ // menampilkan data barang yang belum memiliki jenis barang / belum terklasifikasi
 		$this->db->select('*');
 		$this->db->from('barang');
-		$this->db->where('status_klasifikasi="tidak valid"'); // berdasarkan status_klasifikasi yang tidak valid
+		$this->db->join('jenis_barang', 'barang.kode_jenis_barang = jenis_barang.kode_jenis_barang');
+		$this->db->where('jenis_barang.kode_jenis_barang="3"'); // berdasarkan status_klasifikasi yang tidak valid
 		$query = $this->db->get();
 		if($query){
 			return $query;

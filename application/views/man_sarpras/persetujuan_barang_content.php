@@ -32,7 +32,9 @@
                 <thead>
                   <tr class="text-center">
                     <!-- <th>No. Identitas</th> -->
-                    <th>Nama Item Pengajuan Barang</th>
+                    <th>Nama Pengajuan Barang</th>
+                    <th>Nama Pengaju</th>
+                    <th>Jabatan Pengaju</th>
                     <th>Gambar</th>
                     <th>Tgl Pengajuan</th>
                     <th>Jumlah</th>
@@ -49,6 +51,18 @@
                       <td> 
                        <a href="#" data-toggle="modal" data-target="#modal-<?php echo $barang->kode_item_pengajuan; ?>"><?php echo $barang->nama_item_pengajuan ?></a>
                      </td>
+                      <td><?php 
+                      $pengaju = $Man_sarprasM->get_data_item_pengajuan_by_id($barang->kode_item_pengajuan)->result()[0]->nama;
+                      echo $pengaju;
+                      ?>
+                    </td>
+                    <td>
+                      <?php 
+                      $jabatan = $Man_sarprasM->get_data_item_pengajuan_by_id($barang->kode_item_pengajuan)->result()[0]->nama_jabatan;
+                      $unit = $Man_sarprasM->get_data_item_pengajuan_by_id($barang->kode_item_pengajuan)->result()[0]->nama_unit;
+                      echo $jabatan." ".$unit;
+                      ?>
+                    </td>
                      <td><center><img style="height: 60px;" src="<?php echo base_url();?>assets/file_gambar/<?php echo $barang->file_gambar;?>"></center></td>
                      <td><?php echo $barang->tgl_item_pengajuan;?></td>
                      <td><?php echo $barang->jumlah;?></td>

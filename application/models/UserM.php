@@ -250,7 +250,6 @@
 	public function get_pilihan_barang(){ // untuk menampilkan dropdown pilihan barang di halaman tambah pengajuan barang
 		$this->db->select('*');
 		$this->db->from('barang');
-		$this->db->join('jenis_barang', 'barang.kode_jenis_barang = jenis_barang.kode_jenis_barang');
 		$query = $this->db->get();
 		return $query;
 	}
