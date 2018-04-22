@@ -72,7 +72,7 @@
                       <!-- <td><?php echo $kegiatan->nama;?></td> -->
                       <!-- <td><?php echo $kegiatan->nama_jabatan." ".$kegiatan->nama_unit;?></td> -->
                       <td><?php echo $kegiatan->nama_jenis_kegiatan;?></td>
-                      <td>
+                      <td class="text-center">
                         <?php 
                         $progress       = $UserM->get_progress($kegiatan->kode_kegiatan);
                         $progress_tolak = $UserM->get_progress_tolak($kegiatan->kode_kegiatan);
@@ -80,20 +80,20 @@
                           // echo $progress_tolak;
                         if($progress_tolak == 1){
                           ?>
-                          <a href="#">Selesai</a>
+                          <a class="label label-danger" href="#modal_progress" id="custID" data-toggle="modal" data-id="<?php echo $kegiatan->kode_kegiatan;?>" title="klik untuk melihat detail progress"><b>Selesai</b></a>
                           <?php
                         }else{
                          if($progress == 1){
                           ?>
-                          <a href="#">Proses</a>
+                          <a class="label label-default" href="#modal_progress" id="custID" data-toggle="modal" data-id="<?php echo $kegiatan->kode_kegiatan;?>" title="klik untuk melihat detail progress">Proses</a>
                           <?php
                         }elseif ($progress > 1) {
                           ?>
-                          <a href="#">Selesai</a>
+                          <a class="label label-success" href="#modal_progress" id="custID" data-toggle="modal" data-id="<?php echo $kegiatan->kode_kegiatan;?>" title="klik untuk melihat detail progress">Selesai</a>
                           <?php
                         }elseif ($progress == 0) {
                           ?>
-                          <a href="#">Baru</a>
+                          <a class="label label-info" id="custID" data-toggle="modal" title="klik untuk melihat detail progress">Baru</a>
                           <?php
                         }
                       }

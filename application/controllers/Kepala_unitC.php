@@ -64,6 +64,8 @@ class Kepala_unitC extends CI_Controller {
 		$data['title'] = "Pengajuan Kegiatan | Kepala Unit";
 		$this->data['data_diri'] = $this->UserM->get_data_diri()->result()[0]; //get data diri buat nampilin nama di pjok kanan
 		$this->data['data_kegiatan'] = $this->UserM->get_kegiatan_pegawai()->result();	//menampilkan kegiatan yang diajukan user sebagai pegwai
+		$this->data['UserM'] = $this->UserM ;	
+		
 		$data['body'] = $this->load->view('kepala_unit/pengajuan_kegiatan_content', $this->data, true);
 		$this->load->view('kepala_unit/index_template', $data);
 	}
@@ -170,6 +172,10 @@ class Kepala_unitC extends CI_Controller {
 		$data['detail_kegiatan'] = $this->Kepala_unitM->get_data_pengajuan_by_id($id)->result()[0];
 		$data['data_diri'] = $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
 		$this->load->view('kepala_unit/detail_kegiatan', $data);
+	}
+	public function detail_progress($id){ //menampilkan modal dengan isi dari detail_kegiatan.php
+		$data['detail_progress']	= $this->UserM->get_detail_progress($id)->result();
+		$this->load->view('kepala_unit/detail_progress', $data);
 	}
 
 	public function post_progress(){ //posting progress dan update kegiatan (dana disetujuin)

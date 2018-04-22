@@ -271,6 +271,7 @@
 		$this->db->join('pengguna', 'progress.no_identitas = pengguna.no_identitas');
 		$this->db->join('jabatan', 'pengguna.kode_jabatan = jabatan.kode_jabatan');
 		$this->db->join('unit', 'pengguna.kode_unit = unit.kode_unit');
+		$this->db->join('nama_progress', 'progress.kode_nama_progress = nama_progress.kode_nama_progress');
 		$this->db->where('progress.kode_fk', $id);
 		$this->db->where('progress.jenis_progress = "kegiatan"'); //kegiatan bukan barang
 		$query = $this->db->get();
