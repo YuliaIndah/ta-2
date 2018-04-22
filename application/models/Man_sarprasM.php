@@ -147,4 +147,35 @@ class Man_sarprasM extends CI_Model{
 		$this->db->update('item_pengajuan', $data);
 		return TRUE;
 	}
+
+	public function get_progress_barang_by_id($kode_item_pengajuan, $no_identitas){ //untuk mengecek apakah user sudah memberikan progres barang di item pengajuan . Berhubungan dengan tombol persetujuan akan hilang jika sudah dimasukan persetujuan
+		$this->db->select('*');
+		$this->db->from('progress');
+		$this->db->where('jenis_progress = "barang"');
+		$this->db->where('kode_fk', $kode_item_pengajuan);
+		$this->db->where('no_identitas', $no_identitas);
+		$query = $this->db->get();
+		return $query->num_rows();
+	}
+
+	public function get_barang_setuju(){ // menampilkan data item pengajuan barag yang memiliki status pengajuan selesai atau pending
+		$this->db->select('*');
+		$this->db->from('item_pengajuan');
+		$this->db->join('pengguna', 'pengguna.no_identitas = item_pengajuan.no_identitas');
+		$this->db->join('jabatan', 'jabatan.kode_jabatan = pengguna.kode_jabatan');
+		$this->db->join('unit', 'unit.kode_unit = pengguna.kode_unit');
+		$this->db->join('barang', 'barang.kode_barang = item_pengajuan.kode_barang');
+		$this->db->join('jenis_barang', 'jenis_barang.kode_jenis_barang = barang.kode_jenis_barang');
+		$this->db->join('progress', 'progress.kode_fk = item_pengajuan.kode_item_pengajuan');
+		$this->db->where('item_pengajuan.status_pengajuan ="proses"');
+		$this->db->where('progress.jenis_progress ="barang"');
+		$this->db->where('progress.kode_nama_progress ="1"');
+		$this->db->group_by('item_pengajuan.kode_item_pengajuan');
+		$query = $this->db->get();
+		if($query){
+			return $query;
+		}else{
+			return null;
+		} 
+	}
 }

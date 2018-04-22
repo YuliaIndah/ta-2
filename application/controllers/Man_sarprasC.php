@@ -107,7 +107,6 @@ class Man_sarprasC extends CI_Controller {
 		$this->form_validation->set_rules('kode_fk', 'Kode FK','required');
 		$this->form_validation->set_rules('kode_nama_progress', 'Kode Nama Progress','required');
 		$this->form_validation->set_rules('komentar', 'Komentar','required');
-		$this->form_validation->set_rules('jenis_progress', 'Merk','required');
 		if($this->form_validation->run() == FALSE)
 		{
 			$this->session->set_flashdata('error','Data Persetujuan anda tidak berhasil ditambahkan1 ');
@@ -119,7 +118,6 @@ class Man_sarprasC extends CI_Controller {
 			$kode_fk 		    = $_POST['kode_fk'];
 			$kode_nama_progress = $_POST['kode_nama_progress'];
 			$komentar           = $_POST['komentar'];
-			// $jenis_progress 	= $_POST['jenis_progress'];
 			$jenis_progress 	= "barang";
 
 			$format_waktu 		= "%H:%i";
@@ -140,7 +138,12 @@ class Man_sarprasC extends CI_Controller {
 
 			);
 
-			$persetujuan = 'proses';
+			if($kode_nama_progress == '1'){
+				$persetujuan = 'proses';
+			}elseif ($kode_nama_progress == "2") {
+				$persetujuan = 'tolak';
+			}
+			
 			$data = array(
 				'status_pengajuan' => $persetujuan
 			);
@@ -224,8 +227,9 @@ class Man_sarprasC extends CI_Controller {
 
 	public function ajukan_RAB(){ //halaman kelola barang(man_sarpras)
 		$data['title'] = "Pengajuan RAB | Manajer Sarana dan Prasarana";
-		$this->data['data_diri'] = $this->UserM->get_data_diri()->result()[0];      //get data diri buat nampilin nama di pjok kanan
-		$this->data['data_barang_setuju'] = $this->UserM->get_barang_setuju()->result();          //menampilkan data item pengajuan barang 
+		$this->data['data_diri'] = $this->UserM->get_data_diri()->result()[0]; //get data diri buat nampilin nama di pjok kanan
+		$this->data['data_barang_setuju'] = $this->Man_sarprasM->get_barang_setuju()->result(); //menampilkan data item pengajuan barang 
+		$this->data['Man_sarprasM'] = $this->Man_sarprasM;
 		$data['body'] = $this->load->view('man_sarpras/ajukan_RAB_content', $this->data, true);
 		$this->load->view('man_sarpras/index_template', $data);
 	}
@@ -317,6 +321,7 @@ class Man_sarprasC extends CI_Controller {
 		$data['title'] = "Daftar Pengajuan Barang | Kepala Departemen";
 		$kode_unit = $this->session->userdata('kode_unit');
 		$this->data['data_diri'] = $this->UserM->get_data_diri()->result()[0]; //get data diri buat nampilin nama di pojok kanan
+		$this->data['Man_sarprasM'] = $this->Man_sarprasM;
 		$this->data['data_ajukan_barang'] = $this->UserM->get_ajukan_barang()->result();	//menampilkan pengajuan barag yang diajukan user sebagai pegwai
 		$this->data['data_pimpinan'] = $this->UserM->get_id_pimpinan($kode_unit)->result()[0]->no_identitas;	//menampilkan pengajuan barag yang diajukan user sebagai pegwai
 		$this->data['pilihan_barang'] = $this->UserM->get_pilihan_barang()->result();
