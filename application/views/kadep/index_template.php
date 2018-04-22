@@ -133,6 +133,23 @@
   <?php echo $body; ?>
   <!--main content end-->
 </section>
+
+<!-- modal detail Progress -->
+<div class="modal fade" id="modal_progress" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Detail Progress</h4>
+      </div>
+      <div class="modal-body">
+        <div class="fetched-data"></div>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
 <!-- container section start -->
 <script src="<?php echo base_url();?>assets/js/jquery-3.1.1.js"></script>
 <script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery.js"></script>
@@ -190,6 +207,22 @@
             $("#to").datepicker({ minDate: new Date(dateStr)})
           }
         });
+      });
+
+      // js detail_progress
+      $(document).ready(function(){
+        $('#modal_progress').on('show.bs.modal', function (e) {
+          var rowid = $(e.relatedTarget).data('id');
+            //menggunakan fungsi ajax untuk pengambilan data
+            $.ajax({
+              type : 'get',
+              url : '<?php echo base_url().'KadepC/detail_progress/'?>'+rowid,
+                //data :  'rowid='+ rowid, // $_POST['rowid'] = rowid
+                success : function(data){
+                $('.fetched-data').html(data);//menampilkan data ke dalam modal
+              }
+            });
+          });
       });
 
     </script>

@@ -72,6 +72,8 @@ class MahasiswaC extends CI_Controller {
 		$data['title'] = "Pengajuan Kegiatan | Pengurus KM TEDI";
 		$this->data['data_kegiatan'] = $this->UserM->get_kegiatan_pegawai()->result();	//menampilkan kegiatan yang diajukan user sebagai pegwai
 		$this->data['data_diri'] = $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
+		$this->data['UserM'] = $this->UserM ;	
+		
 		$data['body'] = $this->load->view('mahasiswa/pengajuan_kegiatan_content', $this->data, true) ;
 		$this->load->view('mahasiswa/index_template', $data);
 	}
@@ -133,5 +135,10 @@ class MahasiswaC extends CI_Controller {
 		$this->data['data_diri'] = $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
 		$data['body'] = $this->load->view('mahasiswa/status_pengajuan_content', $this->data, true) ;
 		$this->load->view('mahasiswa/index_template', $data);
+	}
+
+	public function detail_progress($id){ //menampilkan modal dengan isi dari detail_kegiatan.php
+		$data['detail_progress']	= $this->UserM->get_detail_progress($id)->result();
+		$this->load->view('mahasiswa/detail_progress', $data);
 	}
 }

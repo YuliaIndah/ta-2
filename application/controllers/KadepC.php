@@ -49,7 +49,10 @@ class KadepC extends CI_Controller {
 		$kode_jabatan = "";	
 		$data['title'] = "Persetujuan Kegiatan Pegawai | Kepala Departemen";
 		$this->data['data_pengajuan_kegiatan_pegawai'] = $this->KadepM->get_data_pengajuan($kode_jenis_kegiatan, $kode_unit, $kode_jabatan)->result();
+		// $data['detail_kegiatan'] 	= $this->KadepM->get_data_pengajuan_by_id($id)->result()[0];
+
 		$this->data['UserM'] = $this->UserM ;	
+		$this->data['KadepM'] = $this->KadepM ;	
 		$this->data['data_diri'] = $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
 		$data['body'] = $this->load->view('kadep/persetujuan_kegiatan_pegawai_content', $this->data, true) ;
 		$this->load->view('kadep/index_template', $data);
@@ -77,6 +80,8 @@ class KadepC extends CI_Controller {
 		$data['title'] = "Pengajuan Kegiatan | Kepala Departemen";
 		$this->data['data_diri'] = $this->UserM->get_data_diri()->result()[0]; //get data diri buat nampilin nama di pjok kanan
 		$this->data['data_kegiatan'] = $this->UserM->get_kegiatan_pegawai()->result();	//menampilkan kegiatan yang diajukan user sebagai pegwai
+		$this->data['UserM'] = $this->UserM ;	
+
 		$data['body'] = $this->load->view('kadep/pengajuan_kegiatan_content', $this->data, true);
 		$this->load->view('kadep/index_template', $data);
 	}

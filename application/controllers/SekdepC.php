@@ -48,6 +48,7 @@ class SekdepC extends CI_Controller {
 	// sebagai pegawai
 	public function pengajuan_kegiatan(){ //halaman kegiatan pegawai
 		$data['title'] = "Pengajuan Kegiatan | Sekretaris Departemen";
+		$this->data['UserM'] = $this->UserM ;	
 		$this->data['data_diri'] = $this->UserM->get_data_diri()->result()[0]; //get data diri buat nampilin nama di pjok kanan
 		$this->data['data_kegiatan'] = $this->UserM->get_kegiatan_pegawai()->result();	//menampilkan kegiatan yang diajukan user sebagai pegwai
 		$data['body'] = $this->load->view('sekdep/pengajuan_kegiatan_content', $this->data, true);
@@ -65,6 +66,10 @@ class SekdepC extends CI_Controller {
 		$data['detail_kegiatan'] = $this->SekdepM->get_kegiatan_diajukan_by_id($id)->result()[0];
 		$data['data_diri'] = $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
 		$this->load->view('sekdep/detail_kegiatan', $data);
+	}
+	public function detail_progress($id){ //menampilkan modal dengan isi dari detail_kegiatan.php
+		$data['detail_progress']	= $this->UserM->get_detail_progress($id)->result();
+		$this->load->view('sekdep/detail_progress', $data);
 	}
 
 	public function edit_data_diri($no_identitas){ //edit data diri

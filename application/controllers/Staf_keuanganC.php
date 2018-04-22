@@ -44,7 +44,7 @@ class Staf_keuanganC extends CI_Controller {
 			);
 
 			if($this->UserM->edit_data_diri($no_identitas,$data)){
-			$this->session->set_flashdata('sukses','Data anda berhasil disimpan');
+				$this->session->set_flashdata('sukses','Data anda berhasil disimpan');
 				redirect('Staf_keuanganC/data_diri');
 			}else{
 				redirect('Staf_keuanganC/pengajuan_kegiatan');
@@ -65,6 +65,8 @@ class Staf_keuanganC extends CI_Controller {
 		$kode_unit = $this->session->userdata('kode_unit');
 
 		$data['title'] = "Pengajuan Kegiatan | Staf Keuangan";
+		$this->data['UserM'] = $this->UserM ;	
+
 		$this->data['data_diri'] = $this->UserM->get_data_diri()->result()[0]; //get data diri buat nampilin nama di pjok kanan
 		$this->data['data_kegiatan'] = $this->UserM->get_kegiatan_pegawai()->result();	//menampilkan kegiatan yang diajukan user sebagai pegwai
 		$this->data['id_pimpinan'] 		= $this->UserM->get_id_pimpinan($kode_unit)->result()[0]->no_identitas; //ambil id pimpinan
@@ -131,5 +133,10 @@ class Staf_keuanganC extends CI_Controller {
 		$this->data['data_diri'] = $this->UserM->get_data_diri()->result()[0];  	//get data diri buat nampilin nama di pjok kanan
 		$data['body'] = $this->load->view('staf_keuangan/pengaturan_akun_content', $this->data, true) ;
 		$this->load->view('staf_keuangan/index_template', $data);
+	}
+
+	public function detail_progress($id){ //menampilkan modal dengan isi dari detail_kegiatan.php
+		$data['detail_progress']	= $this->UserM->get_detail_progress($id)->result();
+		$this->load->view('staf_keuangan/detail_progress', $data);
 	}
 }

@@ -69,6 +69,8 @@ class Man_keuanganC extends CI_Controller {
 		$data['title'] = "Pengajuan Kegiatan | Manajer Keuangan";
 		$this->data['data_diri'] = $this->UserM->get_data_diri()->result()[0]; //get data diri buat nampilin nama di pjok kanan
 		$this->data['data_kegiatan'] = $this->UserM->get_kegiatan_pegawai()->result();	//menampilkan kegiatan yang diajukan user sebagai pegwai
+		$this->data['UserM'] = $this->UserM ;	
+		
 		$data['body'] = $this->load->view('man_keuangan/pengajuan_kegiatan_content', $this->data, true);
 		$this->load->view('man_keuangan/index_template', $data);
 	}
@@ -92,6 +94,10 @@ class Man_keuanganC extends CI_Controller {
 		$this->load->view('man_keuangan/detail_kegiatan', $data);
 	}
 
+	public function detail_progress($id){ //menampilkan modal dengan isi dari detail_kegiatan.php
+		$data['detail_progress']	= $this->UserM->get_detail_progress($id)->result();
+		$this->load->view('man_keuangan/detail_progress', $data);
+	}
 
 
 	public function edit_data_diri($no_identitas){ //edit data diri
