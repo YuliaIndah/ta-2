@@ -94,7 +94,7 @@
           <li>
             <a href="<?php echo site_url('Man_sarprasC/kegiatan_pegawai')?>">
               <i class="icon_ol"></i>
-              <span>Pengajuan Kegitan</span>
+              <span>Pengajuan Kegiatan</span>
             </a>
           </li>
           <li>
